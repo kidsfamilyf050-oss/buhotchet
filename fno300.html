@@ -1,0 +1,3122 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ФНО 300 — декларация по НДС · НК РК 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+<script>
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --font-display:'Playfair Display',Georgia,'Times New Roman',serif;
+  --font-ui:'Manrope',system-ui,-apple-system,sans-serif;
+  --font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#ebe6df;
+  --surface:#fffef9;
+  --surface2:#f3eee6;
+  --border:rgba(26,22,18,.1);
+  --border2:rgba(26,22,18,.16);
+  --text:#141210;
+  --text2:#4a433a;
+  --text3:#7a7166;
+  --gold:#8a6d2e;
+  --gold-light:#f2ead8;
+  --gold-deep:#5c4a24;
+  --blue:#1a3550;
+  --blue-light:#e6eef6;
+  --blue-mid:#234a6e;
+  --green:#1d6b45;
+  --green-light:#dff3e8;
+  --red:#b42318;
+  --red-light:#fce8e6;
+  --amber:#9a5f0a;
+  --amber-light:#f8edd8;
+  --purple:#5b3a8f;
+  --purple-light:#ede6f7;
+  --teal:#0f5f6e;
+  --teal-light:#dff5f8;
+  --shadow:0 1px 2px rgba(20,18,16,.04),0 8px 28px rgba(20,18,16,.07);
+  --shadow-md:0 4px 16px rgba(20,18,16,.08),0 2px 6px rgba(20,18,16,.04);
+  --shadow-lg:0 24px 56px rgba(20,18,16,.12),0 8px 20px rgba(20,18,16,.06);
+  --radius:14px;
+  --radius-lg:22px;
+}
+
+body{
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(242,234,216,.65) 0%, transparent 55%),
+    linear-gradient(168deg,#ebe6df 0%,#e0d9cf 45%,#f2efe8 100%);
+  color:var(--text);
+  font-family:var(--font-ui);
+  min-height:100vh;
+  font-size:clamp(15px,2.6vw,16px);
+  line-height:1.55;
+  letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* HEADER */
+.header{
+  background:rgba(255,254,249,.88);
+  backdrop-filter:saturate(160%) blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:clamp(12px,3vw,18px) clamp(16px,4vw,32px);
+  box-shadow:var(--shadow);
+  position:sticky;top:0;z-index:100;
+}
+.header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,2.2vw,16px);width:100%;max-width:1200px;margin:0 auto}
+.logo-wrap{display:flex;align-items:center;gap:12px;flex:1;min-width:min(100%,240px)}
+.logo-badge{
+  font-family:var(--font-display);
+  background:linear-gradient(145deg,#2a2319 0%,#4a3d28 40%,#6b5635 100%);
+  color:#faf6ef;
+  font-weight:700;
+  font-size:clamp(12px,2.4vw,14px);
+  padding:10px 16px;
+  border-radius:12px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  box-shadow:0 4px 16px rgba(42,35,25,.35),inset 0 1px 0 rgba(255,255,255,.12);
+  border:1px solid rgba(255,246,220,.2);
+}
+.logo-text{
+  font-size:clamp(11px,2.2vw,13px);
+  color:var(--text2);
+  font-weight:500;
+  line-height:1.45;
+  max-width:min(540px,100%);
+  letter-spacing:.02em;
+}
+.header-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.header-actions .btn{min-height:46px;padding:11px 18px;font-size:13px;border-radius:12px}
+.company-selector{
+  margin-left:auto;
+  display:flex;align-items:center;gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border2);
+  border-radius:14px;
+  padding:10px 16px;
+  cursor:pointer;
+  transition:box-shadow .2s,border-color .2s,transform .15s;
+  min-height:52px;
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset;
+}
+.company-selector:hover{border-color:rgba(138,109,46,.45);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.company-name{font-weight:700;font-size:14px;color:var(--text);max-width:min(220px,44vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-iin{font-size:12px;color:var(--text3);font-weight:500}
+
+/* MAIN */
+.main{max-width:min(1180px,100%);margin:0 auto;padding:clamp(20px,4vw,36px) clamp(14px,4vw,28px) 48px}
+
+/* CARD */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:clamp(14px,2vw,var(--radius-lg));
+  padding:clamp(22px,4vw,34px);
+  margin-bottom:clamp(16px,3vw,26px);
+  box-shadow:var(--shadow),0 1px 0 rgba(255,255,255,.85) inset;
+}
+.section-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.35rem,3.5vw,1.75rem);
+  font-weight:600;
+  color:var(--text);
+  letter-spacing:-.02em;
+  line-height:1.2;
+}
+.upload-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:clamp(12px,2vw,18px)}
+.upload-btn{padding:clamp(16px,3vw,20px);border-radius:14px;min-height:80px}
+.upload-btn-label{font-size:clamp(14px,2.8vw,15px)}
+.upload-btn-hint{font-size:clamp(12px,2.5vw,13px);line-height:1.45}
+
+.modal-narrow{max-width:460px}
+.auth-hint{font-size:13px;color:var(--text3);line-height:1.5;margin-bottom:12px}
+.admin-list{display:flex;flex-direction:column;gap:10px;max-height:300px;overflow-y:auto}
+.admin-item{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:14px;border:1px solid var(--border);border-radius:12px;background:var(--surface2);font-size:14px}
+.admin-item .btn{min-height:44px}
+
+@media print{
+  .header,.header-actions,.btn-row,#calcBtn,.upload-grid,.card:not(.print-include),.loading-overlay,.modal-overlay{display:none!important}
+  .main{padding:0;max-width:100%}
+  .report-wrapper{box-shadow:none;border:none}
+}
+
+@media (max-width:720px){
+  .header-inner{flex-direction:column;align-items:stretch}
+  .company-selector{margin-left:0;width:100%;justify-content:space-between}
+  .period-tabs{justify-content:stretch}
+  .period-tab{flex:1;text-align:center;min-height:48px;display:flex;align-items:center;justify-content:center}
+  .fno-table{font-size:13px}
+  .fno-table td,.fno-table th{padding:10px 12px}
+  .report-kpi{padding:16px 18px}
+}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(14px,3vw,22px);gap:14px;flex-wrap:wrap}
+.card-title{
+  font-family:var(--font-display);
+  font-size:clamp(1.15rem,3vw,1.45rem);
+  font-weight:600;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  letter-spacing:-.02em;
+  line-height:1.25;
+}
+.card-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 2px 8px rgba(20,18,16,.06)}
+.icon-blue{background:var(--blue-light)}
+.icon-green{background:var(--green-light)}
+.icon-purple{background:var(--purple-light)}
+.icon-amber{background:var(--amber-light)}
+
+.upload-btn{position:relative;border:1.5px dashed var(--border2);border-radius:14px;padding:clamp(16px,3vw,20px);cursor:pointer;text-align:left;background:var(--surface2);transition:border-color .2s,background .2s,box-shadow .2s;display:flex;align-items:center;gap:14px;overflow:hidden;min-height:80px}
+.upload-btn:hover{border-color:rgba(138,109,46,.5);background:var(--gold-light);box-shadow:var(--shadow-md)}
+.upload-btn.loaded{border-style:solid;border-color:rgba(29,107,69,.55);background:var(--green-light);box-shadow:0 0 0 1px rgba(29,107,69,.12)}
+.upload-btn input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:10;font-size:0}
+.upload-btn .upload-btn-icon,.upload-btn .upload-btn-text{pointer-events:none;position:relative;z-index:0}
+.upload-btn-icon{width:44px;height:44px;border-radius:11px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:all .2s}
+.upload-btn.loaded .upload-btn-icon{background:var(--green);border-color:var(--green);color:#fff}
+.upload-btn-text{}
+.upload-btn-label{font-weight:700;font-size:15px;color:var(--text);line-height:1.35}
+.upload-btn-hint{font-size:13px;color:var(--text3);margin-top:4px;font-weight:500}
+.upload-btn-filename{font-size:12px;color:var(--green);margin-top:4px;font-weight:700}
+
+/* ERROR */
+.error-box{background:var(--red-light);border:1px solid rgba(180,35,24,.25);color:var(--red);border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;font-size:14px;font-weight:500;display:none}
+
+/* FORM CONTROLS */
+select,input[type=text],input[type=number],input[type=email],input[type=password],input[type=tel]{
+  background:var(--surface2);border:1px solid var(--border2);color:var(--text);
+  border-radius:11px;padding:11px 14px;font-size:15px;outline:none;
+  font-family:inherit;transition:border-color .2s,background .2s,box-shadow .2s;width:100%
+}
+select:focus,input:focus{border-color:rgba(138,109,46,.55);background:var(--surface);box-shadow:0 0 0 3px rgba(138,109,46,.12)}
+label.field-label{display:block;color:var(--text2);font-size:13px;font-weight:700;margin-bottom:6px;letter-spacing:.02em}
+
+/* BUTTONS */
+.btn{
+  padding:11px 22px;border-radius:11px;font-weight:700;font-size:14px;cursor:pointer;border:none;
+  transition:transform .15s,box-shadow .2s,background .2s; font-family:inherit;
+  display:inline-flex;align-items:center;gap:8px;white-space:nowrap;
+}
+.btn-primary{
+  background:linear-gradient(165deg,#2a2319 0%,#3d3224 45%,#5c4a32 100%);
+  color:#faf6ef;
+  box-shadow:0 4px 14px rgba(42,35,25,.35),inset 0 1px 0 rgba(255,255,255,.1);
+}
+.btn-primary:hover{background:linear-gradient(165deg,#352b1f 0%,#4d4030 50%,#6b5638 100%);transform:translateY(-1px);box-shadow:0 6px 20px rgba(42,35,25,.4)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-success{background:var(--green);color:#fff;box-shadow:0 4px 14px rgba(29,107,69,.3)}
+.btn-success:hover{background:#165a38;transform:translateY(-1px)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#931a12}
+.btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--surface);color:var(--text);border-color:var(--border2)}
+.btn-amber{background:var(--amber);color:#fff}
+.btn-amber:hover{background:#7d4d08}
+.btn-sm{padding:8px 14px;font-size:13px;border-radius:10px}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+
+/* COMPANY MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(14,12,10,.45);z-index:1000;display:flex;align-items:center;justify-content:center;display:none;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--radius-lg);padding:32px;width:540px;max-width:calc(100vw - 32px);box-shadow:var(--shadow-lg);max-height:85vh;overflow-y:auto;border:1px solid var(--border)}
+.modal-title{font-family:var(--font-display);font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;letter-spacing:-.02em}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);line-height:1;transition:color .15s}
+.modal-close:hover{color:var(--text)}
+.company-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;max-height:280px;overflow-y:auto}
+.company-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;cursor:pointer;transition:all .18s;background:var(--surface2)}
+.company-item:hover{border-color:rgba(138,109,46,.4);background:var(--gold-light)}
+.company-item.active{border-color:rgba(138,109,46,.55);background:var(--gold-light);box-shadow:0 0 0 1px rgba(138,109,46,.15)}
+.company-item-info{flex:1;min-width:0}
+.company-item-name{font-weight:700;font-size:14px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-item-iin{font-size:12px;color:var(--text3);font-weight:500}
+.company-item-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;line-height:1;padding:4px 6px;border-radius:6px;transition:color .15s}
+.company-item-del:hover{color:var(--red)}
+.divider{height:1px;background:var(--border);margin:16px 0}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+
+/* LOGIC BLOCK */
+.logic-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:20px}
+.logic-block .row{display:flex;align-items:flex-start;gap:10px;padding:5px 0;font-size:13px;color:var(--text2);line-height:1.5}
+.logic-block .badge{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.badge-blue{background:var(--blue-light);color:var(--blue)}
+.badge-green{background:var(--green-light);color:var(--green)}
+.badge-amber{background:var(--amber-light);color:var(--amber)}
+.badge-purple{background:var(--purple-light);color:var(--purple)}
+.fno-legal{margin-top:16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface2);overflow:hidden;box-shadow:var(--shadow)}
+.fno-legal>summary{cursor:pointer;font-family:var(--font-display);font-weight:600;font-size:1.05rem;padding:14px 18px;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border-bottom:1px solid transparent}
+.fno-legal[open]>summary{border-bottom-color:var(--border)}
+.fno-legal>summary::-webkit-details-marker{display:none}
+.fno-legal .legal-body{padding:14px 18px 18px;font-size:13px;color:var(--text2);line-height:1.6}
+.fno-legal .legal-body ul{margin:10px 0 10px 20px;padding:0}
+.fno-legal .legal-body li{margin:5px 0}
+.fno-legal .legal-body strong{color:var(--text)}
+
+/* LOADING */
+.loading-overlay{position:fixed;inset:0;background:rgba(235,230,223,.82);display:none;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(3px)}
+.loading-overlay.show{display:flex}
+.loading-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:32px 44px;text-align:center;box-shadow:var(--shadow-lg)}
+.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .75s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* DATA SUMMARY (quick stats after upload) */
+.data-pill{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--text2);font-weight:500}
+.data-pill strong{color:var(--text);font-weight:800}
+.pills-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+/* Окно хранилища загруженных документов */
+.doc-store{margin-top:18px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.doc-store-head{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;background:linear-gradient(135deg,#1a2a38 0%,#2a2319 50%,#3d3224 100%);color:#f5f0e8;font-weight:700;font-size:15px;letter-spacing:.02em}
+.doc-store-head span{font-weight:600;opacity:.88;font-size:13px}
+.doc-store-body{max-height:340px;overflow-y:auto;padding:12px 14px;background:var(--surface2);min-height:80px}
+.doc-store-empty{text-align:center;padding:28px 18px;color:var(--text3);font-size:14px}
+.doc-row{display:flex;align-items:center;gap:12px;padding:12px 14px;margin-bottom:10px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:14px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
+.doc-row:last-child{margin-bottom:0}
+.doc-cat{flex-shrink:0;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.55px;padding:5px 10px;border-radius:8px;background:var(--blue-light);color:var(--blue);max-width:130px}
+.doc-cat.post{background:var(--purple-light);color:var(--purple)}
+.doc-cat.gtd{background:var(--teal-light);color:var(--teal)}
+.doc-cat.f328{background:var(--amber-light);color:var(--amber)}
+.doc-cat.tpl{background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.doc-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-weight:500}
+.doc-meta{font-size:12px;color:var(--text3);white-space:nowrap;font-weight:500}
+.doc-row .btn{padding:6px 12px;font-size:13px}
+
+/* PERIOD SELECTOR */
+.period-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.period-tab{padding:9px 20px;border-radius:11px;font-size:14px;font-weight:700;cursor:pointer;border:1.5px solid var(--border2);background:var(--surface2);color:var(--text2);transition:all .18s}
+.period-tab:hover{border-color:rgba(138,109,46,.45);color:var(--gold-deep)}
+.period-tab.active{background:linear-gradient(165deg,#2a2319,#4a3d28);color:#faf6ef;border-color:transparent;box-shadow:0 4px 12px rgba(42,35,25,.25)}
+
+/* REPORT STYLES */
+.report-wrapper{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:22px;box-shadow:var(--shadow-md)}
+.report-top{
+  background:linear-gradient(135deg,#141c24 0%,#1a3550 42%,#2a2319 100%);
+  padding:clamp(20px,4vw,28px) clamp(20px,4vw,32px);
+  color:#f2ebe0;
+  border-bottom:1px solid rgba(255,250,240,.08);
+}
+.report-org{font-size:13px;opacity:.78;margin-bottom:6px;font-weight:500;letter-spacing:.03em}
+.report-heading{font-family:var(--font-display);font-size:clamp(1.25rem,3.5vw,1.65rem);font-weight:600;margin-bottom:6px;letter-spacing:-.02em;line-height:1.2}
+.report-period{font-size:14px;opacity:.88;font-weight:500}
+.report-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0;border-bottom:1px solid var(--border);background:var(--surface2)}
+.report-kpi{padding:clamp(18px,3vw,22px) clamp(18px,3vw,24px);border-right:1px solid var(--border)}
+.report-kpi:last-child{border-right:none}
+.report-kpi-label{font-size:11px;color:var(--text3);font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
+.report-kpi-val{font-size:clamp(1.15rem,3vw,1.45rem);font-weight:800;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.report-kpi-sub{font-size:11px;color:var(--text3);margin-top:4px;font-weight:500}
+
+/* FNO TABLE — like official form */
+.fno-section{border-bottom:1px solid var(--border)}
+.fno-section-head{background:linear-gradient(180deg,#f0ebe4,#e8e2d9);padding:12px 18px;font-size:12px;font-weight:800;color:var(--text2);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.fno-section-badge{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.12)}
+.fno-table{width:100%;border-collapse:collapse}
+.fno-table th{padding:11px 16px;text-align:left;font-size:11px;font-weight:800;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);white-space:nowrap;text-transform:uppercase;letter-spacing:.06em}
+.fno-table th.right{text-align:right}
+.fno-table td{padding:11px 16px;border-bottom:1px solid rgba(26,22,18,.06);font-size:14px}
+.fno-table td.line-no{font-family:var(--font-mono);font-size:12px;color:var(--text3);font-weight:700;white-space:nowrap;width:64px}
+.fno-table td.line-label{color:var(--text);width:auto;font-weight:500}
+.fno-table td.line-label.sub{padding-left:32px;color:var(--text2);font-weight:400}
+.fno-table td.num{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:14px}
+.fno-table td.num.zero{color:var(--text3)}
+.fno-table td.num.pos{color:var(--text)}
+.fno-table td.num.neg{color:var(--red)}
+.fno-table td.num.hi-blue{color:var(--blue);font-weight:800}
+.fno-table td.num.hi-green{color:var(--green);font-weight:800}
+.fno-table td.num.hi-red{color:var(--red);font-weight:800}
+.fno-table tr.total-row{background:linear-gradient(180deg,#f7f4ef,#f0ebe4)}
+.fno-table tr.total-row td{font-weight:800}
+.fno-table tr:hover{background:rgba(242,234,216,.35)}
+
+/* QUARTER TABS in report */
+.q-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:0;overflow-x:auto}
+.q-tab{padding:12px 24px;font-size:14px;font-weight:700;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .18s;white-space:nowrap}
+.q-tab:hover{color:var(--gold-deep)}
+.q-tab.active{color:var(--gold-deep);border-bottom-color:var(--gold)}
+
+/* FINAL RESULT BANNER */
+.result-banner{display:flex;align-items:center;gap:16px;padding:clamp(16px,3vw,20px) clamp(18px,4vw,24px);border-radius:var(--radius);margin:18px clamp(16px,4vw,24px);font-weight:700;font-size:16px}
+.result-banner.pay{background:var(--red-light);color:var(--red)}
+.result-banner.refund{background:var(--green-light);color:var(--green)}
+.result-banner.zero{background:var(--surface2);color:var(--text2)}
+.result-banner .amount{font-family:var(--font-mono);font-size:clamp(1.15rem,3vw,1.5rem);font-weight:800}
+
+.main a{color:var(--blue);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600}
+.main a:hover{color:var(--gold-deep)}
+
+.auth-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:clamp(16px,4vw,40px);overflow-y:auto;background:linear-gradient(165deg,#ebe6df 0%,#ddd4c8 50%,#ebe8e2 100%)}
+.auth-gate.hidden{display:none!important}
+.auth-gate-layout{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,32px);max-width:960px;width:100%;justify-content:center;align-items:flex-start}
+.auth-gate-card{flex:1;min-width:min(100%,320px);max-width:440px}
+.gate-side{flex:1;min-width:min(100%,280px);max-width:340px;background:var(--surface);border-radius:var(--radius-lg);padding:clamp(16px,3vw,22px);border:1px solid var(--border);box-shadow:var(--shadow-md)}
+.gate-qr-wrap{text-align:center;margin-top:14px}
+.gate-qr-wrap img{border-radius:12px;border:1px solid var(--border)}
+#demoMonthWrap{display:none;width:100%;margin-top:4px}
+body.demo-mode #demoMonthWrap{display:block!important}
+body.demo-mode #periodQuarterWrap{display:none!important}
+body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.demo-mode #templateBtn{display:none!important}
+.pay-card{margin-top:clamp(22px,4vw,36px);padding:clamp(18px,3vw,26px);background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-lg);font-size:14px;line-height:1.65;box-shadow:var(--shadow)}
+.pay-card h3{font-family:var(--font-display);font-size:1.2rem;margin-bottom:12px;color:var(--text)}
+.pay-card .mono{font-family:var(--font-mono);font-size:13px;word-break:break-all}
+
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- Вход и регистрация (полноэкранно до авторизации) -->
+<div id="authGate" class="auth-gate">
+  <div class="auth-gate-layout">
+    <div class="modal modal-narrow auth-gate-card" style="position:relative;box-shadow:var(--shadow-lg)">
+      <div class="modal-title" style="margin-bottom:16px"><span id="authModalTitle">Вход</span></div>
+      <div id="authLoginBlock">
+        <p class="auth-hint">Войдите по <strong>e-mail</strong> или <strong>логину</strong>, которые вы указали при регистрации. Данные и расчёты хранятся отдельно для каждого пользователя в этом браузере.</p>
+        <label class="field-label">E-mail или логин</label>
+        <input type="text" id="loginEmail" autocomplete="username" placeholder="you@company.kz или логин">
+        <label class="field-label" style="margin-top:10px">Пароль</label>
+        <input type="password" id="loginPass" autocomplete="current-password" placeholder="••••••••">
+        <div class="btn-row" style="margin-top:16px">
+          <button type="button" class="btn btn-primary" onclick="submitLogin()">Войти</button>
+          <button type="button" class="btn btn-ghost" onclick="switchAuthTab('register')">Регистрация</button>
+          <button type="button" class="btn btn-amber" onclick="enterDemo()">Демо</button>
+        </div>
+        <p style="margin-top:12px;font-size:13px"><button type="button" class="btn btn-ghost btn-sm" onclick="openForgotModal()">Забыли пароль?</button></p>
+      </div>
+      <div id="authRegisterBlock" class="hidden">
+        <p class="auth-hint">Заявка сохраняется в браузере и отправляется письмом администратору (<strong>Майнур</strong>). После одобрения вы сможете войти.</p>
+        <label class="field-label">E-mail (для входа)</label>
+        <input type="email" id="regEmail" placeholder="you@company.kz">
+        <label class="field-label" style="margin-top:10px">Логин (можно на кириллице)</label>
+        <input type="text" id="regLogin" placeholder="Например: Иван или ivan_company">
+        <div class="form-row" style="margin-top:10px">
+          <div><label class="field-label">Имя</label><input type="text" id="regName" placeholder="Иван"></div>
+          <div><label class="field-label">Компания</label><input type="text" id="regCompany" placeholder="ТОО …"></div>
+        </div>
+        <label class="field-label" style="margin-top:10px">Телефон (необязательно)</label>
+        <input type="tel" id="regPhone" placeholder="+7 …">
+        <label class="field-label" style="margin-top:10px">Пароль</label>
+        <input type="password" id="regPass" placeholder="не менее 6 символов">
+        <div class="btn-row" style="margin-top:16px">
+          <button type="button" class="btn btn-primary" onclick="submitRegistration()">Отправить заявку</button>
+          <button type="button" class="btn btn-ghost" onclick="switchAuthTab('login')">Уже есть аккаунт</button>
+        </div>
+      </div>
+    </div>
+    <div class="gate-side">
+      <div style="font-family:var(--font-display);font-size:1.15rem;font-weight:600;margin-bottom:8px;color:var(--text)">Ссылка для клиентов</div>
+      <p class="auth-hint">Опубликуйте этот файл на хостинге (HTTPS), затем укажите точный адрес страницы — по нему строится QR-код.</p>
+      <input type="text" id="publicUrlInput" placeholder="https://ваш-сайт.kz/fno300.html" style="margin-bottom:8px">
+      <div class="btn-row" style="margin-top:0">
+        <button type="button" class="btn btn-primary btn-sm" onclick="savePublicUrl()">Сохранить ссылку</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="copyPublicUrl()">Копировать</button>
+      </div>
+      <div class="gate-qr-wrap">
+        <img id="gateQrImg" alt="QR-код входа" width="200" height="200" style="max-width:100%;height:auto">
+        <p class="auth-hint" style="margin-top:10px">Отсканируйте камерой телефона — откроется эта же страница.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="mainShell" class="hidden">
+
+<!-- Восстановление пароля -->
+<div class="modal-overlay" id="forgotModal">
+  <div class="modal modal-narrow">
+    <div class="modal-title">Восстановление пароля <button class="modal-close" type="button" onclick="closeForgotModal()">✕</button></div>
+    <div id="forgotStep1">
+      <p class="auth-hint">Укажите e-mail учётной записи. Откроется письмо администратору с кодом; после получения кода введите его и новый пароль ниже. <strong>Ваши документы и расчёты в браузере не удаляются.</strong></p>
+      <label class="field-label">E-mail</label>
+      <input type="email" id="forgotEmail" placeholder="you@company.kz">
+      <button type="button" class="btn btn-primary" style="margin-top:14px" onclick="sendForgotRequest()">Запросить код</button>
+    </div>
+    <div id="forgotStep2" class="hidden" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+      <label class="field-label">Код из письма / сообщения администратора</label>
+      <input type="text" id="forgotCode" placeholder="6 цифр" maxlength="12" autocomplete="one-time-code">
+      <label class="field-label" style="margin-top:10px">Новый пароль</label>
+      <input type="password" id="forgotNewPass" placeholder="не менее 6 символов" autocomplete="new-password">
+      <button type="button" class="btn btn-primary" style="margin-top:14px" onclick="submitForgotReset()">Сменить пароль</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN: модерация заявок -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <div class="modal-title">Модерация регистраций <button class="modal-close" type="button" onclick="closeAdminModal()">✕</button></div>
+    <div id="adminPanelBody">
+      <p class="auth-hint">Почта для заявок: <strong id="adminEmailHint"></strong>. Рабочая область (данные в этом браузере):</p>
+      <label class="field-label">Просмотр данных пользователя</label>
+      <select id="adminViewWorkspace" onchange="onAdminWorkspaceChange(this.value)" style="margin-bottom:14px"></select>
+      <div class="divider"></div>
+      <div style="font-weight:700;margin-bottom:8px">Ожидают решения</div>
+      <div id="adminPendingList" class="admin-list"></div>
+      <div class="divider"></div>
+      <div style="font-weight:700;margin-bottom:8px">Одобренные пользователи</div>
+      <div id="adminUsersList" class="admin-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="modal-overlay" id="projectsModal">
+  <div class="modal">
+    <div class="modal-title">Сохранённые проекты <button class="modal-close" type="button" onclick="closeProjectsModal()">✕</button></div>
+    <p class="auth-hint">Сохраняются расчёт, компании и настройки периода. Файлы нужно загрузить заново после открытия проекта.</p>
+    <div id="projectsList" class="admin-list"></div>
+  </div>
+</div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <div style="font-size:14px;color:var(--text2)">Обработка данных...</div>
+  </div>
+</div>
+
+<!-- COMPANY MODAL -->
+<div class="modal-overlay" id="companyModal">
+  <div class="modal">
+    <div class="modal-title">
+      🏢 Компании
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="company-list" id="companyList"></div>
+    <div class="divider"></div>
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">+ Добавить компанию</div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Название компании</label>
+        <input type="text" id="newCompName" placeholder="ТОО Ромашка">
+      </div>
+      <div>
+        <label class="field-label">БИН / ИИН</label>
+        <input type="text" id="newCompIin" placeholder="123456789012">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Руководитель</label>
+        <input type="text" id="newCompHead" placeholder="Иванов Иван Иванович">
+      </div>
+      <div>
+        <label class="field-label">Код НО</label>
+        <input type="text" id="newCompOgd" placeholder="0101">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Код территории (стр. 10А ИСНА)</label>
+        <input type="text" id="newComp10A" placeholder="59001">
+      </div>
+      <div>
+        <label class="field-label">Номер налоговой регистрации (10Б)</label>
+        <input type="text" id="newComp10B" placeholder="0015197">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="addCompany()">Добавить</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <div class="logo-badge">БухОтчет · ФНО 300</div>
+      <div class="logo-text">Декларация по НДС (ФНО 300.00) · НК РК 2026 · Excel, PDF, JSON · адаптивный интерфейс</div>
+    </div>
+    <div class="header-actions">
+      <span id="authSessionLabel" class="hidden" style="font-size:12px;color:var(--text2);max-width:min(160px,28vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;align-self:center;padding:0 4px" title=""></span>
+    </div>
+    <div class="company-selector" onclick="openModal()" title="Выбрать компанию">
+      <span style="font-size:18px">🏢</span>
+      <div>
+        <div class="company-name" id="headerCompName">Выберите компанию</div>
+        <div class="company-iin" id="headerCompIin">БИН / ИИН не задан</div>
+      </div>
+      <span style="color:var(--text3);margin-left:4px">▾</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- UPLOAD SECTION -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="card-icon icon-blue">📂</div>
+        Загрузка исходных документов
+      </div>
+    </div>
+
+    <div class="upload-grid">
+      <!-- Реализация: input последним — поверх иконки/текста для клика -->
+      <div class="upload-btn" id="realBtn">
+        <div class="upload-btn-icon" id="realIcon">📤</div>
+        <div class="upload-btn-text">
+          <div class="upload-btn-label">Реализация (ЭСФ / 1С)</div>
+          <div class="upload-btn-hint">Несколько файлов (Ctrl). Дата оборота → квартал; иначе дата выписки</div>
+          <div class="upload-btn-filename" id="realFile"></div>
+        </div>
+        <input type="file" id="realInput" multiple title="Любые табличные форматы и PDF" onchange="loadFile('real',this)">
+      </div>
+
+      <!-- Поступление -->
+      <div class="upload-btn" id="postBtn">
+        <div class="upload-btn-icon" id="postIcon">📥</div>
+        <div class="upload-btn-text">
+          <div class="upload-btn-label">Поступление (ЭСФ / 1С)</div>
+          <div class="upload-btn-hint">Несколько файлов. Дата оборота / дата выписки — см. реализацию</div>
+          <div class="upload-btn-filename" id="postFile"></div>
+        </div>
+        <input type="file" id="postInput" multiple title="Любые табличные форматы и PDF" onchange="loadFile('post',this)">
+      </div>
+
+      <!-- ГТД -->
+      <div class="upload-btn" id="gtdBtn">
+        <div class="upload-btn-icon" id="gtdIcon">🚢</div>
+        <div class="upload-btn-text">
+          <div class="upload-btn-label">ГТД (ДТ) — ИСНА / таможня</div>
+          <div class="upload-btn-hint">PDF ДТ (нужен текстовый слой), Excel/CSV/XML; НДС — по подписям «НДС к уплате» / дата выпуска</div>
+          <div class="upload-btn-filename" id="gtdFile"></div>
+        </div>
+        <input type="file" id="gtdInput" multiple title="Excel, PDF, CSV, XML и др." onchange="loadFile('gtd',this)">
+      </div>
+
+      <!-- 328 ФНО -->
+      <div class="upload-btn" id="fno328Btn">
+        <div class="upload-btn-icon" id="fno328Icon">📋</div>
+        <div class="upload-btn-text">
+          <div class="upload-btn-label">328 ФНО — кабинет ИСНА</div>
+          <div class="upload-btn-hint">JSON ИСНА/1С (fnoContent), Excel/CSV; строки с датой и суммами A/B; PDF — только при явных суммах в тексте</div>
+          <div class="upload-btn-filename" id="fno328File"></div>
+        </div>
+        <input type="file" id="fno328Input" multiple title="Excel, JSON ИСНА, PDF и др." onchange="loadFile('fno328',this)">
+      </div>
+
+      <!-- Эталон JSON 300 (опционально) -->
+      <div class="upload-btn" id="templateBtn">
+        <div class="upload-btn-icon" id="templateIcon">📎</div>
+        <div class="upload-btn-text">
+          <div class="upload-btn-label">Эталон JSON ФНО 300 (ИСНА)</div>
+          <div class="upload-btn-hint">Необязательно: подставит структуру полей при выгрузке (как в кабинете)</div>
+          <div class="upload-btn-filename" id="templateFile"></div>
+        </div>
+        <input type="file" id="templateInput" accept=".json,application/json" onchange="loadFile('template',this)">
+      </div>
+    </div>
+
+    <div class="pills-row" id="dataPills"></div>
+
+    <div class="doc-store" id="docStoreWrap">
+      <div class="doc-store-head">
+        <span>Загруженные документы</span>
+        <span>Список хранится до перезагрузки страницы</span>
+      </div>
+      <div class="doc-store-body" id="docStoreBody"></div>
+    </div>
+
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;color:var(--text3)">
+      <span>Очистить:</span>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="clearFileBatch('real')">реализацию</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="clearFileBatch('post')">поступление</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="clearFileBatch('gtd')">ГТД</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="clearFileBatch('fno328')">328</button>
+      <button type="button" class="btn btn-ghost btn-sm" onclick="clearFileBatch('template')">эталон</button>
+    </div>
+
+    <div style="margin-top:14px;padding:10px 12px;background:var(--surface2);border-radius:8px;font-size:12px;color:var(--text2)">
+      <strong>Несколько файлов:</strong> удерживайте Ctrl/Shift при выборе. Для каждого типа документы суммируются.<br>
+      <strong>Форматы:</strong> Excel/CSV/XML/JSON-массив; PDF — извлечение текста. Бинарные .mxl из 1С сохраните в Excel/CSV.<br>
+      <strong>Даты (как в Pro1C / ЭСФ):</strong> квартал определяется по <em>дате оборота</em>; если её нет — по дате выписки ЭСФ. Оборот без НДС / освобождённый — по колонке «вид оборота» или эвристике БИН/адреса.
+    </div>
+  </div>
+
+  <!-- CALC SECTION -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">
+        <div class="card-icon icon-amber">⚙️</div>
+        Параметры и расчёт
+      </div>
+    </div>
+
+    <div style="display:flex;gap:24px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end">
+      <div>
+        <label class="field-label">Год</label>
+        <select id="yearSel" style="width:110px">
+          <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
+          <option value="2026" selected>2026</option>
+          <option value="2027">2027</option>
+        </select>
+      </div>
+      <div id="periodQuarterWrap">
+        <label class="field-label">Квартал для отчёта</label>
+        <div class="period-tabs">
+          <div class="period-tab active" data-q="all" onclick="selectQ(this)">Все</div>
+          <div class="period-tab" data-q="0" onclick="selectQ(this)">I</div>
+          <div class="period-tab" data-q="1" onclick="selectQ(this)">II</div>
+          <div class="period-tab" data-q="2" onclick="selectQ(this)">III</div>
+          <div class="period-tab" data-q="3" onclick="selectQ(this)">IV</div>
+        </div>
+      </div>
+      <div id="demoMonthWrap">
+        <label class="field-label">Месяц для демо-расчёта</label>
+        <select id="demoMonthSel" style="width:100%;max-width:280px">
+          <option value="0">Январь</option><option value="1">Февраль</option><option value="2">Март</option><option value="3">Апрель</option>
+          <option value="4">Май</option><option value="5">Июнь</option><option value="6">Июль</option><option value="7">Август</option>
+          <option value="8">Сентябрь</option><option value="9">Октябрь</option><option value="10">Ноябрь</option><option value="11" selected>Декабрь</option>
+        </select>
+        <p class="auth-hint" style="margin-top:6px">В демо учитываются только строки с датой в выбранном месяце. Кварталы и остальные типы файлов недоступны.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">
+        <button class="btn btn-primary" id="calcBtn" onclick="calculate()" style="margin-top:4px">
+          ▶ Рассчитать
+        </button>
+      </div>
+    </div>
+
+    <div class="logic-block">
+      <div style="font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">Логика классификации · НК РК 2026</div>
+      <div class="row"><span class="badge badge-blue">НДС 16%</span><span>→ облагаемый оборот по основной ставке (стр. 001)</span></div>
+      <div class="row"><span class="badge badge-purple">НДС 5%</span><span>→ лекарства, медизделия, медуслуги (льготная ставка 2026)</span></div>
+      <div class="row"><span class="badge badge-amber">НДС 10%</span><span>→ периодические издания; лекарства/медуслуги с 2027 г.</span></div>
+      <div class="row"><span class="badge badge-green">НДС = 0%, ЕАЭС/экспорт</span><span>→ оборот 0% по странам (стр. 002)</span></div>
+      <div class="row"><span class="badge badge-amber">Сумма &lt; 0 / доп. счёт</span><span>→ корректировка (стр. 003, 014)</span></div>
+      <div class="row"><span class="badge badge-purple">БИН пустой / 0</span><span>→ оборот не-РК (стр. 004), при колонке «вид оборота» — необлагаемый / освобождённый (474 и др.)</span></div>
+      <div class="row"><span class="badge badge-blue">Даты ЭСФ</span><span><strong>Реализация:</strong> квартал по <strong>дате совершения оборота</strong>, иначе по дате выписки. <strong>Поступление (отчётный год с 2026):</strong> квартал по <strong>дате совершения оборота</strong>; исключение — оборот в <strong>декабре 2025</strong>, а ЭСФ выписан в <strong>I кв. 2026</strong> → строка относится к <strong>I кв. 2026</strong> (по дате выписки). Для отчётов до 2026 по поступлению сохраняется правило «наиболее поздняя» из дат получения / оборота / выписки.</span></div>
+      <div style="margin-top:8px;font-size:11px;color:var(--text2)">Структура JSON для ИСНА: разделы начисления (001–012), зачёта (013–023), расчёт 030–031 и <strong>приложения 300.01 / 300.02</strong> по разъяснениям <a href="https://pro1c.kz/articles/nalog-na-dobavlennuyu-stoimost-nds/postrochnoe-zapolnenie-formy-300-00/" target="_blank" rel="noopener noreferrer">Pro1C (построчное заполнение 300.00, 2026)</a>. Детальные коды строк по видам оборота задайте в 1С или уточните в эталоне JSON из кабинета.</div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text3)">
+        ⚠️ <strong style="color:var(--amber)">Новое с 2026:</strong> Перед сдачей 300.00 необходимо отправить <strong>Извещение по зачёту НДС</strong> в ИС ЭСФ (п.8 ст.480 НК РК). Порог регистрации по НДС: <strong>10 000 МРП = ~43,25 млн ₸</strong>.
+      </div>
+    </div>
+
+    <details class="fno-legal">
+      <summary>Сроки сдачи ФНО 300, зачёт НДС, необлагаемый оборот (НК РК 2026) ▾</summary>
+      <div class="legal-body">
+        <p><strong>Срок подачи ФНО 300.</strong> Декларация подаётся <strong>не ранее 15-го числа первого месяца</strong>, следующего за отчётным кварталом, и <strong>не позднее 15-го числа второго месяца</strong> после окончания этого квартала.</p>
+        <p><strong>Отнесение в зачёт НДС по ЭСФ.</strong> Применяется Налоговый кодекс, действующий на <strong>дату приобретения</strong> товаров, работ, услуг. Для приобретений в декабре 2025 г. период зачёта может определяться по правилам ст. 401 НК, действовавшего до 01.01.2026: НДС к зачёту относится к тому налоговому периоду, на который приходится <strong>наиболее поздняя</strong> из дат: фактического получения товаров, работ, услуг и даты выписки счёта-фактуры (или иного документа-основания по ст. 400 НК). Пример: приобретение в IV кв. 2025 с получением в IV кв. 2025 и ЭСФ, выписанной в I кв. 2026, зачёт — в <strong>I кв. 2026</strong> по более поздней дате.</p>
+        <p style="font-size:11px;color:var(--text3)">В расчёте по загруженным реестрам для <strong>отчётного года 2026 и далее</strong> поступления по умолчанию относятся к кварталу по <strong>дате совершения оборота</strong> в ЭСФ; для пары «оборот — декабрь 2025 / выписка — I кв. 2026» применяется переход к <strong>I кв. 2026</strong>. Для года отчёта до 2026 в модели сохранено правило «поздняя из дат» по колонкам файла.</p>
+        <p><strong>Необлагаемый оборот</strong> (уточнения Кодекса): к числу необлагаемых относятся в том числе:</p>
+        <ul>
+          <li>реализация, освобождённая от НДС;</li>
+          <li>обороты, место реализации которых вне РК;</li>
+          <li>отдельные категории товаров по ст. 474 НК;</li>
+          <li>игорный бизнес, лотереи, специальные налоговые режимы.</li>
+        </ul>
+        <p><strong>Строительство / аренда жилья до 01.01.2026.</strong> Особые правила для реализации жилых объектов, строительство или ввод которых до указанной даты; передача в аренду по долгосрочному договору с правом выкупа, заключённому до 01.01.2026. При реализации жилья, приобретённого без НДС, оборот может определяться как положительная разница между ценой реализации и балансовой стоимостью на дату реализации (без переоценки и обесценения).</p>
+        <p><strong>Зачёт НДС с 01.01.2026 (общие ориентиры):</strong></p>
+        <ul>
+          <li>товары, работы, услуги — по дате <strong>фактического получения</strong>;</li>
+          <li>импорт из третьих стран — по дате <strong>выпуска</strong> товаров;</li>
+          <li>импорт из ЕАЭС — по дате <strong>уплаты</strong> НДС;</li>
+          <li>работы и услуги нерезидентов — по дате <strong>выписки электронного</strong> счёта-фактуры.</li>
+        </ul>
+        <p><strong>Сельхозпроизводители, переработчики, сельхозкооперативы:</strong> доля дополнительной суммы НДС к зачёту повышена с <strong>70% до 80%</strong>.</p>
+        <p style="font-size:11px;color:var(--text3);margin-top:10px">Текст носит справочный характер; уточняйте актуальные редакции НК и разъяснения у налогового консультанта. Расчёт в этой странице — модель по загруженным ЭСФ и не заменяет учёт в 1С/ИСНА.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="pay-card print-include">
+    <h3>Оплата и контакты</h3>
+    <p><strong>ТОО «ASMAYA CONSULTING»</strong><br>
+    Адрес: Алматы, ул. Манаса, 22Б<br>
+    БИН: 251040020245</p>
+    <p><strong>Банк:</strong> АО «Kaspi Bank» · КБе 17 · БИК CASPKZKA<br>
+    <span class="mono">KZ22722S000049168358</span></p>
+    <p style="font-size:12px;color:var(--text3)">Данные приложения хранятся локально в браузере.</p>
+  </div>
+
+  <!-- REPORT SECTION -->
+  <div id="reportSection" class="hidden print-include">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+      <div class="section-title" style="margin-bottom:0">Сводный отчёт ФНО 300</div>
+      <div class="btn-row" style="margin-top:0">
+        <button class="btn btn-success btn-sm" id="exportBtn" onclick="exportJson()">⬇ Выгрузить JSON для ИСНА</button>
+      </div>
+    </div>
+    <div id="reportContent"></div>
+  </div>
+</div>
+
+</div><!-- /mainShell -->
+
+<script>
+// ─── STATE ────────────────────────────────────────────────────────────────────
+const files = { real: [], post: [], gtd: [], fno328: [], template: null };
+let calcResult = null;
+let selectedQ = 'all';
+let companies = [];
+let activeCompany = null;
+let reportYear = 2026;
+let reportQ = 'all';
+let activeQTab = 0;
+
+const APP_CONFIG = {
+  ADMIN_EMAIL: 'majnurotynsinova2@gmail.com',
+  ADMIN_LOGIN: 'майнур',
+  ADMIN_PASSWORD: '900512402014',
+  DEMO_LOGIN: 'demo',
+  DEMO_PASSWORD: 'demo',
+  LS_PUBLIC_URL: 'fno300_public_url'
+};
+
+const FNO_LS = {
+  pending: 'fno300_reg_pending',
+  users: 'fno300_reg_users',
+  ownerEmail: 'fno300_owner_email',
+  session: 'fno300_session'
+};
+
+let persistedProjects = [];
+
+function normLogin(s) { return String(s || '').trim().toLowerCase(); }
+function normEmail(s) { return String(s || '').trim().toLowerCase(); }
+
+function hashPass(p) {
+  let h = 5381;
+  for (let i = 0; i < p.length; i++) h = ((h << 5) + h + p.charCodeAt(i)) | 0;
+  return String(h);
+}
+
+function getSession() {
+  try { return JSON.parse(localStorage.getItem(FNO_LS.session) || 'null'); } catch (e) { return null; }
+}
+function setSession(o) {
+  if (o) localStorage.setItem(FNO_LS.session, JSON.stringify(o));
+  else localStorage.removeItem(FNO_LS.session);
+}
+
+function workspaceStorageId() {
+  const s = getSession();
+  if (!s) return null;
+  if (s.role === 'admin' && s.viewWorkspaceAs) {
+    const e = normEmail(s.viewWorkspaceAs);
+    return e ? ('u_' + e.replace(/[^a-z0-9@._-]+/gi, '_')) : 'admin';
+  }
+  if (s.role === 'admin') return 'admin';
+  if (s.role === 'demo') return 'demo';
+  return 'u_' + normEmail(s.email).replace(/[^a-z0-9@._-]+/gi, '_');
+}
+
+function dataStorageKey() {
+  const id = workspaceStorageId();
+  return id ? ('fno300_data_' + id) : null;
+}
+
+function readWorkspaceDisk() {
+  const k = dataStorageKey();
+  if (!k) return {};
+  try { return JSON.parse(localStorage.getItem(k) || '{}'); } catch (e) { return {}; }
+}
+
+function writeWorkspaceDisk(obj) {
+  const k = dataStorageKey();
+  if (!k) return;
+  try {
+    localStorage.setItem(k, JSON.stringify(obj));
+  } catch (e) {
+    console.error(e);
+    alert('Не удалось сохранить: слишком большой объём данных для браузера. Удалите часть загруженных файлов.');
+  }
+}
+
+function serializeFileItem(it) {
+  if (!it) return null;
+  const o = { name: it.name, ext: it.ext || '', _id: it._id, _category: it._category };
+  if (it.kind === 'pdf' && it.text) {
+    if (it.text.length > 350000) return { name: o.name, ext: o.ext, _id: o._id, _category: o._category, kind: 'pdf', err: 'text_too_large' };
+    return Object.assign({}, o, { kind: 'pdf', text: it.text });
+  }
+  if (it.wb && typeof XLSX !== 'undefined') {
+    try {
+      const b64 = XLSX.write(it.wb, { bookType: 'xlsx', type: 'base64' });
+      if (b64.length > 2500000) return { name: o.name, kind: 'large', _id: o._id };
+      return Object.assign({}, o, { kind: 'xlsx', base64: b64 });
+    } catch (e) { return null; }
+  }
+  if (it.json) return Object.assign({}, o, { kind: 'json', json: it.json });
+  return null;
+}
+
+function deserializeFileItem(s, cat) {
+  if (!s || s.err) return null;
+  if (s.kind === 'pdf' && s.text) return { kind: 'pdf', text: s.text, name: s.name, ext: s.ext || 'pdf', _id: s._id, _category: cat };
+  if (s.kind === 'xlsx' && s.base64 && typeof XLSX !== 'undefined') {
+    try {
+      const wb = XLSX.read(s.base64, { type: 'base64', cellDates: true });
+      return { wb, name: s.name, ext: s.ext || 'xlsx', _id: s._id, _category: cat, sheets: wb.SheetNames };
+    } catch (e) { return null; }
+  }
+  if (s.kind === 'json' && s.json) return { json: s.json, name: s.name, ext: 'json', _id: s._id, _category: cat };
+  return null;
+}
+
+function serializeAllFiles() {
+  const out = { real: [], post: [], gtd: [], fno328: [] };
+  ['real', 'post', 'gtd', 'fno328'].forEach(function (k) {
+    (files[k] || []).forEach(function (it) {
+      const z = serializeFileItem(it);
+      if (z) out[k].push(z);
+    });
+  });
+  return out;
+}
+
+function deserializeAllFiles(obj) {
+  files.real = []; files.post = []; files.gtd = []; files.fno328 = [];
+  if (!obj || typeof obj !== 'object') return;
+  ['real', 'post', 'gtd', 'fno328'].forEach(function (k) {
+    (obj[k] || []).forEach(function (s) {
+      const it = deserializeFileItem(s, k);
+      if (it) files[k].push(it);
+    });
+  });
+}
+
+function persistWorkspace() {
+  if (!getSession()) return;
+  const prev = readWorkspaceDisk();
+  const payload = Object.assign({}, prev, {
+    v: 2,
+    companies: companies,
+    projects: persistedProjects,
+    selectedQ: selectedQ,
+    reportYear: reportYear,
+    reportQ: reportQ,
+    activeCompanyIin: activeCompany ? activeCompany.iin : null,
+    calcResult: calcResult,
+    files: serializeAllFiles(),
+    template: files.template && files.template.json ? { name: files.template.name, json: files.template.json } : null
+  });
+  writeWorkspaceDisk(payload);
+}
+
+function loadWorkspaceIntoState() {
+  const d = readWorkspaceDisk();
+  companies = Array.isArray(d.companies) ? d.companies : [];
+  persistedProjects = Array.isArray(d.projects) ? d.projects : [];
+  selectedQ = d.selectedQ !== undefined ? d.selectedQ : 'all';
+  reportYear = d.reportYear || 2026;
+  reportQ = d.reportQ !== undefined ? d.reportQ : 'all';
+  calcResult = d.calcResult || null;
+  activeCompany = null;
+  if (d.activeCompanyIin && companies.length) {
+    activeCompany = companies.find(function (c) { return c.iin === d.activeCompanyIin; }) || null;
+  }
+  if (d.template && d.template.json) {
+    files.template = { json: d.template.json, name: d.template.name || 'template.json', _id: 'tpl' };
+  } else files.template = null;
+  deserializeAllFiles(d.files);
+  document.querySelectorAll('.period-tab').forEach(function (t) {
+    t.classList.toggle('active', String(t.dataset.q) === String(selectedQ));
+  });
+  updateHeaderCompany();
+  updatePills();
+  renderDocStore();
+  ['real', 'post', 'gtd', 'fno328', 'template'].forEach(function (t) { markLoaded(t); });
+  if (calcResult) document.getElementById('reportSection').classList.remove('hidden');
+  else document.getElementById('reportSection').classList.add('hidden');
+}
+
+function updateHeaderCompany() {
+  if (activeCompany) {
+    document.getElementById('headerCompName').textContent = activeCompany.name;
+    document.getElementById('headerCompIin').textContent = 'БИН/ИИН: ' + activeCompany.iin;
+  } else {
+    document.getElementById('headerCompName').textContent = 'Выберите компанию';
+    document.getElementById('headerCompIin').textContent = 'БИН / ИИН не задан';
+  }
+}
+
+function loadCompanies() {}
+function saveCompanies() { persistWorkspace(); }
+
+function getProjects() { return persistedProjects; }
+function setProjects(arr) { persistedProjects = arr.slice(0, 40); persistWorkspace(); }
+
+function migrateLegacyIfNeeded() {
+  if (localStorage.getItem('fno300_migrated_multiuser')) return;
+  var legComp = localStorage.getItem('fno300_companies');
+  var legProj = localStorage.getItem('fno300_projects');
+  if (legComp && !localStorage.getItem('fno300_data_admin')) {
+    try {
+      localStorage.setItem('fno300_data_admin', JSON.stringify({
+        v: 2,
+        companies: JSON.parse(legComp),
+        projects: legProj ? JSON.parse(legProj) : []
+      }));
+    } catch (e) {}
+  }
+  localStorage.setItem('fno300_migrated_multiuser', '1');
+}
+
+function ensureAdminAccountRow() {
+  var users = [];
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var em = normEmail(APP_CONFIG.ADMIN_EMAIL);
+  if (users.some(function (u) { return normEmail(u.email) === em; })) return;
+  users.push({
+    email: APP_CONFIG.ADMIN_EMAIL,
+    login: APP_CONFIG.ADMIN_LOGIN,
+    name: 'Майнур',
+    company: 'Администратор',
+    phone: '',
+    passHash: hashPass(APP_CONFIG.ADMIN_PASSWORD),
+    role: 'admin',
+    approvedAt: Date.now()
+  });
+  localStorage.setItem(FNO_LS.users, JSON.stringify(users));
+}
+
+function resetWorkspaceMemory() {
+  companies = []; activeCompany = null; calcResult = null; persistedProjects = [];
+  selectedQ = 'all'; reportYear = 2026; reportQ = 'all';
+  files.real = []; files.post = []; files.gtd = []; files.fno328 = []; files.template = null;
+  updateHeaderCompany();
+  updatePills();
+  renderDocStore();
+  document.querySelectorAll('.period-tab').forEach(function (t) {
+    t.classList.toggle('active', String(t.dataset.q) === 'all');
+  });
+  document.getElementById('reportSection').classList.add('hidden');
+}
+
+function refreshEntryScreen() {
+  var s = getSession();
+  var gate = document.getElementById('authGate');
+  var shell = document.getElementById('mainShell');
+  if (gate) gate.classList.toggle('hidden', !!s);
+  if (shell) shell.classList.toggle('hidden', !s);
+  document.body.classList.toggle('demo-mode', !!(s && s.role === 'demo'));
+  var modBtn = document.getElementById('headerBtnModeration');
+  if (modBtn) modBtn.classList.toggle('hidden', !(s && s.role === 'admin'));
+  var hp = document.getElementById('headerBtnProjects');
+  var hs = document.getElementById('headerBtnSave');
+  if (hp) hp.classList.toggle('hidden', !!(s && s.role === 'demo'));
+  if (hs) hs.classList.toggle('hidden', !!(s && s.role === 'demo'));
+}
+
+function updateHeaderAuth() {
+  var s = getSession();
+  var lab = document.getElementById('authSessionLabel');
+  var reg = document.getElementById('headerBtnRegister');
+  var out = document.getElementById('headerBtnLogout');
+  if (!lab || !reg || !out) return;
+  if (s && s.email) {
+    lab.textContent = s.name || s.email;
+    lab.title = s.email + (s.role === 'demo' ? ' · демо' : '');
+    lab.classList.remove('hidden');
+    reg.classList.add('hidden');
+    out.classList.remove('hidden');
+  } else {
+    lab.classList.add('hidden');
+    reg.classList.remove('hidden');
+    out.classList.add('hidden');
+  }
+}
+
+function openAuthModal(mode) {
+  var gate = document.getElementById('authGate');
+  if (gate) gate.classList.remove('hidden');
+  var shell = document.getElementById('mainShell');
+  if (shell && getSession()) shell.classList.add('hidden');
+  switchAuthTab(mode === 'register' ? 'register' : 'login');
+}
+function closeAuthModal() {
+  if (getSession()) {
+    var gate = document.getElementById('authGate');
+    if (gate) gate.classList.add('hidden');
+    var shell = document.getElementById('mainShell');
+    if (shell) shell.classList.remove('hidden');
+  }
+}
+function switchAuthTab(tab) {
+  var isReg = tab === 'register';
+  var t = document.getElementById('authModalTitle');
+  if (t) t.textContent = isReg ? 'Регистрация' : 'Вход';
+  document.getElementById('authLoginBlock').classList.toggle('hidden', isReg);
+  document.getElementById('authRegisterBlock').classList.toggle('hidden', !isReg);
+}
+
+function enterDemo() {
+  setSession({ email: 'demo@fno300.local', name: 'Демо', role: 'demo' });
+  loadWorkspaceIntoState();
+  refreshEntryScreen();
+  updateHeaderAuth();
+  alert('Демо: загрузите только «Реализацию», выберите месяц и выгрузите JSON. Остальные типы файлов и кварталы отключены.');
+}
+
+function submitLogin() {
+  var raw = document.getElementById('loginEmail').value.trim();
+  var pass = document.getElementById('loginPass').value;
+  if (!raw || !pass) { alert('Введите логин или e-mail и пароль'); return; }
+  var nl = normLogin(raw);
+  var ne = normEmail(raw);
+
+  if ((nl === normLogin(APP_CONFIG.ADMIN_LOGIN) || ne === normEmail(APP_CONFIG.ADMIN_EMAIL)) && pass === APP_CONFIG.ADMIN_PASSWORD) {
+    setSession({ email: APP_CONFIG.ADMIN_EMAIL, name: 'Майнур', role: 'admin', viewWorkspaceAs: null });
+    loadWorkspaceIntoState();
+    refreshEntryScreen();
+    updateHeaderAuth();
+    alert('Добро пожаловать, администратор.');
+    return;
+  }
+  if (nl === normLogin(APP_CONFIG.DEMO_LOGIN) && pass === APP_CONFIG.DEMO_PASSWORD) {
+    enterDemo();
+    return;
+  }
+  var users = [];
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var u = users.find(function (x) {
+    return normEmail(x.email) === ne || normLogin(x.login || '') === nl;
+  });
+  if (!u || u.passHash !== hashPass(pass)) { alert('Неверный логин / e-mail или пароль'); return; }
+  setSession({ email: u.email, name: u.name || '', role: u.role || 'user', login: u.login || '' });
+  loadWorkspaceIntoState();
+  refreshEntryScreen();
+  updateHeaderAuth();
+  alert('Добро пожаловать.');
+}
+
+function logoutUser() {
+  persistWorkspace();
+  setSession(null);
+  resetWorkspaceMemory();
+  refreshEntryScreen();
+  updateHeaderAuth();
+}
+
+function submitRegistration() {
+  var email = normEmail(document.getElementById('regEmail').value);
+  var login = String(document.getElementById('regLogin').value || '').trim();
+  var name = document.getElementById('regName').value.trim();
+  var company = document.getElementById('regCompany').value.trim();
+  var phone = document.getElementById('regPhone').value.trim();
+  var pass = document.getElementById('regPass').value;
+  if (!email || !login || !name || !company || pass.length < 6) {
+    alert('Заполните e-mail, логин, имя, компанию и пароль (не менее 6 символов)');
+    return;
+  }
+  var pending = [], users = [];
+  try { pending = JSON.parse(localStorage.getItem(FNO_LS.pending) || '[]'); } catch (e) {}
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  if (users.some(function (x) { return normEmail(x.email) === email; })) {
+    alert('Этот e-mail уже одобрен — войдите.');
+    return;
+  }
+  if (pending.some(function (x) { return normEmail(x.email) === email; })) {
+    alert('Заявка с этим e-mail уже в очереди.');
+    return;
+  }
+  if (users.some(function (x) { return normLogin(x.login || '') === normLogin(login); }) ||
+      pending.some(function (x) { return normLogin(x.login || '') === normLogin(login); })) {
+    alert('Этот логин уже занят.');
+    return;
+  }
+  var id = 'p_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+  pending.push({ id: id, ts: Date.now(), email: email, login: login, name: name, company: company, phone: phone, passHash: hashPass(pass) });
+  localStorage.setItem(FNO_LS.pending, JSON.stringify(pending));
+  var owner = APP_CONFIG.ADMIN_EMAIL;
+  var sub = encodeURIComponent('Регистрация ФНО 300: ' + company);
+  var body = encodeURIComponent(
+    'Новая заявка.\n\nE-mail: ' + email + '\nЛогин: ' + login + '\nИмя: ' + name + '\nКомпания: ' + company +
+    '\nТелефон: ' + phone + '\nID: ' + id + '\n\nОткройте приложение под администратором → «Модерация».'
+  );
+  window.location.href = 'mailto:' + owner + '?subject=' + sub + '&body=' + body;
+  switchAuthTab('login');
+  alert('Заявка сохранена. Отправлено письмо администратору (если настроен почтовый клиент). После одобрения войдите по e-mail или логину.');
+}
+
+function openForgotModal() {
+  document.getElementById('forgotModal').classList.add('open');
+  document.getElementById('forgotStep2').classList.add('hidden');
+  document.getElementById('forgotEmail').value = '';
+  document.getElementById('forgotCode').value = '';
+  document.getElementById('forgotNewPass').value = '';
+}
+function closeForgotModal() { document.getElementById('forgotModal').classList.remove('open'); }
+
+function sendForgotRequest() {
+  var email = normEmail(document.getElementById('forgotEmail').value);
+  if (!email) { alert('Введите e-mail'); return; }
+  var users = [];
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  if (!users.some(function (u) { return normEmail(u.email) === email; })) {
+    alert('Учётная запись с таким e-mail не найдена.');
+    return;
+  }
+  var code = String(Math.floor(100000 + Math.random() * 900000));
+  var key = 'fno300_rec_' + email.replace(/[^a-z0-9@._-]+/gi, '_');
+  localStorage.setItem(key, JSON.stringify({ code: code, exp: Date.now() + 3600000 }));
+  var sub = encodeURIComponent('Код восстановления ФНО 300: ' + email);
+  var body = encodeURIComponent('Код для сброса пароля пользователя ' + email + ': ' + code + '\n\nКод действует 1 час. Документы пользователя в браузере не удаляются.');
+  window.location.href = 'mailto:' + APP_CONFIG.ADMIN_EMAIL + '?subject=' + sub + '&body=' + body;
+  document.getElementById('forgotStep2').classList.remove('hidden');
+  alert('Сформировано письмо администратору с кодом. Сообщите код пользователю или введите его сами, если это ваш аккаунт.');
+}
+
+function submitForgotReset() {
+  var email = normEmail(document.getElementById('forgotEmail').value);
+  var code = String(document.getElementById('forgotCode').value || '').trim();
+  var np = document.getElementById('forgotNewPass').value;
+  if (!email || !code || np.length < 6) { alert('Заполните e-mail, код и новый пароль (от 6 символов)'); return; }
+  var key = 'fno300_rec_' + email.replace(/[^a-z0-9@._-]+/gi, '_');
+  var rec = null;
+  try { rec = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) {}
+  if (!rec || String(rec.code) !== code || Date.now() > rec.exp) {
+    alert('Неверный или просроченный код.');
+    return;
+  }
+  var users = [];
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var u = users.find(function (x) { return normEmail(x.email) === email; });
+  if (!u) { alert('Пользователь не найден'); return; }
+  u.passHash = hashPass(np);
+  localStorage.setItem(FNO_LS.users, JSON.stringify(users));
+  localStorage.removeItem(key);
+  closeForgotModal();
+  alert('Пароль обновлён. Войдите снова — ваши сохранённые документы и расчёты на месте.');
+}
+
+function savePublicUrl() {
+  var v = String(document.getElementById('publicUrlInput').value || '').trim();
+  localStorage.setItem(APP_CONFIG.LS_PUBLIC_URL, v);
+  updateGateQr(v);
+}
+function copyPublicUrl() {
+  var v = String(document.getElementById('publicUrlInput').value || '').trim();
+  if (!v) { alert('Сначала введите и сохраните ссылку'); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(v).then(function () { alert('Скопировано'); }).catch(function () { prompt('Копируйте вручную', v); });
+  } else prompt('Копируйте вручную', v);
+}
+function updateGateQr(url) {
+  var img = document.getElementById('gateQrImg');
+  if (!img || !url) return;
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(url);
+}
+function initGateLink() {
+  var inp = document.getElementById('publicUrlInput');
+  if (!inp) return;
+  var u = localStorage.getItem(APP_CONFIG.LS_PUBLIC_URL) || '';
+  if (!u) {
+    u = String(window.location.href || '').split('#')[0];
+    if (u.indexOf('file:') === 0) u = '';
+  }
+  inp.value = u;
+  updateGateQr(u || window.location.href);
+  var hint = document.getElementById('adminEmailHint');
+  if (hint) hint.textContent = APP_CONFIG.ADMIN_EMAIL;
+}
+
+function populateAdminWorkspaceSelect() {
+  var sel = document.getElementById('adminViewWorkspace');
+  if (!sel) return;
+  var users = [];
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var html = '<option value="">— Мои данные (админ) —</option>';
+  users.forEach(function (u) {
+    if (normEmail(u.email) === normEmail(APP_CONFIG.ADMIN_EMAIL)) return;
+    html += '<option value="' + esc(u.email) + '">' + esc(u.email) + ' · ' + esc(u.name || '') + '</option>';
+  });
+  sel.innerHTML = html;
+  var s = getSession();
+  sel.value = (s && s.viewWorkspaceAs) ? s.viewWorkspaceAs : '';
+}
+
+function onAdminWorkspaceChange(val) {
+  var s = getSession();
+  if (!s || s.role !== 'admin') return;
+  persistWorkspace();
+  s.viewWorkspaceAs = val || null;
+  setSession(s);
+  loadWorkspaceIntoState();
+  populateAdminWorkspaceSelect();
+  refreshAdminLists();
+}
+
+function openAdminModal() {
+  var s = getSession();
+  if (!s || s.role !== 'admin') {
+    alert('Раздел «Модерация» доступен только администратору (вход: логин Майнур или e-mail ' + APP_CONFIG.ADMIN_EMAIL + ').');
+    return;
+  }
+  document.getElementById('adminModal').classList.add('open');
+  populateAdminWorkspaceSelect();
+  refreshAdminLists();
+}
+function closeAdminModal() { document.getElementById('adminModal').classList.remove('open'); }
+
+function refreshAdminLists() {
+  var pending = [], users = [];
+  try { pending = JSON.parse(localStorage.getItem(FNO_LS.pending) || '[]'); } catch (e) {}
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var pl = document.getElementById('adminPendingList');
+  var ul = document.getElementById('adminUsersList');
+  if (!pl || !ul) return;
+  pl.innerHTML = pending.length
+    ? pending.map(function (p) {
+      return '<div class="admin-item"><div style="flex:1;min-width:200px"><strong>' + esc(p.email) + '</strong><br><span style="font-size:12px;color:var(--text3)">логин: ' + esc(p.login || '') + ' · ' + esc(p.name) + ' · ' + esc(p.company) + (p.phone ? ' · ' + esc(p.phone) : '') + '</span></div>' +
+        '<button type="button" class="btn btn-primary btn-sm" onclick="approveRegistration(' + JSON.stringify(p.id) + ')">Принять</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" onclick="rejectRegistration(' + JSON.stringify(p.id) + ')">Отклонить</button></div>';
+    }).join('')
+    : '<div style="color:var(--text3);font-size:13px">Нет заявок</div>';
+  ul.innerHTML = users.length
+    ? users.map(function (u) {
+      return '<div class="admin-item"><strong>' + esc(u.email) + '</strong> · ' + esc(u.login || '') + ' · ' + esc(u.name || '') + '</div>';
+    }).join('')
+    : '<div style="color:var(--text3);font-size:13px">Пока никого</div>';
+}
+
+function approveRegistration(id) {
+  var pending = [], users = [];
+  try { pending = JSON.parse(localStorage.getItem(FNO_LS.pending) || '[]'); } catch (e) {}
+  try { users = JSON.parse(localStorage.getItem(FNO_LS.users) || '[]'); } catch (e) {}
+  var idx = pending.findIndex(function (p) { return p.id === id; });
+  if (idx < 0) return;
+  var p = pending[idx];
+  pending.splice(idx, 1);
+  users.push({
+    email: p.email,
+    login: p.login || '',
+    name: p.name,
+    company: p.company,
+    phone: p.phone,
+    passHash: p.passHash,
+    role: 'user',
+    approvedAt: Date.now()
+  });
+  localStorage.setItem(FNO_LS.pending, JSON.stringify(pending));
+  localStorage.setItem(FNO_LS.users, JSON.stringify(users));
+  refreshAdminLists();
+  alert('Пользователь одобрен: ' + p.email);
+}
+function rejectRegistration(id) {
+  var pending = [];
+  try { pending = JSON.parse(localStorage.getItem(FNO_LS.pending) || '[]'); } catch (e) {}
+  localStorage.setItem(FNO_LS.pending, JSON.stringify(pending.filter(function (p) { return p.id !== id; })));
+  refreshAdminLists();
+}
+
+function openProjectsModal() {
+  if (getSession() && getSession().role === 'demo') { alert('В демо режиме проекты недоступны.'); return; }
+  document.getElementById('projectsModal').classList.add('open');
+  renderProjectsList();
+}
+function closeProjectsModal() { document.getElementById('projectsModal').classList.remove('open'); }
+
+function renderProjectsList() {
+  var el = document.getElementById('projectsList');
+  if (!el) return;
+  var list = getProjects();
+  el.innerHTML = list.length
+    ? list.map(function (p, i) {
+      return '<div class="admin-item"><div style="flex:1;min-width:180px"><strong>' + esc(p.title) + '</strong><br>' +
+        '<span style="font-size:11px;color:var(--text3)">' + new Date(p.savedAt).toLocaleString('ru-KZ') + ' · ' + esc(String(p.year)) + ' г. · кв.: ' + esc(String(p.selectedQ)) + '</span></div>' +
+        '<button type="button" class="btn btn-primary btn-sm" onclick="loadProject(' + i + ')">Открыть</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" onclick="deleteProject(' + i + ')">Удалить</button></div>';
+    }).join('')
+    : '<div style="color:var(--text3);font-size:13px">Нет сохранённых проектов</div>';
+}
+function saveProjectDialog() {
+  if (getSession() && getSession().role === 'demo') { alert('В демо режиме сохранение проектов недоступно.'); return; }
+  if (!calcResult) {
+    alert('Сначала выполните расчёт («Рассчитать»), чтобы сохранить отчёт и данные компаний.');
+    return;
+  }
+  var def = (activeCompany && activeCompany.name) ? activeCompany.name + ' · ФНО ' + reportYear : 'Проект ФНО ' + reportYear;
+  var title = prompt('Название проекта', def);
+  if (!title || !String(title).trim()) return;
+  var snap = {
+    title: String(title).trim(),
+    savedAt: Date.now(),
+    year: parseInt(document.getElementById('yearSel').value, 10),
+    selectedQ: selectedQ,
+    reportYear: reportYear,
+    reportQ: reportQ,
+    companies: JSON.parse(JSON.stringify(companies)),
+    activeCompanyIin: activeCompany ? activeCompany.iin : null,
+    calcResult: JSON.parse(JSON.stringify(calcResult))
+  };
+  var arr = getProjects();
+  arr.unshift(snap);
+  setProjects(arr);
+  alert('Сохранено. Файлы после открытия проекта загрузите снова.');
+}
+function loadProject(i) {
+  var arr = getProjects();
+  var p = arr[i];
+  if (!p || !p.calcResult) { alert('Повреждённые данные проекта'); return; }
+  companies = p.companies && p.companies.length ? p.companies : [];
+  activeCompany = null;
+  if (p.activeCompanyIin) activeCompany = companies.find(function (c) { return c.iin === p.activeCompanyIin; }) || null;
+  document.getElementById('yearSel').value = String(p.year || 2026);
+  selectedQ = p.selectedQ !== undefined ? p.selectedQ : 'all';
+  reportYear = p.reportYear || p.year || 2026;
+  reportQ = p.reportQ !== undefined ? p.reportQ : 'all';
+  calcResult = p.calcResult;
+  document.querySelectorAll('.period-tab').forEach(function (t) {
+    t.classList.toggle('active', String(t.dataset.q) === String(selectedQ));
+  });
+  updateHeaderCompany();
+  persistWorkspace();
+  renderReport();
+  document.getElementById('reportSection').classList.remove('hidden');
+  document.getElementById('reportSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  closeProjectsModal();
+}
+function deleteProject(i) {
+  if (!confirm('Удалить проект из списка?')) return;
+  var arr = getProjects();
+  arr.splice(i, 1);
+  setProjects(arr);
+  renderProjectsList();
+}
+
+function initAppEntry() {
+  if (!localStorage.getItem(FNO_LS.ownerEmail)) localStorage.setItem(FNO_LS.ownerEmail, APP_CONFIG.ADMIN_EMAIL);
+  migrateLegacyIfNeeded();
+  ensureAdminAccountRow();
+  initGateLink();
+  // БухОтчет портал: авто-вход без пароля
+  if (!getSession()) {
+    setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+  }
+  var s = getSession();
+  if (s) loadWorkspaceIntoState();
+  else resetWorkspaceMemory();
+  // Подхватить компанию из портала
+  try {
+    var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
+    if (portalComp && portalComp.name) {
+      var exists = companies.find(function(c){ return c.iin === portalComp.iin; });
+      if (!exists) { companies.push(portalComp); }
+      activeCompany = portalComp;
+      var cn = document.getElementById('headerCompName');
+      var ci = document.getElementById('headerCompIin');
+      if (cn) cn.textContent = portalComp.name;
+      if (ci) ci.textContent = portalComp.iin || 'БИН не задан';
+    }
+  } catch(e){}
+  refreshEntryScreen();
+  updateHeaderAuth();
+}
+
+initAppEntry();
+// Слушать изменения компании из портала
+window.addEventListener('storage', function(e){
+  if (e.key === 'buhotchet_active_company') {
+    try {
+      var pc = JSON.parse(e.newValue || 'null');
+      if (pc && pc.name) {
+        activeCompany = pc;
+        var cn = document.getElementById('headerCompName');
+        var ci = document.getElementById('headerCompIin');
+        if (cn) cn.textContent = pc.name;
+        if (ci) ci.textContent = pc.iin || '';
+      }
+    } catch(err){}
+  }
+});
+
+function openModal() {
+  renderCompanyList();
+  document.getElementById('companyModal').classList.add('open');
+}
+function closeModal() { document.getElementById('companyModal').classList.remove('open'); }
+
+function renderCompanyList() {
+  const el = document.getElementById('companyList');
+  if (!companies.length) {
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Нет сохранённых компаний</div>';
+    return;
+  }
+  el.innerHTML = companies.map((c,i) => `
+    <div class="company-item ${activeCompany && activeCompany.iin===c.iin?'active':''}" onclick="selectCompany(${i})">
+      <div style="font-size:22px">🏢</div>
+      <div class="company-item-info">
+        <div class="company-item-name">${esc(c.name)}</div>
+        <div class="company-item-iin">БИН/ИИН: ${esc(c.iin)}${c.ogd?' · НО: '+c.ogd:''}</div>
+      </div>
+      <button class="company-item-del" onclick="event.stopPropagation();deleteCompany(${i})">✕</button>
+    </div>`).join('');
+}
+
+function selectCompany(i) {
+  activeCompany = companies[i];
+  document.getElementById('headerCompName').textContent = activeCompany.name;
+  document.getElementById('headerCompIin').textContent = 'БИН/ИИН: ' + activeCompany.iin;
+  closeModal();
+  persistWorkspace();
+}
+
+function deleteCompany(i) {
+  companies.splice(i,1);
+  saveCompanies();
+  if (activeCompany && !companies.find(c=>c.iin===activeCompany.iin)) {
+    activeCompany = null;
+    document.getElementById('headerCompName').textContent = 'Выберите компанию';
+    document.getElementById('headerCompIin').textContent = 'БИН / ИИН не задан';
+  }
+  renderCompanyList();
+}
+
+function addCompany() {
+  const name = document.getElementById('newCompName').value.trim();
+  const iin  = document.getElementById('newCompIin').value.trim();
+  const head = document.getElementById('newCompHead').value.trim();
+  const ogd  = document.getElementById('newCompOgd').value.trim();
+  const c10a = document.getElementById('newComp10A').value.trim();
+  const c10b = document.getElementById('newComp10B').value.trim();
+  if (!name || !iin) { alert('Введите название и БИН/ИИН'); return; }
+  companies.push({name,iin,head,ogd,c10a,c10b});
+  saveCompanies();
+  document.getElementById('newCompName').value='';
+  document.getElementById('newCompIin').value='';
+  document.getElementById('newCompHead').value='';
+  document.getElementById('newCompOgd').value='';
+  document.getElementById('newComp10A').value='';
+  document.getElementById('newComp10B').value='';
+  renderCompanyList();
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ─── FILE LOADING (Excel, CSV, XML/1С, PDF ИСНА, JSON) ───────────────────────
+function readArrayBuffer(file) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error('Чтение файла'));
+    r.readAsArrayBuffer(file);
+  });
+}
+function readTextFile(file, enc) {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(r.result);
+    r.onerror = () => reject(new Error('Чтение текста'));
+    r.readAsText(file, enc || 'UTF-8');
+  });
+}
+async function extractPdfText(buf) {
+  if (typeof pdfjsLib === 'undefined') throw new Error('Библиотека PDF.js не загрузилась (проверьте интернет)');
+  const pdf = await pdfjsLib.getDocument({ data: buf, verbosity: 0 }).promise;
+  let out = '';
+  for (let p = 1; p <= pdf.numPages; p++) {
+    const page = await pdf.getPage(p);
+    let tc;
+    try {
+      tc = await page.getTextContent({ normalizeWhitespace: true });
+    } catch (e) {
+      tc = await page.getTextContent();
+    }
+    const items = (tc.items || []).map(it => ({
+      s: (it.str || '').trim(),
+      tr: it.transform || [0, 0, 0, 0, 0, 0]
+    })).filter(x => x.s);
+    if (items.length) {
+      items.sort((a, b) => {
+        const ya = a.tr[5], yb = b.tr[5];
+        if (Math.abs(ya - yb) > 2) return yb - ya;
+        return a.tr[4] - b.tr[4];
+      });
+      let y0 = items[0].tr[5], line = [];
+      const flush = () => { if (line.length) out += line.join(' ') + '\n'; line = []; };
+      for (const it of items) {
+        if (Math.abs(it.tr[5] - y0) > 3) { flush(); y0 = it.tr[5]; }
+        line.push(it.s);
+      }
+      flush();
+    }
+    out += '\n';
+  }
+  return out.replace(/\s+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+function workbookFromBuffer(buf, ext, textContent) {
+  const e = (ext || '').toLowerCase();
+  if (e === 'csv') return XLSX.read(textContent || '', { type: 'string', FS: ';', cellDates: true });
+  if (e === 'tsv' || e === 'txt') {
+    const t = textContent || '';
+    const fs = e === 'tsv' ? '\t' : (t.indexOf('\t') >= 0 ? '\t' : ';');
+    return XLSX.read(t, { type: 'string', FS: fs, cellDates: true });
+  }
+  return XLSX.read(buf, { type: 'array', cellDates: true });
+}
+function tryXmlRowsToWorkbook(xmlText) {
+  try {
+    const p = new DOMParser();
+    const doc = p.parseFromString(xmlText, 'text/xml');
+    if (doc.querySelector('parsererror')) return null;
+    const rows = [];
+    const rowEls = doc.querySelectorAll('Row, row, Строка, строка, Line');
+    if (rowEls.length) {
+      rowEls.forEach(re => {
+        const cells = re.querySelectorAll('Cell, cell, Ячейка, Col, col, Data');
+        const r = [];
+        cells.forEach(c => r.push(c.textContent || ''));
+        if (r.length) rows.push(r);
+      });
+    }
+    if (rows.length < 2) return null;
+    const ws = XLSX.utils.aoa_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'XML');
+    return wb;
+  } catch (e) { return null; }
+}
+
+function tryWorkbookFromGenericJson(json) {
+  const arr = Array.isArray(json) ? json : (json.rows || json.data || json.Items || json.items || json.Документ);
+  if (!Array.isArray(arr) || !arr.length) return null;
+  const first = arr[0];
+  if (!first || typeof first !== 'object') return null;
+  const keys = Object.keys(first);
+  if (keys.length < 2) return null;
+  const aoa = [keys];
+  arr.forEach(obj => aoa.push(keys.map(k => (obj[k] !== undefined && obj[k] !== null) ? obj[k] : '')));
+  const ws = XLSX.utils.aoa_to_sheet(aoa);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Данные');
+  return wb;
+}
+
+function clearFileBatch(type) {
+  if (type === 'template') {
+    files.template = null;
+    const btn = document.getElementById('templateBtn');
+    if (btn) btn.classList.remove('loaded');
+    const ic = document.getElementById('templateIcon');
+    if (ic) ic.textContent = '📎';
+    const fe = document.getElementById('templateFile');
+    if (fe) fe.textContent = '';
+    const tinp = document.getElementById('templateInput');
+    if (tinp) tinp.value = '';
+  } else {
+    files[type] = [];
+    const btn = document.getElementById(type + 'Btn');
+    if (btn) btn.classList.remove('loaded');
+    const ic = document.getElementById(type + 'Icon');
+    if (ic) ic.textContent = type === 'real' ? '📤' : type === 'post' ? '📥' : type === 'gtd' ? '🚢' : '📋';
+    const fe = document.getElementById(type + 'File');
+    if (fe) fe.textContent = '';
+    const inp = document.getElementById(type + 'Input');
+    if (inp) inp.value = '';
+  }
+  updatePills();
+  renderDocStore();
+  persistWorkspace();
+}
+
+async function ingestFileToItem(file, type) {
+  const name = file.name || 'document';
+  const ext = (name.includes('.') ? name.split('.').pop() : '').toLowerCase();
+
+  if (ext === 'json') {
+    const txt = await readTextFile(file);
+    const json = JSON.parse(txt);
+    if (type === 'fno328') {
+      const wbTry = tryWorkbookFromGenericJson(json);
+      if (wbTry) return { wb: wbTry, name, ext };
+      return { json, name, ext: 'json' };
+    }
+    const wbTry = tryWorkbookFromGenericJson(json);
+    if (wbTry) return { wb: wbTry, name, ext };
+    throw new Error(name + ': JSON — нужен массив объектов или поле rows/data');
+  }
+
+  if (ext === 'pdf') {
+    const buf = await readArrayBuffer(file);
+    const text = await extractPdfText(buf);
+    return { kind: 'pdf', text, name, ext };
+  }
+
+  if (ext === 'xml') {
+    const xmlText = await readTextFile(file);
+    let wb = tryXmlRowsToWorkbook(xmlText);
+    if (!wb) {
+      try { wb = XLSX.read(xmlText, { type: 'string', cellDates: true }); } catch (e) { wb = null; }
+    }
+    if (!wb) throw new Error(name + ': XML не разобран как таблица');
+    return { wb, name, ext };
+  }
+
+  if (ext === 'csv' || ext === 'txt' || ext === 'tsv') {
+    const txt = await readTextFile(file);
+    return { wb: workbookFromBuffer(null, ext === 'tsv' ? 'tsv' : ext, txt), name, ext };
+  }
+
+  const buf = await readArrayBuffer(file);
+  try {
+    const wb = XLSX.read(buf, { type: 'array', cellDates: true });
+    if (wb && wb.SheetNames && wb.SheetNames.length) return { wb, name, ext: ext || 'xlsx', sheets: wb.SheetNames };
+  } catch (e) { /* try text */ }
+
+  try {
+    const txt = await readTextFile(file);
+    const fs = txt.indexOf('\t') >= 0 ? '\t' : (txt.indexOf(';') >= 0 ? ';' : ',');
+    const wb = XLSX.read(txt, { type: 'string', FS: fs, cellDates: true });
+    if (wb && wb.SheetNames && wb.SheetNames.length) return { wb, name, ext: 'csv' };
+  } catch (e2) { /* */ }
+
+  throw new Error(name + ': откройте в Excel и сохраните как .xlsx или .csv (или PDF для ГТД)');
+}
+
+async function loadFile(type, input) {
+  /* FileList привязан к input: если сразу сделать input.value='', список
+     опустеет и цикл не прочитает ни одного файла. Снимаем снимок в массив. */
+  const picked = Array.from(input.files || []);
+  if (!picked.length) return;
+  try {
+    if (type === 'template') {
+      const file = picked[0];
+      const txt = await readTextFile(file);
+      files.template = { json: JSON.parse(txt), name: file.name, _id: nextDocId() };
+      markLoaded(type, file.name);
+      updatePills();
+      renderDocStore();
+      clearError();
+      persistWorkspace();
+      return;
+    }
+    if (!Array.isArray(files[type])) files[type] = [];
+    for (let i = 0; i < picked.length; i++) {
+      const item = await ingestFileToItem(picked[i], type);
+      item._id = nextDocId();
+      item._category = type;
+      files[type].push(item);
+    }
+    markLoaded(type);
+    updatePills();
+    renderDocStore();
+    clearError();
+    persistWorkspace();
+  } catch (ex) {
+    showError('Ошибка чтения: ' + ex.message);
+  } finally {
+    input.value = '';
+  }
+}
+
+function markLoaded(type, singleName) {
+  const btn = document.getElementById(type + 'Btn');
+  if (!btn) return;
+  const icon = document.getElementById(type + 'Icon');
+  const fileEl = document.getElementById(type + 'File');
+  if (type === 'template') {
+    btn.classList.toggle('loaded', !!files.template);
+    if (icon) icon.textContent = files.template ? '✅' : '📎';
+    if (fileEl) fileEl.textContent = files.template ? (singleName || files.template.name) : '';
+    return;
+  }
+  const list = files[type] || [];
+  btn.classList.toggle('loaded', list.length > 0);
+  if (icon) {
+    icon.textContent = list.length ? '✅' : (type === 'real' ? '📤' : type === 'post' ? '📥' : type === 'gtd' ? '🚢' : '📋');
+  }
+  if (fileEl) {
+    if (!list.length) fileEl.textContent = '';
+    else {
+      const names = list.map(f => f.name).join(', ');
+      fileEl.textContent = list.length + ' файл.: ' + (names.length > 115 ? names.slice(0, 112) + '…' : names);
+    }
+  }
+}
+
+function updatePills() {
+  const el = document.getElementById('dataPills');
+  if (!el) return;
+  const bits = [];
+  ['real', 'post', 'gtd', 'fno328'].forEach(k => {
+    const n = (files[k] || []).length;
+    if (n) bits.push({ label: { real: 'Реализация', post: 'Поступление', gtd: 'ГТД', fno328: '328' }[k], n });
+  });
+  if (files.template) bits.push({ label: 'Эталон JSON', n: 1 });
+  el.innerHTML = bits.map(t =>
+    `<span class="data-pill">✅ <strong>${t.label}</strong> — ${t.n} шт.</span>`
+  ).join('');
+}
+
+let __docIdSeq = 0;
+function nextDocId() {
+  return 'd' + (++__docIdSeq) + '_' + Math.random().toString(36).slice(2, 11);
+}
+
+function collectDocRows() {
+  const rows = [];
+  ['real', 'post', 'gtd', 'fno328'].forEach(cat => {
+    (files[cat] || []).forEach(item => {
+      if (!item._id) item._id = nextDocId();
+      rows.push({ cat, item });
+    });
+  });
+  if (files.template) {
+    if (!files.template._id) files.template._id = nextDocId();
+    rows.push({ cat: 'template', item: files.template });
+  }
+  return rows;
+}
+
+function renderDocStore() {
+  const body = document.getElementById('docStoreBody');
+  if (!body) return;
+  const catLabel = { real: 'Реализация', post: 'Поступление', gtd: 'ГТД', fno328: '328 ФНО', template: 'Эталон JSON' };
+  const catCls = { real: '', post: ' post', gtd: ' gtd', fno328: ' f328', template: ' tpl' };
+  const rows = collectDocRows();
+  if (!rows.length) {
+    body.innerHTML = '<div class="doc-store-empty">Документов пока нет — нажмите на блок загрузки выше и выберите один или несколько файлов (Ctrl/Shift).</div>';
+    return;
+  }
+  body.innerHTML = rows.map(({ cat, item }) => {
+    const name = esc(item.name || 'файл');
+    const ext = (item.ext || '').toString();
+    const id = String(item._id || '');
+    const badgeClass = 'doc-cat' + (catCls[cat] || '');
+    const meta = ext ? '<span class="doc-meta">.' + esc(ext) + '</span>' : '';
+    return '<div class="doc-row"><span class="' + badgeClass + '">' + esc(catLabel[cat] || cat) + '</span>'
+      + '<span class="doc-name" title="' + name + '">' + name + '</span>' + meta
+      + '<button type="button" class="btn btn-ghost btn-sm doc-remove" data-cat="' + esc(cat) + '" data-id="' + esc(id) + '">Удалить</button></div>';
+  }).join('');
+}
+
+function removeStoredDoc(cat, id) {
+  if (cat === 'template') {
+    files.template = null;
+    markLoaded('template');
+    const tinp = document.getElementById('templateInput');
+    if (tinp) tinp.value = '';
+    updatePills();
+    renderDocStore();
+    persistWorkspace();
+    return;
+  }
+  const arr = files[cat];
+  if (!Array.isArray(arr)) return;
+  const ix = arr.findIndex(x => String(x._id) === String(id));
+  if (ix >= 0) arr.splice(ix, 1);
+  markLoaded(cat);
+  updatePills();
+  renderDocStore();
+  persistWorkspace();
+}
+
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function clean(val) {
+  if (val === '' || val === null || val === undefined) return 0;
+  if (typeof val === 'number' && !isNaN(val)) return val;
+  let s = String(val).replace(/\u00A0/g, ' ').replace(/\s/g, '').trim();
+  if (!s) return 0;
+  const lastC = s.lastIndexOf(',');
+  const lastD = s.lastIndexOf('.');
+  if (lastC >= 0 && lastD >= 0) {
+    if (lastC > lastD) s = s.replace(/\./g, '').replace(',', '.');
+    else s = s.replace(/,/g, '');
+  } else if (lastC >= 0) {
+    const p = s.split(',');
+    if (p.length === 2 && p[1].length <= 2) s = p[0].replace(/\./g, '') + '.' + p[1];
+    else s = s.replace(/,/g, '');
+  } else {
+    s = s.replace(/,/g, '');
+  }
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+function excelDateToJS(v) {
+  if (v instanceof Date) return v;
+  if (typeof v==='number') return new Date(Math.round((v-25569)*86400*1000));
+  if (typeof v==='string' && v.trim()) {
+    const t = v.trim();
+    const m = t.match(/^(\d{2})\.(\d{2})\.(\d{4})(\D|$)/);
+    if (m) return new Date(+m[3], +m[2] - 1, +m[1]);
+    const m2 = t.match(/^(\d{4})-(\d{2})-(\d{2})(\D|$)/);
+    if (m2) return new Date(+m2[1], +m2[2] - 1, +m2[3]);
+    const d = new Date(t); return isNaN(d) ? null : d;
+  }
+  return null;
+}
+function fmtNum(n, zero='—') {
+  if (n===0||n===null||n===undefined) return zero;
+  return new Intl.NumberFormat('ru-KZ').format(Math.round(n));
+}
+function showError(msg) {
+  const el=document.getElementById('errorBox');
+  el.textContent='⚠ '+msg; el.style.display='block';
+}
+function clearError() { document.getElementById('errorBox').style.display='none'; }
+
+function normHeaderCell(c) {
+  return String(c || '').toLowerCase()
+    .replace(/[\s_\.\u00A0\/\\:;,\-–—()«»"']/g, '');
+}
+function sortPat(arr) {
+  return [...arr].sort((a, b) => b.length - a.length);
+}
+function findColInRow(row, substrings) {
+  const sorted = sortPat(substrings);
+  for (let i = 0; i < row.length; i++) {
+    const h = normHeaderCell(row[i]);
+    for (const s of sorted) {
+      if (h.includes(s)) return i;
+    }
+  }
+  return -1;
+}
+function findHeaderRowIndex(rows) {
+  for (let i = 0; i < Math.min(45, rows.length); i++) {
+    const joined = (rows[i] || []).map(c => normHeaderCell(c)).join('|');
+    if (!joined) continue;
+    const hasDate = joined.includes('дата');
+    const hasMoney = joined.includes('ндс') || joined.includes('сумма') || joined.includes('оборот') || joined.includes('стоимост');
+    const hasMeta = joined.includes('статус') || joined.includes('бин') || joined.includes('иин') || joined.includes('контрагент')
+      || joined.includes('отправител') || joined.includes('получател') || joined.includes('счетафактур');
+    if (hasDate && (hasMoney || hasMeta)) return i;
+  }
+  return 0;
+}
+function autoDetectObNdsColumns(rows, hIdx, maxC) {
+  const H = Math.min(rows.length, hIdx + 120);
+  let M = 0;
+  for (let r = hIdx; r < H; r++) M = Math.max(M, (rows[r] || []).length);
+  M = Math.min(maxC || 50, M);
+  if (M < 2) return null;
+  let best = null;
+  let bestScore = 0;
+  for (let c1 = 0; c1 < M; c1++) {
+    for (let c2 = 0; c2 < M; c2++) {
+      if (c1 === c2) continue;
+      let ok = 0, tot = 0;
+      for (let r = hIdx + 1; r < H; r++) {
+        const row = rows[r] || [];
+        const v1 = clean(row[c1]);
+        const v2 = clean(row[c2]);
+        if (v1 < 50 || v2 < 1) continue;
+        tot++;
+        const ratio = v2 / v1;
+        if (ratio > 0.03 && ratio < 0.22) ok++;
+      }
+      const score = tot > 8 ? ok / tot : 0;
+      if (score > bestScore) {
+        bestScore = score;
+        best = { ob: c1, nds: c2 };
+      }
+    }
+  }
+  if (best && bestScore >= 0.45) return best;
+  return null;
+}
+function buildEsfRealMap(headerRow) {
+  const dateTurnover = findColInRow(headerRow, sortPat([
+    'датасовершенияоборота', 'совершенияоборота', 'датаоборота', 'датаоборот', 'датаповрота', 'датаповорота', 'датаотгрузки', 'датапереходаправа',
+    'датареализации', 'датаотраженавучете', 'датазачетанорм', 'dateofturnover', 'turnoverdate'
+  ]));
+  const dateInvoice = findColInRow(headerRow, sortPat([
+    'датавыписки', 'датавыписан', 'датавыпис', 'датасчетнаоплату', 'датаформированияэсф', 'датаформирования',
+    'датаотправкиэсф', 'датаотправк', 'датаэлектронного', 'датаполучения', 'датавходящего', 'датаподписания',
+    'invoicedate', 'datecreated'
+  ]));
+  const st = findColInRow(headerRow, sortPat(['статуссчетафактуры', 'статуссф', 'статус', 'status']));
+  const dt = findColInRow(headerRow, sortPat(['видсчета', 'видсчет', 'типдокумент', 'дополнит', 'виддокумента']));
+  /* Реализация: контрагент — получатель; не путать с колонкой «ИИН/БИН отправителя» (мы продавец). */
+  const bn = findColInRow(headerRow, sortPat([
+    'иинбинполучателя', 'бинполучателя', 'иинполучателя', 'бинполуч', 'иинполуч', 'идентификаторполуч', 'бинконтрагента', 'бинконтра'
+  ]));
+  let ob = findColInRow(headerRow, sortPat([
+    'размероборотапореализации', 'размероборотапореализац', 'оборотапореализации', 'оборотапореализац'
+  ]));
+  if (ob < 0) ob = findColInRow(headerRow, sortPat([
+    'стоимостьтоваровработуслугбезучетакосвенныхналогов', 'безучетакосвенныхналогов', 'стоимостьбезучетакосвенных',
+    'оборотпореализации', 'суммаоборотанадату', 'оборотвтенге', 'оборотбезндс', 'суммабезндс', 'суммабезучетандс',
+    'стоимостьбезндс', 'суммадляцелей', 'amountwithouttax', 'taxableamount', 'оборотпо', 'суммареализации'
+  ]));
+  let nd = findColInRow(headerRow, sortPat([
+    'ндссумма', 'ндс-сумма', 'суммандс', 'суммандсвсумме', 'ндсвсумме', 'ндскуплате', 'ндс', 'sumvat', 'vatamount'
+  ]));
+  const sumWithVat = findColInRow(headerRow, sortPat([
+    'стоимостьтоваровработуслугсучетомкосвенныхналогов', 'сучетомкосвенныхналогов', 'стоимостьсучетомкосвенных',
+    'всегокоплате', 'всегокоплат', 'суммасндс', 'итоговаясумма', 'итого', 'total', 'sumwithvat', 'общаясумма'
+  ]));
+  const ad = findColInRow(headerRow, sortPat(['адресдоставки', 'адресдостав', 'странаназначения', 'странаназнач', 'адрес', 'страна']));
+  const turnKind = findColInRow(headerRow, sortPat([
+    'видоборота', 'видналоговогооборота', 'видналогоборота', 'классификатор', 'строкаформы300', 'способобложения'
+  ]));
+  const dateFallback = dateTurnover >= 0 ? dateTurnover : (dateInvoice >= 0 ? dateInvoice : 4);
+  return {
+    dateTurnover, dateInvoice,
+    date: dateFallback,
+    status: st >= 0 ? st : 8,
+    dtype: dt >= 0 ? dt : 7,
+    bin: bn >= 0 ? bn : 10,
+    ob, nds: nd, sumWithVat, addr: ad >= 0 ? ad : 18,
+    turnKind
+  };
+}
+function buildEsfPurchaseMap(headerRow) {
+  const dateTurnover = findColInRow(headerRow, sortPat([
+    'датасовершенияоборота', 'совершенияоборота', 'датаоборота', 'датаоборот', 'датаповрота', 'датаприхода', 'датапоступления', 'датазачетанорм', 'turnoverdate'
+  ]));
+  const dateReceipt = findColInRow(headerRow, sortPat([
+    'датаполучениятоваровработуслуг', 'датаполучениятоваров', 'датафактическогополучения', 'датаприемкивэксплуатацию',
+    'датаполученияпокупателем', 'датаполучениягруза', 'датаполученияэсф', 'датаполучения'
+  ]));
+  const dateInvoice = findColInRow(headerRow, sortPat([
+    'датавыписки', 'датавыписан', 'датавыпис', 'датасчетнаоплату', 'датаформированияэсф', 'датаотправки',
+    'датавходящего', 'invoicedate'
+  ]));
+  const st = findColInRow(headerRow, sortPat(['статуссчетафактуры', 'статуссф', 'статус', 'status']));
+  let ob = findColInRow(headerRow, sortPat([
+    'размероборотапореализации', 'размероборотапореализац', 'оборотапореализации', 'оборотапореализац'
+  ]));
+  if (ob < 0) ob = findColInRow(headerRow, sortPat([
+    'стоимостьтоваровработуслугбезучетакосвенныхналогов', 'безучетакосвенныхналогов', 'стоимостьбезучетакосвенных',
+    'оборотпопоступлению', 'суммаоборотанадату', 'оборотвтенге', 'оборотбезндс', 'суммабезндс', 'стоимостьбезндс',
+    'суммадляцелей', 'amountwithouttax', 'оборот'
+  ]));
+  let nd = findColInRow(headerRow, sortPat(['ндссумма', 'ндс-сумма', 'суммандс', 'ндсвсумме', 'ндс', 'sumvat']));
+  const sumWithVat = findColInRow(headerRow, sortPat([
+    'стоимостьтоваровработуслугсучетомкосвенныхналогов', 'сучетомкосвенныхналогов', 'стоимостьсучетомкосвенных',
+    'всегокоплате', 'суммасндс', 'итого', 'total', 'общаясумма'
+  ]));
+  let dateFallback = dateInvoice;
+  if (dateFallback < 0) dateFallback = dateTurnover >= 0 ? dateTurnover : (dateReceipt >= 0 ? dateReceipt : 3);
+  return {
+    dateTurnover, dateInvoice, dateReceipt, date: dateFallback,
+    status: st >= 0 ? st : 8, ob, nds: nd, sumWithVat
+  };
+}
+function inferObNdsFromRow(row, map) {
+  let ob = map.ob >= 0 ? clean(row[map.ob]) : 0;
+  let nds = map.nds >= 0 ? clean(row[map.nds]) : 0;
+  const sw = map.sumWithVat >= 0 ? clean(row[map.sumWithVat]) : 0;
+  /* В реестре ИСНА «стоимость с косвенными» часто = базе без НДС, НДС — отдельной колонкой.
+     Нельзя «лечить» sw ≈ ob при несовпадении с ob+nds: иначе nds обнуляется или пересчитывается неверно. */
+  if (sw > 0) {
+    if (nds > 0 && ob <= 0) ob = Math.round((sw - nds) * 100) / 100;
+    else if (ob > 0 && nds <= 0) nds = Math.round((sw - ob) * 100) / 100;
+    else if (ob <= 0 && nds <= 0) {
+      ob = Math.round((sw / 1.16) * 100) / 100;
+      nds = Math.round((sw - ob) * 100) / 100;
+    } else if (ob > 0 && nds > 0) {
+      const sum = ob + nds;
+      const diff = Math.abs(sw - sum);
+      const tol = Math.max(1.5, Math.min(sw, sum) * 0.004);
+      if (diff <= tol) nds = Math.round((sw - ob) * 100) / 100;
+    }
+  }
+  if (ob > 0 && nds > 0 && !sw) {
+    const r = nds / ob;
+    if (r > 0.4) {
+      const t = ob; ob = nds; nds = t;
+    }
+  }
+  return { ob, nds };
+}
+function rowQuarterDateReal(map, row) {
+  return excelDateToJS(row[map.dateTurnover]) || excelDateToJS(row[map.dateInvoice]) || excelDateToJS(row[map.date]) || null;
+}
+function rowQuarterDatePost(map, row, reportYear) {
+  const ry = typeof reportYear === 'number' ? reportYear : 2026;
+  const dtTurn = map.dateTurnover >= 0 ? excelDateToJS(row[map.dateTurnover]) : null;
+  const dtInv = map.dateInvoice >= 0 ? excelDateToJS(row[map.dateInvoice]) : null;
+  const dtRec = map.dateReceipt >= 0 ? excelDateToJS(row[map.dateReceipt]) : null;
+  const dtF = map.date >= 0 ? excelDateToJS(row[map.date]) : null;
+  const ok = d => d && !isNaN(d.getTime());
+
+  /* С 2026: поступление в основном по дате оборота; переход с НК до 2026 — дек. 2025 оборот + ЭСФ в I кв. 2026 → I кв. 2026 */
+  if (ry >= 2026 && ok(dtTurn) && ok(dtInv)) {
+    const yt = dtTurn.getFullYear(), mt = dtTurn.getMonth();
+    const yi = dtInv.getFullYear(), mi = dtInv.getMonth();
+    if (yt === 2025 && mt === 11 && yi === 2026 && mi <= 2) return dtInv;
+  }
+
+  if (ry >= 2026) {
+    return (ok(dtTurn) ? dtTurn : null) || (ok(dtInv) ? dtInv : null) || (ok(dtRec) ? dtRec : null) || (ok(dtF) ? dtF : null) || null;
+  }
+
+  const dates = [dtRec, dtTurn, dtInv, dtF].filter(ok);
+  if (!dates.length) return null;
+  return new Date(Math.max.apply(null, dates.map(x => x.getTime())));
+}
+function applyAutoDetectToMap(rows, hIdx, map) {
+  let need = map.ob < 0 || map.nds < 0;
+  if (!need && map.ob >= 0 && map.nds >= 0) {
+    let nz = 0;
+    for (let r = hIdx + 1; r < Math.min(rows.length, hIdx + 25); r++) {
+      const row = rows[r] || [];
+      if (clean(row[map.ob]) !== 0 || clean(row[map.nds]) !== 0) nz++;
+    }
+    if (!nz) need = true;
+  }
+  if (!need) return;
+  const det = autoDetectObNdsColumns(rows, hIdx);
+  if (!det) return;
+  if (map.ob < 0 || need) map.ob = det.ob;
+  if (map.nds < 0 || need) map.nds = det.nds;
+}
+
+function firstDateFromText(text) {
+  const m = String(text || '').match(/(\d{2})\.(\d{2})\.(\d{4})/);
+  if (!m) return null;
+  return new Date(+m[3], +m[2] - 1, +m[1]);
+}
+/** Дата выпуска ДТ / регистрации — приоритетные подписи (текст из PDF таможни РК) */
+function extractGtdReleaseDate(text) {
+  const t = String(text || '').replace(/\u00A0/g, ' ');
+  const patterns = [
+    /дата\s*выпуска[^\d\n]{0,60}(\d{2}\.\d{2}\.\d{4})/i,
+    /(?:выпуск|регистраци(?:я|и)\s*дт)[^\d\n]{0,60}(\d{2}\.\d{2}\.\d{4})/i,
+    /(?:дата|время)\s*регистрации[^\d\n]{0,40}(\d{2}\.\d{2}\.\d{4})/i,
+    /(\d{2}\.\d{2}\.\d{4})[^\n]{0,40}(?:выпуск|регистрац)/i
+  ];
+  for (const re of patterns) {
+    const m = t.match(re);
+    if (m) {
+      const d = new Date(+m[3], +m[2] - 1, +m[1]);
+      if (!isNaN(d.getTime())) return d;
+    }
+  }
+  return firstDateFromText(t);
+}
+/**
+ * Сумма НДС по декларации на товары (ДТ): одно итоговое значение, без суммирования строк.
+ * Ищем подписи вида «НДС к уплате», «Сумма НДС», ставки 12%/16% и т.п.
+ */
+function extractGtdNdsFromText(text) {
+  const t = String(text || '').replace(/\u00A0/g, ' ');
+  const lineRe = [
+    /(?:сумма\s*)?ндс[^\n]{0,40}(?:подлежащ(?:его|ий)\s+уплате|к\s+уплате|начислен)[^\d]{0,24}(\d{1,3}(?:\s\d{3})*[,.]\d{2}|\d+[,.]\d{2})/gi,
+    /ндс\s*\(?\s*(?:12|16)\s*%[^\d]{0,40}(\d{1,3}(?:\s\d{3})*[,.]\d{2}|\d+[,.]\d{2})/gi,
+    /(?:налог\s*на\s*добавленную[^\d]{0,30})(\d{1,3}(?:\s\d{3})*[,.]\d{2}|\d+[,.]\d{2})/gi,
+    /(?:итого\s*к\s*уплате|всего\s*к\s*уплате|к\s*уплате\s*всего)[^\d]{0,50}(\d{1,3}(?:\s\d{3})*[,.]\d{2}|\d+[,.]\d{2})/gi,
+    /общ(?:ая|ий)\s+сумма[^\d]{0,40}(\d{1,3}(?:\s\d{3})*[,.]\d{2}|\d+[,.]\d{2})/gi
+  ];
+  let best = 0;
+  for (const re of lineRe) {
+    let m;
+    while ((m = re.exec(t)) !== null) {
+      const n = clean(m[1]);
+      if (n > 0 && n < 1e11) best = Math.max(best, n);
+    }
+  }
+  if (best > 0) return Math.round(best);
+  return sumNdsFromDeclarationText(t);
+}
+function sumNdsFromDeclarationText(text) {
+  const t = String(text || '').replace(/\u00A0/g, ' ');
+  const reNds = /(ндс|налог\s*на\s*добавленную|vat)/i;
+  let bestLine = 0;
+  for (const line of t.split(/\n|;/)) {
+    if (!reNds.test(line)) continue;
+    let lineMax = 0;
+    for (const m of line.matchAll(/(\d{1,3}(?:\s\d{3})+[,.]\d{2}|\d[\d\s]{0,12}[,.]\d{2})/g)) {
+      const n = clean(m[1]);
+      if (n > 10 && n < 1e12) lineMax = Math.max(lineMax, n);
+    }
+    bestLine = Math.max(bestLine, lineMax);
+  }
+  if (bestLine > 0) return Math.round(bestLine);
+  const glob = [...t.matchAll(/(?:ндс|сумма\s*ндс)[^\d]{0,24}(\d[\d\s]{3,14}[,.]?\d{0,2})/gi)];
+  let s = 0;
+  for (const m of glob) s = Math.max(s, clean(m[1]));
+  return Math.round(s);
+}
+
+function processGtdPdfText(text, year, quarter, data) {
+  const nds = extractGtdNdsFromText(text);
+  if (!nds) return;
+  const dt = extractGtdReleaseDate(text);
+  if (!dt || isNaN(dt.getTime())) return;
+  if (!periodDateOk(dt, year, quarter)) return;
+  const q = Math.floor(dt.getMonth() / 3);
+  const t = String(text || '');
+  const isEaes = /(беларус|росси|рф\b|армен|кыргыз|киргиз|еаэс|беларусь)/i.test(t);
+  if (isEaes) data[q].gtdEaesNds += nds;
+  else data[q].gtdNds += nds;
+}
+
+function buildGtdMap(headerRow) {
+  const dateCol = findColInRow(headerRow, sortPat([
+    'датавыпуска', 'датавыпуск', 'датарегистрациигтд', 'датадт', 'датадекларации', 'датаоформления',
+    'датапостановления', 'датавыпускадт', 'дата'
+  ]));
+  const ndsCol = findColInRow(headerRow, sortPat([
+    'суммандс', 'ндскуплате', 'ндсподлежит', 'ндсначислен', 'сумманалога', 'ндс', 'sumvat'
+  ]));
+  const addrCol = findColInRow(headerRow, sortPat([
+    'странаотправления', 'странаназначения', 'страна', 'кодстраны', 'наименованиестраны'
+  ]));
+  return { date: dateCol, nds: ndsCol, addr: addrCol };
+}
+
+function processFno328Json(j, year, quarter, data) {
+  if (!j || typeof j !== 'object') return;
+  const fc = j.fnoContent;
+  if (fc && fc.type === 'fno300') return;
+  const typeStr = String((fc && fc.type) || j.type || j.formType || j.formCode || '').toLowerCase();
+  if (typeStr && /300/.test(typeStr) && !/328/.test(typeStr)) return;
+
+  const seen = new Set();
+  function addRow(dateVal, a, b) {
+    const date = excelDateToJS(dateVal);
+    if (!date || isNaN(date.getTime())) return;
+    if (!periodDateOk(date, year, quarter)) return;
+    const q = Math.floor(date.getMonth() / 3);
+    const aa = clean(a), bb = clean(b);
+    const key = date.getTime() + '|' + aa + '|' + bb;
+    if (seen.has(key)) return;
+    seen.add(key);
+    data[q].fno328A += aa;
+    data[q].fno328B += bb;
+  }
+  function pickNum(o, keys) {
+    for (const k of keys) {
+      if (o[k] !== undefined && o[k] !== null && o[k] !== '') return o[k];
+    }
+    return null;
+  }
+  function tryObject(o) {
+    if (!o || typeof o !== 'object' || Array.isArray(o)) return;
+    const keys = Object.keys(o);
+    if (keys.length > 55) return;
+    const dateVal = pickNum(o, [
+      'registrationDate', 'documentDate', 'declarationDate', 'releaseDate', 'invoiceDate', 'taxPeriodEnd',
+      'date', 'dt', '_date', 'periodDate', 'Дата', 'датаВыпуска', 'датаРегистрации', 'датаДокумента'
+    ]);
+    const a = pickNum(o, [
+      'A', 'rowA', 'turnover', 'amountExcl', 'sumExcl', 'amountWithoutVat', 'customsValue', 'taxableAmount',
+      'sumWithoutTax', 'оборот', 'amountA', '_013_II_A', 'columnA', 'СуммаА', 'суммаОборота', 'стоимостьТоваров'
+    ]);
+    const b = pickNum(o, [
+      'B', 'rowB', 'vatAmount', 'sumVat', 'nds', 'NDS', 'vatSum', 'amountB', '_013_II_B', 'columnB',
+      'СуммаНДС', 'суммаНдс', 'налогВсумме'
+    ]);
+    const ca = clean(a), cb = clean(b);
+    if (dateVal != null && (ca || cb)) addRow(dateVal, ca, cb);
+  }
+  function walk(o, depth) {
+    if (!o || typeof o !== 'object' || depth > 18) return;
+    if (Array.isArray(o)) {
+      o.forEach(x => walk(x, depth + 1));
+      return;
+    }
+    tryObject(o);
+    for (const v of Object.values(o)) walk(v, depth + 1);
+  }
+
+  if (fc && typeof fc === 'object') {
+    const totals = fc.totals ?? fc.total ?? fc.summary;
+    if (totals && typeof totals === 'object') tryObject(totals);
+    const hdr = fc.header ?? fc.heading ?? j.header;
+    if (hdr && typeof hdr === 'object') {
+      const dv = hdr.registrationDate ?? hdr.documentDate ?? hdr.date;
+      const ta = clean(hdr.totalA ?? hdr.sumA ?? hdr.turnover);
+      const tb = clean(hdr.totalB ?? hdr.sumB ?? hdr.vat);
+      if (dv && (ta || tb)) addRow(dv, ta, tb);
+    }
+    walk(fc, 0);
+  } else {
+    walk(j, 0);
+  }
+}
+
+function processFno328PdfText(text, year, quarter, data) {
+  const lines = String(text || '').replace(/\u00A0/g, ' ').split(/\n/);
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!/(328|013[\s._]*II|ндс|зачет|зачёт|ввоз|импорт|косвенн)/i.test(line)) continue;
+    const dm = line.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+    if (!dm) continue;
+    const d = new Date(+dm[3], +dm[2] - 1, +dm[1]);
+    if (isNaN(d.getTime()) || !periodDateOk(d, year, quarter)) continue;
+    const q = Math.floor(d.getMonth() / 3);
+    const nums = [...line.matchAll(/(\d{1,3}(?:\s\d{3})+[,.]\d{2}|\d[\d\s]{2,12}[,.]\d{2})/g)].map(m => clean(m[1])).filter(n => n > 1 && n < 1e12);
+    if (nums.length >= 2) {
+      const b = nums[nums.length - 1];
+      const a = nums[nums.length - 2];
+      if (a >= b * 0.4) { data[q].fno328A += a; data[q].fno328B += b; }
+    }
+  }
+}
+
+// ─── PERIOD SELECTOR ─────────────────────────────────────────────────────────
+function selectQ(el) {
+  document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  selectedQ = el.dataset.q;
+}
+
+// ─── PROCESSING ───────────────────────────────────────────────────────────────
+// ─── СТАВКИ НДС 2026 (НК РК ст.503) ─────────────────────────────────────────
+// 16% — основная; 5% — лекарства/медуслуги 2026; 10% — печатные издания; 0% — экспорт
+const RATE_MAIN = 0.16;
+const RATE_MED  = 0.05;
+const RATE_PRINT= 0.10;
+
+function periodDateOk(date, year, quarter) {
+  if (!date || isNaN(date.getTime())) return false;
+  if (date.getFullYear() !== year) return false;
+  if (typeof window.__fnoDemoMonth === 'number' && window.__fnoDemoMonth >= 0 && window.__fnoDemoMonth <= 11) {
+    return date.getMonth() === window.__fnoDemoMonth;
+  }
+  const qm = Math.floor(date.getMonth() / 3);
+  if (quarter !== null && qm !== quarter) return false;
+  return true;
+}
+
+function emptyQ() {
+  return {
+    // РЕАЛИЗАЦИЯ
+    rSumA:0, rSumB:0,           // 001 — облагаемый оборот 16%
+    rMedA:0,  rMedB:0,          // 001 льготная 5% (лекарства/мед)
+    rPrintA:0, rPrintB:0,       // 001 льготная 10% (печатные издания)
+    rZeroA:0,                    // 002 — 0% экспорт итого
+    rKorrA:0, rKorrB:0,         // 003 — корректировка реализации
+    rNotRkA:0,                   // 004 — не РК
+    rFreeA:0,                    // 005 — освобождённый
+    rOtherExport:0,              // 002 экспорт не ЕАЭС
+    rRussia:0, rBelarus:0, rArmenia:0, rKyrgyz:0,
+    // ПОСТУПЛЕНИЕ
+    pSumA:0, pSumB:0,           // 013 — НДС к зачёту (ЭСФ)
+    pMedA:0, pMedB:0,           // 013 зачёт 5%
+    pNoNdsA:0,                   // 015 — без НДС
+    pKorrNds:0,                  // 014 — корр. зачёта
+    // ГТД и 328 ФНО
+    gtdNds:0,                    // 016 НДС по ГТД (таможня, импорт из третьих стран)
+    gtdEaesNds:0,                // 016 НДС по ЕАЭС
+    fno328A:0, fno328B:0         // 013.II из 328 ФНО
+  };
+}
+
+function processRealizatsiya(wb, year, quarter, data) {
+  let sheetName = wb.SheetNames.find(n => n === 'Реализация' || n.toLowerCase().includes('реализ'));
+  if (!sheetName) sheetName = wb.SheetNames[0];
+  if (!sheetName) return 'Нет листов в книге';
+  const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: '' });
+  if (!rows.length) return 'Пустой лист';
+  const hIdx = findHeaderRowIndex(rows);
+  const map = buildEsfRealMap(rows[hIdx] || []);
+  applyAutoDetectToMap(rows, hIdx, map);
+  const body = rows.slice(hIdx + 1);
+  body.forEach(row => {
+    const status = String(row[map.status] || '').toLowerCase().trim();
+    if (status.includes('отозван') || status.includes('аннулир') || status.includes('отклон')) return;
+    const date = rowQuarterDateReal(map, row);
+    if (!date) return;
+    if (!periodDateOk(date, year, quarter)) return;
+    const q = Math.floor(date.getMonth() / 3);
+
+    const { ob, nds } = inferObNdsFromRow(row, map);
+    const bin = String(row[map.bin] || '').replace(/[^0-9]/g, '');
+    const addr = String(row[map.addr] || '').toLowerCase().trim();
+    const docType = String(row[map.dtype] || '').toLowerCase();
+    const kindCol = map.turnKind >= 0 ? String(row[map.turnKind] || '').toLowerCase() : '';
+    const rowText = row.map(c => String(c || '').toLowerCase()).join(' ');
+    const exempt = kindCol.includes('освобож') || kindCol.includes('474') || kindCol.includes('476') || kindCol.includes('475') || rowText.includes('освобожден');
+    const notTax = kindCol.includes('необлага') || kindCol.includes('не облага') || kindCol.includes('нерезид') || kindCol.includes('внерк');
+
+    const rate = ob > 0 ? Math.round((nds / ob) * 100) / 100 : 0;
+    const isMed = Math.abs(rate - 0.05) < 0.01;
+    const isPrint = Math.abs(rate - 0.10) < 0.01;
+
+    if (ob < 0 || nds < 0 || docType.includes('дополнит')) {
+      data[q].rKorrA += ob; data[q].rKorrB += nds;
+    } else if (nds > 0) {
+      if (isMed) { data[q].rMedA += ob; data[q].rMedB += nds; }
+      else if (isPrint) { data[q].rPrintA += ob; data[q].rPrintB += nds; }
+      else { data[q].rSumA += ob; data[q].rSumB += nds; }
+    } else if (nds === 0 && ob > 0) {
+      if (exempt) {
+        data[q].rFreeA += ob;
+      } else if (notTax) {
+        data[q].rNotRkA += ob;
+      } else {
+        let isEaes = false;
+        if (addr.includes('россия') || addr.includes('рф')) { data[q].rRussia += ob; isEaes = true; }
+        else if (addr.includes('беларусь') || addr.includes('белоруссия')) { data[q].rBelarus += ob; isEaes = true; }
+        else if (addr.includes('армения')) { data[q].rArmenia += ob; isEaes = true; }
+        else if (addr.includes('кыргыз') || addr.includes('киргиз')) { data[q].rKyrgyz += ob; isEaes = true; }
+        if (isEaes) data[q].rZeroA += ob;
+        else if (addr !== '' && bin && !bin.startsWith('00')) { data[q].rOtherExport += ob; data[q].rZeroA += ob; }
+        else if (!bin || /^0+$/.test(bin)) data[q].rNotRkA += ob;
+        else data[q].rFreeA += ob;
+      }
+    }
+  });
+  return null;
+}
+
+function processPostuplenie(wb, year, quarter, data) {
+  let sheetName = wb.SheetNames.find(n => n === 'Полученные' || n.toLowerCase().includes('получен') || n.toLowerCase().includes('поступлен'));
+  if (!sheetName) sheetName = wb.SheetNames[0];
+  if (!sheetName) return 'Нет листов в книге';
+  const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: '' });
+  if (!rows.length) return 'Пустой лист';
+  const hIdx = findHeaderRowIndex(rows);
+  const map = buildEsfPurchaseMap(rows[hIdx] || []);
+  applyAutoDetectToMap(rows, hIdx, map);
+  const body = rows.slice(hIdx + 1);
+  body.forEach(row => {
+    const status = String(row[map.status] || '').toLowerCase().trim();
+    if (status.includes('отозван') || status.includes('аннулир') || status.includes('отклон')) return;
+    const date = rowQuarterDatePost(map, row, year);
+    if (!date) return;
+    if (!periodDateOk(date, year, quarter)) return;
+    const q = Math.floor(date.getMonth() / 3);
+    const { ob, nds } = inferObNdsFromRow(row, map);
+    const rate = ob > 0 ? Math.round((nds / ob) * 100) / 100 : 0;
+    const isMed = Math.abs(rate - 0.05) < 0.01;
+    if (nds < 0) data[q].pKorrNds += nds;
+    else if (nds > 0) {
+      if (isMed) { data[q].pMedA += ob; data[q].pMedB += nds; }
+      else { data[q].pSumA += ob; data[q].pSumB += nds; }
+    } else if (nds === 0 && ob > 0) data[q].pNoNdsA += ob;
+  });
+  return null;
+}
+
+function processGtd(source, year, quarter, data) {
+  if (!source) return;
+  if (source.kind === 'pdf' && source.text) {
+    processGtdPdfText(source.text, year, quarter, data);
+    return;
+  }
+  if (!source.wb) return;
+  const wb = source.wb;
+  const sheetName = wb.SheetNames[0];
+  const rows = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1, defval: '' });
+  if (!rows || !rows.length) return;
+  const hIdx = findHeaderRowIndex(rows);
+  const map = buildGtdMap(rows[hIdx] || []);
+  const body = rows.slice(hIdx + 1);
+  const useCols = map.date >= 0 && map.nds >= 0;
+  body.forEach(row => {
+    let date = null;
+    if (useCols) date = excelDateToJS(row[map.date]);
+    if (!date) date = excelDateToJS(row[0] || row[1] || row[2]);
+    if (!date) return;
+    if (!periodDateOk(date, year, quarter)) return;
+    const q = Math.floor(date.getMonth() / 3);
+    if (useCols) nds = clean(row[map.nds]);
+    if (!nds) {
+      for (let c = row.length - 1; c >= 0; c--) {
+        const v = clean(row[c]);
+        if (v > 0 && v < 1e11) { nds = v; break; }
+      }
+    }
+    if (!nds) return;
+    let addr = '';
+    if (map.addr >= 0) addr = String(row[map.addr] || '').toLowerCase();
+    else addr = String(row[3] || row[4] || row[5] || '').toLowerCase();
+    const isEaes = addr.includes('россия') || addr.includes('рф') || addr.includes('беларус') || addr.includes('армен') || addr.includes('кыргыз') || addr.includes('киргиз') || addr.includes('еаэс');
+    if (isEaes) data[q].gtdEaesNds += nds;
+    else data[q].gtdNds += nds;
+  });
+}
+
+function processFno328(source, year, quarter, data) {
+  if (!source) return;
+  if (source.json) {
+    processFno328Json(source.json, year, quarter, data);
+    return;
+  }
+  if (source.kind === 'pdf' && source.text) {
+    processFno328PdfText(source.text, year, quarter, data);
+    return;
+  }
+  if (!source.wb) return;
+  const sheetName = source.wb.SheetNames[0];
+  const rows = XLSX.utils.sheet_to_json(source.wb.Sheets[sheetName], { header: 1, defval: '' });
+  const hIdx = findHeaderRowIndex(rows);
+  const map = buildEsfPurchaseMap(rows[hIdx] || []);
+  applyAutoDetectToMap(rows, hIdx, map);
+  const body = rows.slice(hIdx + 1);
+  body.forEach(row => {
+    const date = rowQuarterDatePost(map, row, year) || excelDateToJS(row[map.date] || row[3] || row[2] || row[1]);
+    if (!date) return;
+    if (!periodDateOk(date, year, quarter)) return;
+    const q = Math.floor(date.getMonth() / 3);
+    const inv = inferObNdsFromRow(row, map);
+    let ob = inv.ob, nds = inv.nds;
+    if (ob === 0 && nds === 0) {
+      ob = clean(row[map.ob] || row[12] || row[5] || row[4]);
+      nds = clean(row[map.nds] || row[13] || row[6] || row[5]);
+    }
+    data[q].fno328A += ob; data[q].fno328B += nds;
+  });
+}
+
+function processEsfLikePdfText(text, year, quarter, data, mode) {
+  const lines = String(text || '').split(/\n/);
+  for (const raw of lines) {
+    const line = raw.replace(/\u00A0/g, ' ').trim();
+    const dm = line.match(/(\d{2})\.(\d{2})\.(\d{4})/);
+    if (!dm) continue;
+    const date = new Date(+dm[3], +dm[2] - 1, +dm[1]);
+    if (isNaN(date.getTime()) || !periodDateOk(date, year, quarter)) continue;
+    const q = Math.floor(date.getMonth() / 3);
+    const nums = [...line.matchAll(/(\d[\d\s]{2,14}[,.]?\d{0,2})/g)].map(m => clean(m[1])).filter(n => n > 10 && n < 1e12).sort((a, b) => b - a);
+    if (nums.length < 2) continue;
+    let ob = nums[0], nds = nums[1];
+    if (nds > ob) { const t = ob; ob = nds; nds = t; }
+    const addr = line.toLowerCase();
+    const bin = (line.match(/\b(\d{12})\b/) || [])[1] || '';
+    const docType = line.toLowerCase();
+    if (mode === 'real') {
+      const rate = ob > 0 ? Math.round((nds / ob) * 100) / 100 : 0;
+      const isMed = Math.abs(rate - 0.05) < 0.01;
+      const isPrint = Math.abs(rate - 0.10) < 0.01;
+      if (ob < 0 || nds < 0 || docType.includes('дополнит')) { data[q].rKorrA += ob; data[q].rKorrB += nds; }
+      else if (nds > 0) {
+        if (isMed) { data[q].rMedA += ob; data[q].rMedB += nds; }
+        else if (isPrint) { data[q].rPrintA += ob; data[q].rPrintB += nds; }
+        else { data[q].rSumA += ob; data[q].rSumB += nds; }
+      } else if (nds === 0 && ob > 0) {
+        let isEaes = false;
+        if (addr.includes('россия') || addr.includes('рф')) { data[q].rRussia += ob; isEaes = true; }
+        else if (addr.includes('беларусь')) { data[q].rBelarus += ob; isEaes = true; }
+        else if (addr.includes('армения')) { data[q].rArmenia += ob; isEaes = true; }
+        else if (addr.includes('кыргыз') || addr.includes('киргиз')) { data[q].rKyrgyz += ob; isEaes = true; }
+        if (isEaes) data[q].rZeroA += ob;
+        else if (addr !== '' && bin && !bin.startsWith('00')) { data[q].rOtherExport += ob; data[q].rZeroA += ob; }
+        else if (!bin || /^0+$/.test(bin)) data[q].rNotRkA += ob;
+        else data[q].rFreeA += ob;
+      }
+    } else {
+      const rate = ob > 0 ? Math.round((nds / ob) * 100) / 100 : 0;
+      const isMed = Math.abs(rate - 0.05) < 0.01;
+      if (nds < 0) data[q].pKorrNds += nds;
+      else if (nds > 0) {
+        if (isMed) { data[q].pMedA += ob; data[q].pMedB += nds; }
+        else { data[q].pSumA += ob; data[q].pSumB += nds; }
+      } else if (nds === 0 && ob > 0) data[q].pNoNdsA += ob;
+    }
+  }
+}
+
+// ─── CALCULATE ────────────────────────────────────────────────────────────────
+function calculate() {
+  clearError();
+  const sess = getSession();
+  const isDemo = sess && sess.role === 'demo';
+  if (isDemo) {
+    window.__fnoDemoMonth = parseInt(document.getElementById('demoMonthSel').value, 10);
+    if (isNaN(window.__fnoDemoMonth)) window.__fnoDemoMonth = 0;
+  } else {
+    window.__fnoDemoMonth = null;
+  }
+  const hasAny = isDemo
+    ? !!(files.real && files.real.length)
+    : ((files.real && files.real.length) || (files.post && files.post.length) ||
+      (files.gtd && files.gtd.length) || (files.fno328 && files.fno328.length));
+  if (!hasAny) {
+    showError(isDemo ? 'Демо: загрузите файл реализации (ЭСФ).' : 'Загрузите хотя бы один файл');
+    return;
+  }
+
+  const year=parseInt(document.getElementById('yearSel').value);
+  const quarter = selectedQ==='all' ? null : parseInt(selectedQ);
+  reportYear=year; reportQ=selectedQ;
+
+  document.getElementById('loadingOverlay').classList.add('show');
+  document.getElementById('calcBtn').disabled = true;
+
+  setTimeout(() => {
+    try {
+      calcResult = null;
+      const data = [emptyQ(), emptyQ(), emptyQ(), emptyQ()];
+      const errs=[];
+
+      (files.real || []).forEach(src => {
+        if (src.wb) {
+          const e = processRealizatsiya(src.wb, year, quarter, data);
+          if (e) errs.push(e);
+        } else if (src.kind === 'pdf' && src.text) {
+          processEsfLikePdfText(src.text, year, quarter, data, 'real');
+        }
+      });
+      if (!isDemo) {
+        (files.post || []).forEach(src => {
+          if (src.wb) {
+            const e = processPostuplenie(src.wb, year, quarter, data);
+            if (e) errs.push(e);
+          } else if (src.kind === 'pdf' && src.text) {
+            processEsfLikePdfText(src.text, year, quarter, data, 'post');
+          }
+        });
+        (files.gtd || []).forEach(src => processGtd(src, year, quarter, data));
+        (files.fno328 || []).forEach(src => processFno328(src, year, quarter, data));
+      }
+
+      calcResult=data;
+      const msgs = errs.slice();
+      if (!isDemo) {
+        const gtdSum = data.reduce((s, q) => s + q.gtdNds + q.gtdEaesNds, 0);
+        const hasGtdPdf = (files.gtd || []).some(f => {
+          const nm = (f.name || (f.file && f.file.name) || '').toLowerCase();
+          return f.kind === 'pdf' || nm.endsWith('.pdf');
+        });
+        if (hasGtdPdf && gtdSum === 0) {
+          msgs.push('ГТД (PDF): сумма НДС не извлечена (0 ₸). Возможен скан без текстового слоя или нестандартная вёрстка — проверьте ДТ вручную.');
+        }
+      }
+      if (msgs.length) showError(msgs.join(' · '));
+      else clearError();
+
+      renderReport();
+      document.getElementById('reportSection').classList.remove('hidden');
+      document.getElementById('reportSection').scrollIntoView({behavior:'smooth',block:'start'});
+      persistWorkspace();
+    } catch(e){
+      showError('Ошибка расчёта: '+e.message);
+    }
+    window.__fnoDemoMonth = null;
+    document.getElementById('loadingOverlay').classList.remove('show');
+    document.getElementById('calcBtn').disabled = false;
+  },80);
+}
+
+// ─── RENDER REPORT ────────────────────────────────────────────────────────────
+const qLabels=['I квартал','II квартал','III квартал','IV квартал'];
+const qShort=['Q1','Q2','Q3','Q4'];
+
+function renderReport() {
+  const qs = reportQ==='all' ? [0,1,2,3] : [parseInt(reportQ)];
+  const org = activeCompany ? activeCompany.name : 'Компания не выбрана';
+  const iin = activeCompany ? 'БИН/ИИН: '+activeCompany.iin : '';
+
+  const container=document.getElementById('reportContent');
+  container.innerHTML='';
+
+  qs.forEach(q=>{
+    const d=calcResult[q];
+    // Итоги начисленного НДС (все ставки)
+    const chargedNds  = d.rSumB + d.rMedB + d.rPrintB + d.rKorrB;
+    // Итоги НДС к зачёту
+    const creditNds   = d.pSumB + d.pMedB + d.fno328B + d.pKorrNds + d.gtdNds + d.gtdEaesNds;
+    const toPay       = Math.max(0, chargedNds - creditNds);
+    const toRefund    = Math.max(0, creditNds - chargedNds);
+    // Облагаемый оборот всего (все ставки)
+    const totalObA    = d.rSumA + d.rMedA + d.rPrintA;
+    const totalObB    = chargedNds;
+    // Зачёт всего
+    const totalZachetA= d.pSumA + d.pMedA + d.fno328A;
+    const totalZachetB= Math.abs(creditNds);
+
+    const wrapper=document.createElement('div');
+    wrapper.className='report-wrapper print-include';
+
+    wrapper.innerHTML=`
+      <div class="report-top">
+        <div class="report-org">${esc(org)} ${iin ? '· '+esc(iin) : ''}</div>
+        <div class="report-heading">Декларация по НДС (ФНО 300.00) · НК РК 2026</div>
+        <div class="report-period">${reportYear} год · ${qLabels[q]}</div>
+      </div>
+
+      <!-- KPIs -->
+      <div class="report-kpis">
+        <div class="report-kpi">
+          <div class="report-kpi-label">Оборот облагаемый (все ставки)</div>
+          <div class="report-kpi-val" style="color:var(--blue)">${fmtNum(totalObA,'0')}</div>
+          <div class="report-kpi-sub">стр. 001A (16% + 5% + 10%)</div>
+        </div>
+        <div class="report-kpi">
+          <div class="report-kpi-label">НДС начислен</div>
+          <div class="report-kpi-val" style="color:var(--amber)">${fmtNum(totalObB,'0')}</div>
+          <div class="report-kpi-sub">стр. 012 (итог раздела I)</div>
+        </div>
+        <div class="report-kpi">
+          <div class="report-kpi-label">НДС к зачёту</div>
+          <div class="report-kpi-val" style="color:var(--purple)">${fmtNum(totalZachetB,'0')}</div>
+          <div class="report-kpi-sub">стр. 023 (итог раздела II)</div>
+        </div>
+        <div class="report-kpi">
+          <div class="report-kpi-label">${toPay>0?'К уплате':'К возврату'}</div>
+          <div class="report-kpi-val" style="color:${toPay>0?'var(--red)':'var(--green)'}">${fmtNum(toPay||toRefund,'0')}</div>
+          <div class="report-kpi-sub">стр. 030 (раздел III)</div>
+        </div>
+      </div>
+
+      <!-- РАЗДЕЛ I: Исчисление НДС -->
+      <div class="fno-section">
+        <div class="fno-section-head">
+          <div class="fno-section-badge" style="background:var(--blue)">I</div>
+          Раздел 1 — Исчисление НДС (Реализация)
+          <span style="margin-left:auto;font-size:10px;background:var(--blue-light);color:var(--blue);padding:2px 8px;border-radius:10px">Ставка 16% / 5% / 10% / 0%</span>
+        </div>
+        <table class="fno-table">
+          <thead><tr>
+            <th style="width:70px">Строка</th>
+            <th>Показатель</th>
+            <th class="right" style="width:200px">Оборот (A), ₸</th>
+            <th class="right" style="width:180px">НДС (B), ₸</th>
+          </tr></thead>
+          <tbody>
+            <tr class="total-row">
+              <td class="line-no">001</td>
+              <td class="line-label">Облагаемый оборот (все ставки)</td>
+              <td class="num ${totalObA?'hi-blue':'zero'}">${fmtNum(totalObA)}</td>
+              <td class="num ${totalObB?'hi-blue':'zero'}">${fmtNum(totalObB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">001.I</td>
+              <td class="line-label sub">по ставке 16% (основная)</td>
+              <td class="num ${d.rSumA?'pos':'zero'}">${fmtNum(d.rSumA)}</td>
+              <td class="num ${d.rSumB?'pos':'zero'}">${fmtNum(d.rSumB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">001.II</td>
+              <td class="line-label sub">по ставке 5% (лекарства / медуслуги)</td>
+              <td class="num ${d.rMedA?'pos':'zero'}">${fmtNum(d.rMedA)}</td>
+              <td class="num ${d.rMedB?'pos':'zero'}">${fmtNum(d.rMedB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">001.III</td>
+              <td class="line-label sub">по ставке 10% (печатные издания)</td>
+              <td class="num ${d.rPrintA?'pos':'zero'}">${fmtNum(d.rPrintA)}</td>
+              <td class="num ${d.rPrintB?'pos':'zero'}">${fmtNum(d.rPrintB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">002</td>
+              <td class="line-label">Оборот по ставке 0% (экспорт)</td>
+              <td class="num ${d.rZeroA?'pos':'zero'}">${fmtNum(d.rZeroA)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">002.I</td>
+              <td class="line-label sub">Россия (ЕАЭС)</td>
+              <td class="num ${d.rRussia?'pos':'zero'}">${fmtNum(d.rRussia)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">002.II</td>
+              <td class="line-label sub">Беларусь (ЕАЭС)</td>
+              <td class="num ${d.rBelarus?'pos':'zero'}">${fmtNum(d.rBelarus)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">002.III</td>
+              <td class="line-label sub">Армения (ЕАЭС)</td>
+              <td class="num ${d.rArmenia?'pos':'zero'}">${fmtNum(d.rArmenia)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">002.IV</td>
+              <td class="line-label sub">Кыргызстан (ЕАЭС)</td>
+              <td class="num ${d.rKyrgyz?'pos':'zero'}">${fmtNum(d.rKyrgyz)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">002.V</td>
+              <td class="line-label sub">Экспорт (третьи страны, не ЕАЭС)</td>
+              <td class="num ${d.rOtherExport?'pos':'zero'}">${fmtNum(d.rOtherExport)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">003</td>
+              <td class="line-label">Корректировка облагаемого оборота</td>
+              <td class="num ${d.rKorrA<0?'neg':d.rKorrA?'pos':'zero'}">${fmtNum(d.rKorrA)}</td>
+              <td class="num ${d.rKorrB<0?'neg':d.rKorrB?'pos':'zero'}">${fmtNum(d.rKorrB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">004</td>
+              <td class="line-label">Необлагаемый оборот (не РК)</td>
+              <td class="num ${d.rNotRkA?'pos':'zero'}">${fmtNum(d.rNotRkA)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">005</td>
+              <td class="line-label">Освобождённый оборот (ст.474 НК РК)</td>
+              <td class="num ${d.rFreeA?'pos':'zero'}">${fmtNum(d.rFreeA)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr class="total-row">
+              <td class="line-no">012</td>
+              <td class="line-label">НДС начисленный итого (001B + 003B)</td>
+              <td class="num">—</td>
+              <td class="num ${totalObB?'hi-blue':'zero'}">${fmtNum(totalObB)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- РАЗДЕЛ II: НДС к зачёту -->
+      <div class="fno-section">
+        <div class="fno-section-head">
+          <div class="fno-section-badge" style="background:var(--purple)">II</div>
+          Раздел 2 — НДС к зачёту (Поступление)
+          <span style="margin-left:auto;font-size:10px;background:var(--purple-light);color:var(--purple);padding:2px 8px;border-radius:10px">Извещение по зачёту — ст.480 п.8 НК РК 2026</span>
+        </div>
+        <table class="fno-table">
+          <thead><tr>
+            <th style="width:70px">Строка</th>
+            <th>Показатель</th>
+            <th class="right" style="width:200px">Оборот (A), ₸</th>
+            <th class="right" style="width:180px">НДС (B), ₸</th>
+          </tr></thead>
+          <tbody>
+            <tr class="total-row">
+              <td class="line-no">013</td>
+              <td class="line-label">НДС по товарам, работам, услугам (РК)</td>
+              <td class="num ${totalZachetA?'hi-blue':'zero'}">${fmtNum(totalZachetA)}</td>
+              <td class="num ${totalZachetB?'hi-blue':'zero'}">${fmtNum(d.pSumB+d.pMedB+d.fno328B)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">013.I</td>
+              <td class="line-label sub">по ЭСФ полученным (16%)</td>
+              <td class="num ${d.pSumA?'pos':'zero'}">${fmtNum(d.pSumA)}</td>
+              <td class="num ${d.pSumB?'pos':'zero'}">${fmtNum(d.pSumB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">013.I-мед</td>
+              <td class="line-label sub">по ЭСФ полученным (5% — лекарства/мед)</td>
+              <td class="num ${d.pMedA?'pos':'zero'}">${fmtNum(d.pMedA)}</td>
+              <td class="num ${d.pMedB?'pos':'zero'}">${fmtNum(d.pMedB)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">013.II</td>
+              <td class="line-label sub">по 328 ФНО (реестр покупок)</td>
+              <td class="num ${d.fno328A?'pos':'zero'}">${fmtNum(d.fno328A)}</td>
+              <td class="num ${d.fno328B?'pos':'zero'}">${fmtNum(d.fno328B)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">014</td>
+              <td class="line-label">Корректировка зачёта</td>
+              <td class="num zero">—</td>
+              <td class="num ${d.pKorrNds<0?'neg':d.pKorrNds?'pos':'zero'}">${fmtNum(d.pKorrNds)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">015</td>
+              <td class="line-label">Поступления без НДС</td>
+              <td class="num ${d.pNoNdsA?'pos':'zero'}">${fmtNum(d.pNoNdsA)}</td>
+              <td class="num zero">—</td>
+            </tr>
+            <tr>
+              <td class="line-no">016.I</td>
+              <td class="line-label">НДС по ГТД — третьи страны (дата выпуска)</td>
+              <td class="num zero">—</td>
+              <td class="num ${d.gtdNds?'pos':'zero'}">${fmtNum(d.gtdNds)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">016.II</td>
+              <td class="line-label">НДС по импорту из ЕАЭС (дата уплаты)</td>
+              <td class="num zero">—</td>
+              <td class="num ${d.gtdEaesNds?'pos':'zero'}">${fmtNum(d.gtdEaesNds)}</td>
+            </tr>
+            <tr class="total-row">
+              <td class="line-no">023</td>
+              <td class="line-label">Итого НДС к зачёту</td>
+              <td class="num">—</td>
+              <td class="num ${totalZachetB?'hi-blue':'zero'}">${fmtNum(totalZachetB)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- РАЗДЕЛ III: Расчёт -->
+      <div class="fno-section">
+        <div class="fno-section-head">
+          <div class="fno-section-badge" style="background:var(--green)">III</div>
+          Раздел 3 — Расчёт НДС за отчётный период (ст.503 НК РК 2026)
+        </div>
+        <table class="fno-table">
+          <thead><tr>
+            <th style="width:70px">Строка</th>
+            <th>Показатель</th>
+            <th class="right" colspan="2">Сумма НДС, ₸</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="line-no">030.I</td>
+              <td class="line-label">НДС начисленный (стр.012)</td>
+              <td colspan="2" class="num ${chargedNds?'pos':'zero'}">${fmtNum(chargedNds)}</td>
+            </tr>
+            <tr>
+              <td class="line-no">030.II</td>
+              <td class="line-label">НДС к зачёту (стр.023)</td>
+              <td colspan="2" class="num ${totalZachetB?'pos':'zero'}">${fmtNum(totalZachetB)}</td>
+            </tr>
+            <tr class="total-row">
+              <td class="line-no">031</td>
+              <td class="line-label">${toPay>0?'НДС к уплате в бюджет':'НДС к возврату из бюджета'}</td>
+              <td colspan="2" class="num ${toPay>0?'hi-red':'hi-green'}">${fmtNum(toPay||toRefund,'0')}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="result-banner ${toPay>0?'pay':toRefund>0?'refund':'zero'}">
+          <span style="font-size:24px">${toPay>0?'💳':toRefund>0?'💰':'✅'}</span>
+          <div>
+            <div style="font-size:12px;font-weight:600;opacity:.75;margin-bottom:2px">${qLabels[q]} ${reportYear} · НДС 16%</div>
+            <div>${toPay>0?'К уплате в бюджет':toRefund>0?'К возврату из бюджета':'НДС = 0, к уплате нет'}</div>
+          </div>
+          <div class="amount" style="margin-left:auto">${fmtNum(toPay||toRefund,'—')} ₸</div>
+        </div>
+
+        <div style="margin:12px 20px 16px;padding:10px 14px;background:var(--amber-light);border-radius:8px;font-size:12px;color:var(--amber)">
+          ⚠️ <strong>Напоминание (НК РК 2026, ст.480 п.8):</strong> До сдачи ФНО 300.00 за данный квартал необходимо зарегистрировать <strong>Извещение по зачёту НДС</strong> в ИС ЭСФ для всех полученных ЭСФ, принятых к зачёту.
+        </div>
+      </div>`;
+
+    container.appendChild(wrapper);
+  });
+}
+
+
+// ─── JSON EXPORT (ИСНА) ───────────────────────────────────────────────────────
+function buildTemplate(year, quarter) {
+  const comp = activeCompany || {};
+  const today = new Date();
+  const todayStr = String(today.getDate()).padStart(2,'0')+'.'+
+                   String(today.getMonth()+1).padStart(2,'0')+'.'+today.getFullYear();
+  return {
+    taxpayerCode: comp.iin || '',
+    periodType: 'QUARTER',
+    periodValue: quarter + 1,
+    fnoYear: year,
+    taxpayerNameRu: comp.name || '',
+    taxpayerNameEn: '', taxpayerNameKk: '', taxpayerNameQq: '',
+    taxpayerType: 'UL',
+    creatorCode: comp.iin || '',
+    creatorType: 'UL',
+    creatorNameRu: comp.name || '',
+    creatorNameKk: '', creatorNameEn: '', creatorNameQq: '',
+    declarationTypes: ['NEXT_PRIORITY'],
+    ogdCodeByLocation: comp.ogd || null,
+    ogdCodeByResidence: comp.ogd || null,
+    currencyCode: 'KZT',
+    noticeNumber: '', noticeDate: null,
+    taxpayerCategories: [],
+    fnoContent: {
+      type: 'fno300',
+      taxpayerResponsibility: {
+        fullNameOfHead: comp.head || '',
+        isResponsible: true,
+        declarationDate: todayStr,
+        fullNameOfAuthorizedPerson: null,
+        fullNameOfEmployeeWhoAcceptedDeclaration: null,
+        declarationReceiptDate: null,
+        declarationIncomingNumber: null,
+        postmarkDate: null
+      },
+      commonInfo: {
+        selectedApplications: [],
+        _7A: '', _7B: null, _9: '01',
+        _10A: comp.c10a || '', _10B: comp.c10b || '',
+        _12: {A:false,B:true}, _13: {A:false,B:true}
+      },
+      VATCalculation: {
+        _001:{A:{value:null},B:{value:null}},
+        _001_I:{A:null,B:null}, _001_I_1:{A:null,B:null},
+        _001_I_2:{A:null,B:null}, _001_I_3:{A:null,B:null},
+        _001_I_4:{total:null,A:null,B:null},
+        _001_II:{A:null,B:null}, _002:null,
+        _003_A:{value:null,manual:true}, _003_B:{value:null,manual:true},
+        _004_A:null, _005:{value:null,manual:true},
+        _006:null, _006_I:null, _007:{value:100,manual:true},
+        _008:null, _009:null, _010:null,
+        _011:{value:null,manual:true}, _012:null
+      },
+      amountOfVAT: {
+        _013:{A:{value:null},B:{value:null}},
+        _013_I:{A:null,B:null}, _013_II:{A:null,B:null},
+        _013_II_1:{A:null,B:null}, _013_II_2:{A:null,B:null},
+        _014:{A:{value:null,manual:true},B:{value:null,manual:true}},
+        _015:{A:null,B:null}, _016_I:{A:null,B:null}, _016_II:{A:null,B:null},
+        _017:{value:null,manual:true}, _018:null, _019:null, _020:{A:null,B:null},
+        _021:null, _022:{value:null,manual:true}, _023:null,
+        _024:{_024_I:null,_024_II:null,_024_III:null,_024:null},
+        _025:{I:null,II:null,III:null,IV:null},
+        _026:{I:null,II:null,III:null}, _027:{I:null,II:null},
+        _028:{value:null,manual:true},
+        _029:{A:{value:null,manual:true},B:{value:null,manual:true}}
+      },
+      VATCalculations: {_030:{I:null,II:null},_031_B:null},
+      claimsForTheRefund: {
+        _032:{_032:null,I:false,II:false,III_A:null,III_B:null},
+        numbers:{I:null,II:null}
+      },
+      application_01:{
+        _001:{B_I:null,B_II:null,B_III:null,B_IV:null,B_V:null,B:null},
+        _002B:null, _003:{B:{manual:false,value:null},table:[]},
+        _004_B:null, _005_B:null, _006_B:null, _007_B:null, _008_B:null
+      },
+      application_02:{
+        _001:{B:null,table:[]}, _002B:null, _003B:null, _004B:null,
+        _005B:null, _006B:null, _007B:null, _008B:null, _009B:null,
+        _010:{B:null,table:[]}, _011:null, _012:null, _013:null, _014:null
+      },
+      application_03:{
+        _001:{A:null,B:null},I:{A:null,B:null},II:{A:null,B:null},III:{A:null,B:null},
+        IV:{A:null,B:null},V:{A:null,B:null},VI:{A:null,B:null},
+        VII:{A:null,B:null},VIII:{A:null,B:null},IX:{A:null,B:null}
+      },
+      application_04: [],
+      application_05:{
+        _001:{A:null,B:null,table:[]}, _002:{A:null,B:null}, _003:{A:null,B:null},
+        _004:{A:null,B:null}, _005_A:null, _006:{A:null,table:[]},
+        _007:{B:null,table:[]}, _008_B:null, _009_B:null, _010_B:null
+      },
+      application_06:[], application_07:[], application_08:[]
+    }
+  };
+}
+
+function fillJson(tpl, d, year, q) {
+  const json = JSON.parse(JSON.stringify(tpl));
+  const shell = buildTemplate(year, q);
+  if (!json.fnoContent) json.fnoContent = shell.fnoContent;
+  if (!json.fnoContent.VATCalculation) json.fnoContent.VATCalculation = shell.fnoContent.VATCalculation;
+  if (!json.fnoContent.amountOfVAT) json.fnoContent.amountOfVAT = shell.fnoContent.amountOfVAT;
+  if (!json.fnoContent.VATCalculations) json.fnoContent.VATCalculations = shell.fnoContent.VATCalculations;
+  json.fnoYear = year;
+  json.periodValue = q + 1;
+
+  const comp = activeCompany || {};
+  if (comp.iin) {
+    json.taxpayerCode = comp.iin;
+    json.creatorCode = comp.iin;
+    json.taxpayerNameRu = comp.name || json.taxpayerNameRu;
+    json.creatorNameRu = comp.name || json.creatorNameRu;
+  }
+  if (comp.ogd != null && comp.ogd !== '') {
+    json.ogdCodeByLocation = comp.ogd;
+    json.ogdCodeByResidence = comp.ogd;
+  }
+  if (json.fnoContent && json.fnoContent.taxpayerResponsibility && comp.head) {
+    json.fnoContent.taxpayerResponsibility.fullNameOfHead = comp.head;
+  }
+  if (json.fnoContent && json.fnoContent.commonInfo) {
+    if (comp.c10a) json.fnoContent.commonInfo._10A = comp.c10a;
+    if (comp.c10b) json.fnoContent.commonInfo._10B = comp.c10b;
+  }
+
+  const chargedNds = d.rSumB + d.rMedB + d.rPrintB + d.rKorrB;
+  const creditNds = d.pSumB + d.pMedB + d.pKorrNds + d.gtdNds + d.gtdEaesNds + d.fno328B;
+  const toPay = Math.max(0, chargedNds - creditNds);
+  const toRefund = Math.max(0, creditNds - chargedNds);
+
+  const vc = json.fnoContent.VATCalculation;
+  const av = json.fnoContent.amountOfVAT;
+
+  const totalObTax = d.rSumA + d.rMedA + d.rPrintA;
+  const totalNdsTax = d.rSumB + d.rMedB + d.rPrintB;
+
+  vc._001 = { A: { value: Math.round(totalObTax) }, B: { value: Math.round(totalNdsTax) } };
+  vc._001_I = { A: Math.round(totalObTax), B: Math.round(totalNdsTax) };
+  vc._001_I_1 = { A: Math.round(d.rSumA), B: Math.round(d.rSumB) };
+  vc._001_I_2 = { A: d.rMedA ? Math.round(d.rMedA) : null, B: d.rMedB ? Math.round(d.rMedB) : null };
+  vc._001_I_3 = { A: d.rPrintA ? Math.round(d.rPrintA) : null, B: d.rPrintB ? Math.round(d.rPrintB) : null };
+  vc._006 = Math.round(totalObTax);
+  vc._006_I = Math.round(totalObTax);
+  vc._007 = { value: 100, manual: true };
+  vc._012 = Math.round(chargedNds);
+
+  if (d.rKorrA !== 0 || d.rKorrB !== 0) {
+    vc._003_A = { value: Math.round(d.rKorrA), manual: true };
+    vc._003_B = { value: Math.round(d.rKorrB), manual: true };
+  }
+  if (d.rZeroA > 0) vc._002 = Math.round(d.rZeroA);
+
+  av._013 = {
+    A: { value: Math.round(d.pSumA + d.pMedA + d.fno328A) },
+    B: { value: Math.round(d.pSumB + d.pMedB + d.fno328B) }
+  };
+  av._013_I = { A: Math.round(d.pSumA + d.pMedA), B: Math.round(d.pSumB + d.pMedB) };
+  av._013_II = { A: Math.round(d.fno328A), B: Math.round(d.fno328B) };
+  av._015 = { A: Math.round(d.pNoNdsA), B: null };
+  if (d.gtdNds) av._016_I = { A: null, B: Math.round(d.gtdNds) };
+  if (d.gtdEaesNds) av._016_II = { A: null, B: Math.round(d.gtdEaesNds) };
+  av._021 = Math.round(d.pSumA + d.pMedA + d.fno328A + d.pNoNdsA);
+  av._023 = Math.round(Math.abs(creditNds));
+  av._025 = { I: Math.round(Math.abs(creditNds)), II: null, III: null, IV: null };
+
+  if (d.pKorrNds !== 0) {
+    av._014 = { A: { value: null, manual: true }, B: { value: Math.round(d.pKorrNds), manual: true } };
+  }
+
+  json.fnoContent.VATCalculations._030 = toPay > 0
+    ? { I: Math.round(toPay), II: null }
+    : { I: null, II: Math.round(toRefund) };
+
+  if (d.rNotRkA) vc._004_A = Math.round(d.rNotRkA);
+  if (d.rFreeA) vc._005 = { value: Math.round(d.rFreeA), manual: true };
+
+  const a01 = json.fnoContent.application_01 && json.fnoContent.application_01._001;
+  if (a01) {
+    a01.B_I = d.rRussia ? Math.round(d.rRussia) : null;
+    a01.B_II = d.rBelarus ? Math.round(d.rBelarus) : null;
+    a01.B_III = d.rArmenia ? Math.round(d.rArmenia) : null;
+    a01.B_IV = d.rKyrgyz ? Math.round(d.rKyrgyz) : null;
+    a01.B_V = d.rOtherExport ? Math.round(d.rOtherExport) : null;
+    a01.B = d.rZeroA ? Math.round(d.rZeroA) : null;
+  }
+  const a02 = json.fnoContent.application_02 && json.fnoContent.application_02._001;
+  if (a02 && d.rFreeA) a02.B = Math.round(d.rFreeA);
+
+  return json;
+}
+
+function exportJson() {
+  if (!calcResult) return;
+  const year = reportYear;
+  const qs = reportQ==='all' ? [0,1,2,3] : [parseInt(reportQ)];
+
+  qs.forEach(q=>{
+    const d = calcResult[q];
+    const hasData = Object.values(d).some(v=>v!==0);
+    if (!hasData && reportQ==='all') return;
+
+    const tpl = files.template && files.template.json
+      ? JSON.parse(JSON.stringify(files.template.json))
+      : buildTemplate(year, q);
+    const json = fillJson(tpl, d, year, q);
+    const blob = new Blob([JSON.stringify(json,null,'\t')],{type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'ФНО300_'+(activeCompany?activeCompany.iin+'_':'')+year+'_'+(q+1)+'кв.json';
+    a.click();
+  });
+}
+
+// close modal on overlay click
+document.getElementById('companyModal').addEventListener('click', function(e){
+  if(e.target===this) closeModal();
+});
+['forgotModal','adminModal','projectsModal'].forEach(function(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
+
+(function initDocStoreUi() {
+  const docBody = document.getElementById('docStoreBody');
+  if (docBody) {
+    docBody.addEventListener('click', function(e) {
+      const b = e.target.closest('.doc-remove');
+      if (!b) return;
+      removeStoredDoc(b.getAttribute('data-cat'), b.getAttribute('data-id'));
+    });
+  }
+  renderDocStore();
+})();
+</script>
+</body>
+</html>
