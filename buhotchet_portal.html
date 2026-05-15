@@ -30,148 +30,50 @@
   --shadow:0 1px 3px rgba(20,18,16,.06),0 8px 24px rgba(20,18,16,.08);
   --radius:14px;
 }
-
-body{
-  background:var(--bg);
-  font-family:'Golos Text',system-ui,sans-serif;
-  color:var(--text);
-  min-height:100vh;
-  font-size:15px;
-  line-height:1.55;
-  -webkit-font-smoothing:antialiased;
-}
+body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:var(--text);min-height:100vh;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
 
 /* HEADER */
-.header{
-  background:var(--brand);
-  padding:0 24px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:58px;
-  position:sticky;top:0;z-index:200;
-  box-shadow:0 2px 12px rgba(0,0,0,.25);
-}
+.header{background:var(--brand);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25)}
 .logo-area{display:flex;align-items:center;gap:14px}
-.logo-icon{
-  width:38px;height:38px;
-  background:var(--gold);
-  border-radius:9px;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:700;font-size:15px;color:#fff;
-  letter-spacing:-.5px;
-  flex-shrink:0;
-}
+.logo-icon{width:38px;height:38px;background:var(--gold);border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:15px;color:#fff;letter-spacing:-.5px;flex-shrink:0}
 .logo-text-wrap{line-height:1.25}
 .logo-name{font-size:17px;font-weight:700;color:#fff;letter-spacing:-.2px}
 .logo-sub{font-size:11px;color:rgba(255,255,255,.6);font-weight:500}
 
-.period-bar{
-  display:flex;align-items:center;gap:10px;
-}
+/* PERIOD BAR — только для дашборда */
+.period-bar{display:flex;align-items:center;gap:10px}
 .period-label{font-size:12px;color:rgba(255,255,255,.65)}
-.period-sel{
-  background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:7px;
-  color:#fff;
-  font-family:'Golos Text',sans-serif;
-  font-size:13px;
-  padding:6px 10px;
-  cursor:pointer;outline:none;
-}
+.period-sel{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:7px;color:#fff;font-family:'Golos Text',sans-serif;font-size:13px;padding:5px 8px;cursor:pointer;outline:none}
 .period-sel option{color:#000}
 
-.company-chip{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.22);
-  border-radius:8px;
-  padding:6px 12px;
-  cursor:pointer;
-  transition:background .15s;
-  max-width:220px;
-}
+.company-chip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 12px;cursor:pointer;transition:background .15s;max-width:220px}
 .company-chip:hover{background:rgba(255,255,255,.2)}
 .company-chip-name{font-size:13px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .company-chip-iin{font-size:11px;color:rgba(255,255,255,.6)}
 .company-chip-arrow{color:rgba(255,255,255,.5);font-size:10px;flex-shrink:0}
 
 /* NAV */
-.nav{
-  background:#1A3D70;
-  display:flex;
-  gap:2px;
-  padding:0 20px;
-  border-bottom:2px solid var(--gold);
-}
-.nav-btn{
-  background:none;border:none;cursor:pointer;
-  padding:10px 18px;
-  font-family:'Golos Text',sans-serif;
-  font-size:13px;font-weight:500;
-  color:rgba(255,255,255,.6);
-  border-bottom:2px solid transparent;
-  margin-bottom:-2px;
-  transition:color .15s;
-  white-space:nowrap;
-  display:flex;align-items:center;gap:6px;
-}
+.nav{background:#1A3D70;display:flex;gap:2px;padding:0 20px;border-bottom:2px solid var(--gold)}
+.nav-btn{background:none;border:none;cursor:pointer;padding:10px 18px;font-family:'Golos Text',sans-serif;font-size:13px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;white-space:nowrap;display:flex;align-items:center;gap:6px}
 .nav-btn:hover{color:rgba(255,255,255,.85)}
 .nav-btn.active{color:#fff;border-bottom-color:var(--gold)}
 
 /* CONTENT */
-.content{
-  max-width:1320px;
-  margin:0 auto;
-  padding:24px 20px 48px;
-}
-
-/* PAGES */
+.content{max-width:1320px;margin:0 auto;padding:24px 20px 48px}
 .page{display:none}
 .page.active{display:block}
 
-/* IFRAME pages */
-.iframe-wrap{
-  width:100%;
-  background:var(--surface);
-  border-radius:var(--radius);
-  overflow:hidden;
-  box-shadow:var(--shadow);
-  height:calc(100vh - 120px);
-}
-.iframe-wrap iframe{
-  width:100%;height:100%;
-  border:none;
-}
+/* IFRAME */
+.iframe-wrap{width:100%;background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);height:calc(100vh - 120px)}
+.iframe-wrap iframe{width:100%;height:100%;border:none}
 
 /* CARDS */
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  padding:24px 26px;
-  margin-bottom:20px;
-  box-shadow:var(--shadow);
-}
-.card-title{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:1.25rem;
-  font-weight:600;
-  color:var(--text);
-  margin-bottom:18px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:10px;
-}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px 26px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-title{font-family:'Playfair Display',Georgia,serif;font-size:1.25rem;font-weight:600;color:var(--text);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 
 /* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-.kpi-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:16px 18px;
-  position:relative;overflow:hidden;
-  box-shadow:var(--shadow);
-}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;box-shadow:var(--shadow)}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .kpi-card.blue::before{background:var(--brand2)}
 .kpi-card.gold::before{background:var(--gold)}
@@ -188,23 +90,11 @@ body{
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
 .field{display:flex;flex-direction:column;gap:5px}
 .field label{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.02em}
-.field input,.field select,.field textarea{
-  background:var(--surface2);border:1px solid var(--border2);
-  border-radius:10px;padding:10px 13px;
-  font-size:14px;font-family:'Golos Text',sans-serif;
-  color:var(--text);outline:none;transition:border-color .18s;
-  width:100%;
-}
+.field input,.field select,.field textarea{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'Golos Text',sans-serif;color:var(--text);outline:none;transition:border-color .18s;width:100%}
 .field input:focus,.field select:focus{border-color:rgba(46,107,196,.55);background:var(--surface);box-shadow:0 0 0 3px rgba(46,107,196,.1)}
 
 /* BUTTONS */
-.btn{
-  padding:10px 20px;border-radius:10px;
-  font-weight:700;font-size:13px;cursor:pointer;border:none;
-  font-family:'Golos Text',sans-serif;
-  display:inline-flex;align-items:center;gap:7px;
-  transition:transform .13s,box-shadow .18s;white-space:nowrap;
-}
+.btn{padding:10px 20px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:'Golos Text',sans-serif;display:inline-flex;align-items:center;gap:7px;transition:transform .13s,box-shadow .18s;white-space:nowrap}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:var(--brand);color:#fff;box-shadow:0 3px 12px rgba(26,77,143,.3)}
 .btn-primary:hover{background:var(--brand2)}
@@ -215,47 +105,24 @@ body{
 .btn-sm{padding:7px 13px;font-size:12px;border-radius:8px}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
 
-/* COMPANY LIST */
-.company-list{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-.company-item{
-  display:flex;align-items:center;gap:12px;
-  padding:13px 16px;
-  border:1px solid var(--border);border-radius:11px;
-  background:var(--surface2);
-  cursor:pointer;transition:all .18s;
-}
-.company-item:hover,.company-item.active{
-  border-color:rgba(26,77,143,.4);background:var(--brand-light);
-}
-.company-item.active{box-shadow:0 0 0 2px rgba(26,77,143,.2)}
-.company-badge{
-  width:42px;height:42px;border-radius:9px;
-  background:var(--brand);
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:700;color:#fff;
-  flex-shrink:0;
-}
-.company-info{flex:1;min-width:0}
-.company-item-name{font-weight:700;font-size:14px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.company-item-iin{font-size:12px;color:var(--text3)}
-.company-item-actions{display:flex;gap:6px;flex-shrink:0}
-.company-del{background:none;border:none;color:var(--text3);cursor:pointer;font-size:18px;padding:3px 6px;border-radius:6px;line-height:1;transition:color .15s}
-.company-del:hover{color:var(--red)}
-.company-select-btn{
-  font-family:'Golos Text',sans-serif;
-  font-size:11px;padding:5px 10px;
-  border-radius:6px;font-weight:600;cursor:pointer;border:none;
-  background:var(--brand-light);color:var(--brand);
-  transition:background .15s;
-}
-.company-select-btn:hover{background:var(--brand);color:#fff}
-.company-select-btn.selected{background:var(--brand);color:#fff}
+/* COMPANY GRID */
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:18px}
+.company-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .18s;position:relative}
+.company-card:hover,.company-card.active{border-color:rgba(26,77,143,.45);background:var(--brand-light);box-shadow:0 0 0 3px rgba(26,77,143,.1)}
+.company-card.active{border-color:var(--brand)}
+.company-card-badge{width:46px;height:46px;border-radius:10px;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin-bottom:12px}
+.company-card-name{font-weight:700;font-size:14px;color:var(--text);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-card-meta{font-size:12px;color:var(--text3);line-height:1.5}
+.company-card-actions{position:absolute;top:12px;right:12px;display:flex;gap:4px}
+.company-card-btn{background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:6px;font-size:11px;font-weight:700;transition:all .15s}
+.company-card-select{background:var(--brand-light);color:var(--brand)}
+.company-card-select:hover{background:var(--brand);color:#fff}
+.company-card-select.selected{background:var(--brand);color:#fff}
+.company-card-del{background:var(--red-light);color:var(--red)}
+.company-card-del:hover{background:var(--red);color:#fff}
 
 /* REPORT LIST */
-.report-row{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;
-}
+.report-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
 .report-row:last-child{border-bottom:none}
 .report-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .ri-blue{background:var(--brand-light)}
@@ -291,60 +158,26 @@ body{
 
 /* CALCULATOR */
 .tax-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.tax-tab{
-  font-family:'Golos Text',sans-serif;
-  font-size:12px;font-weight:600;
-  padding:6px 14px;border-radius:7px;
-  border:1px solid var(--border2);
-  background:var(--surface2);color:var(--text2);
-  cursor:pointer;transition:all .15s;
-}
+.tax-tab{font-family:'Golos Text',sans-serif;font-size:12px;font-weight:600;padding:6px 14px;border-radius:7px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s}
 .tax-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-.big-input{
-  font-family:'Golos Text',sans-serif;
-  font-size:22px;font-weight:700;
-  padding:13px 16px;
-  border:1px solid var(--border2);border-radius:10px;
-  background:var(--surface2);color:var(--text);
-  width:100%;outline:none;margin-bottom:14px;
-}
+.big-input{font-family:'Golos Text',sans-serif;font-size:22px;font-weight:700;padding:13px 16px;border:1px solid var(--border2);border-radius:10px;background:var(--surface2);color:var(--text);width:100%;outline:none;margin-bottom:14px}
 .big-input:focus{border-color:var(--brand2)}
-.calc-result{
-  background:var(--brand);
-  border-radius:10px;padding:18px 20px;
-  display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;
-}
+.calc-result{background:var(--brand);border-radius:10px;padding:18px 20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
 .cr-label{font-size:11px;color:rgba(255,255,255,.65);margin-bottom:4px}
 .cr-value{font-size:18px;font-weight:700;color:#fff}
 .cr-value span{font-size:11px;font-weight:400}
 
 /* MODAL */
-.modal-overlay{
-  position:fixed;inset:0;
-  background:rgba(14,12,10,.5);
-  z-index:500;display:none;
-  align-items:center;justify-content:center;
-  backdrop-filter:blur(4px);
-}
+.modal-overlay{position:fixed;inset:0;background:rgba(14,12,10,.5);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
-.modal{
-  background:var(--surface);
-  border-radius:18px;
-  padding:28px;
-  width:560px;max-width:calc(100vw - 32px);
-  box-shadow:0 24px 56px rgba(20,18,16,.18);
-  max-height:85vh;overflow-y:auto;
-  border:1px solid var(--border);
-}
-.modal-title{
-  font-family:'Playfair Display',Georgia,serif;
-  font-size:1.3rem;font-weight:600;color:var(--text);
-  margin-bottom:20px;
-  display:flex;align-items:center;justify-content:space-between;
-}
+.modal{background:var(--surface);border-radius:18px;padding:28px;width:560px;max-width:calc(100vw - 32px);box-shadow:0 24px 56px rgba(20,18,16,.18);max-height:85vh;overflow-y:auto;border:1px solid var(--border)}
+.modal-title{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;font-weight:600;color:var(--text);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
 .modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--text3);line-height:1}
 .modal-close:hover{color:var(--text)}
 .divider{height:1px;background:var(--border);margin:16px 0}
+
+/* DASHBOARD KPI from real data */
+.dash-empty{text-align:center;padding:40px;color:var(--text3);font-size:14px}
 
 @media(max-width:768px){
   .kpi-grid{grid-template-columns:1fr 1fr}
@@ -354,7 +187,14 @@ body{
   .nav-btn{padding:10px 12px;font-size:12px}
   .header{padding:0 14px}
   .iframe-wrap{height:calc(100vh - 108px)}
+  .company-grid{grid-template-columns:1fr}
 }
+
+/* PERIOD MODAL */
+.period-modal-grid{display:flex;flex-direction:column;gap:14px}
+.period-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.period-row label{font-size:12px;font-weight:700;color:var(--text2);width:80px}
+.period-sel-full{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:8px 12px;font-family:'Golos Text',sans-serif;font-size:14px;color:var(--text);flex:1;outline:none}
 </style>
 </head>
 <body>
@@ -369,15 +209,39 @@ body{
     </div>
   </div>
 
-  <div class="period-bar">
+  <!-- Период — только на дашборде -->
+  <div class="period-bar" id="periodBarWrap">
     <span class="period-label">Период:</span>
-    <select class="period-sel" id="periodSel" onchange="onPeriodChange()">
-      <option>2025 / I квартал</option>
-      <option>2025 / II квартал</option>
-      <option selected>2025 / III квартал</option>
-      <option>2025 / IV квартал</option>
-      <option>2025 / Год</option>
-      <option>2026 / I квартал</option>
+    <select class="period-sel" id="yearSel" onchange="onPeriodChange()">
+      <option value="2024">2024</option>
+      <option value="2025">2025</option>
+      <option value="2026" selected>2026</option>
+      <option value="2027">2027</option>
+      <option value="2028">2028</option>
+      <option value="2029">2029</option>
+      <option value="2030">2030</option>
+    </select>
+    <select class="period-sel" id="monthSel" onchange="onPeriodChange()">
+      <option value="all" selected>Весь год</option>
+      <option value="1">Январь</option>
+      <option value="2">Февраль</option>
+      <option value="3">Март</option>
+      <option value="4">Апрель</option>
+      <option value="5">Май</option>
+      <option value="6">Июнь</option>
+      <option value="7">Июль</option>
+      <option value="8">Август</option>
+      <option value="9">Сентябрь</option>
+      <option value="10">Октябрь</option>
+      <option value="11">Ноябрь</option>
+      <option value="12">Декабрь</option>
+    </select>
+    <select class="period-sel" id="quarterSel" onchange="onPeriodChange()">
+      <option value="all" selected>Все кварталы</option>
+      <option value="1">I квартал</option>
+      <option value="2">II квартал</option>
+      <option value="3">III квартал</option>
+      <option value="4">IV квартал</option>
     </select>
   </div>
 
@@ -405,85 +269,104 @@ body{
 
 <!-- ========== DASHBOARD ========== -->
 <div class="page active" id="page-dashboard">
-  <div class="kpi-grid">
+  <div class="kpi-grid" id="dashKpiGrid">
     <div class="kpi-card blue">
-      <div class="kpi-label">Выручка (квартал)</div>
-      <div class="kpi-value">84 300 000 <span>₸</span></div>
-      <div class="kpi-sub up">↑ +12.4% vs прошлый квартал</div>
+      <div class="kpi-label">Сотрудников (ФНО 200)</div>
+      <div class="kpi-value" id="dash-emp">—</div>
+      <div class="kpi-sub" id="dash-emp-sub">нет данных</div>
     </div>
     <div class="kpi-card gold">
-      <div class="kpi-label">НДС к уплате</div>
-      <div class="kpi-value">10 116 000 <span>₸</span></div>
-      <div class="kpi-sub">до 25 октября 2025</div>
+      <div class="kpi-label">НДС начислен (ФНО 300)</div>
+      <div class="kpi-value" id="dash-nds-charged">— <span>₸</span></div>
+      <div class="kpi-sub" id="dash-nds-sub">нет данных</div>
     </div>
     <div class="kpi-card green">
-      <div class="kpi-label">КПН (авансы)</div>
-      <div class="kpi-value">4 200 000 <span>₸</span></div>
-      <div class="kpi-sub up">✓ Оплачено вовремя</div>
+      <div class="kpi-label">НДС к зачёту (ФНО 300)</div>
+      <div class="kpi-value" id="dash-nds-credit">— <span>₸</span></div>
+      <div class="kpi-sub" id="dash-nds-credit-sub">нет данных</div>
     </div>
     <div class="kpi-card red">
-      <div class="kpi-label">Просроченных</div>
-      <div class="kpi-value">1</div>
-      <div class="kpi-sub down">ФНО 200.00 — требует внимания</div>
+      <div class="kpi-label">НДС к уплате / возврату</div>
+      <div class="kpi-value" id="dash-nds-pay">—</div>
+      <div class="kpi-sub" id="dash-nds-pay-sub">нет данных</div>
     </div>
   </div>
 
   <div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
     <div class="card">
       <div class="card-title">
-        Последние отчёты
+        Формы отчётности
         <button class="btn btn-ghost btn-sm" onclick="showPage('fno300',document.querySelectorAll('.nav-btn')[2])">ФНО 300 →</button>
       </div>
       <div class="report-row">
         <div class="report-icon ri-blue">📄</div>
-        <div class="report-name">ФНО 300.00 — Декларация по НДС, III кв. 2025</div>
-        <div class="report-date">01.10.2025</div>
-        <div class="badge draft">Черновик</div>
+        <div class="report-name">ФНО 300.00 — Декларация по НДС</div>
+        <div class="report-date">НДС 16% · НК РК 2026</div>
+        <div class="badge pending">Активна</div>
       </div>
       <div class="report-row">
-        <div class="report-icon ri-green">✅</div>
-        <div class="report-name">ФНО 100.00 — КПН, аванс III кв. 2025</div>
-        <div class="report-date">20.09.2025</div>
-        <div class="badge done">Принят</div>
+        <div class="report-icon ri-green">💼</div>
+        <div class="report-name">ФНО 200.00 — ИПН, ОПВ, СО, ОСМС</div>
+        <div class="report-date">Квартальная · 2026</div>
+        <div class="badge pending">Активна</div>
       </div>
       <div class="report-row">
-        <div class="report-icon ri-red">⚠️</div>
-        <div class="report-name">ФНО 200.00 — ИПН и СН, II кв. 2025</div>
-        <div class="report-date">Срок: 31.07.2025</div>
-        <div class="badge overdue">Просрочен</div>
+        <div class="report-icon ri-warn">📋</div>
+        <div class="report-name">ФНО 910.00 — Упрощённая декларация</div>
+        <div class="report-date">Полугодовая · 4% с оборота</div>
+        <div class="badge draft">Справочно</div>
       </div>
       <div class="report-row">
-        <div class="report-icon ri-warn">📤</div>
-        <div class="report-name">ФНО 910.00 — Упрощённая декларация, I п/г 2025</div>
-        <div class="report-date">15.08.2025</div>
-        <div class="badge done">Принят</div>
+        <div class="report-icon ri-blue">📊</div>
+        <div class="report-name">ФНО 100.00 — КПН (корпоративный)</div>
+        <div class="report-date">Годовая + авансы · 20%</div>
+        <div class="badge draft">Справочно</div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title" style="font-size:1rem">Ближайшие дедлайны</div>
+      <div class="card-title" style="font-size:1rem">Ближайшие дедлайны 2026</div>
       <div class="dl-item">
-        <div class="dl-date urgent"><div class="dl-day">25</div><div class="dl-mon">окт</div></div>
+        <div class="dl-date urgent"><div class="dl-day">25</div><div class="dl-mon">апр</div></div>
         <div>
           <div class="dl-name">ФНО 300.00 (НДС)</div>
-          <div class="dl-days" style="color:var(--red)">Осталось 11 дней</div>
+          <div class="dl-days" style="color:var(--text3)">I квартал 2026</div>
         </div>
       </div>
       <div class="dl-item">
-        <div class="dl-date soon"><div class="dl-day">31</div><div class="dl-mon">окт</div></div>
+        <div class="dl-date urgent"><div class="dl-day">15</div><div class="dl-mon">май</div></div>
         <div>
           <div class="dl-name">ФНО 200.00 (ИПН/ОПВ)</div>
-          <div class="dl-days" style="color:var(--warn)">Осталось 17 дней</div>
+          <div class="dl-days" style="color:var(--text3)">I квартал 2026</div>
         </div>
       </div>
       <div class="dl-item">
-        <div class="dl-date ok"><div class="dl-day">20</div><div class="dl-mon">ноя</div></div>
+        <div class="dl-date soon"><div class="dl-day">25</div><div class="dl-mon">июл</div></div>
         <div>
-          <div class="dl-name">ФНО 100.00 (КПН аванс)</div>
-          <div class="dl-days">Осталось 37 дней</div>
+          <div class="dl-name">ФНО 300.00 (НДС)</div>
+          <div class="dl-days">II квартал 2026</div>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-date ok"><div class="dl-day">15</div><div class="dl-mon">авг</div></div>
+        <div>
+          <div class="dl-name">ФНО 200.00 (ИПН/ОПВ)</div>
+          <div class="dl-days">II квартал 2026</div>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- ФНО 200 данные из localStorage -->
+  <div class="card" id="dashFno200Card" style="display:none">
+    <div class="card-title" style="font-size:1rem">Данные ФНО 200 (из расчёта)</div>
+    <div id="dashFno200Content"></div>
+  </div>
+
+  <!-- ФНО 300 данные из localStorage -->
+  <div class="card" id="dashFno300Card" style="display:none">
+    <div class="card-title" style="font-size:1rem">Данные ФНО 300 (из расчёта)</div>
+    <div id="dashFno300Content"></div>
   </div>
 </div>
 
@@ -492,30 +375,40 @@ body{
   <div class="card">
     <div class="card-title">
       Мои компании
-      <button class="btn btn-primary btn-sm" onclick="openAddCompanyForm()">+ Добавить</button>
+      <button class="btn btn-primary btn-sm" onclick="openAddCompanyForm()">+ Добавить компанию</button>
     </div>
-    <div class="company-list" id="companyList">
-      <div style="text-align:center;padding:24px;color:var(--text3);font-size:14px" id="emptyMsg">
-        Нет компаний. Добавьте первую компанию ниже.
+    <div class="company-grid" id="companyGrid">
+      <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text3);font-size:14px" id="emptyMsg">
+        Нет компаний. Нажмите «+ Добавить компанию».
       </div>
     </div>
+
     <div id="addCompanyForm" style="display:none">
       <div class="divider"></div>
-      <div style="font-size:14px;font-weight:700;margin-bottom:14px;color:var(--text)">Новая компания</div>
+      <div style="font-size:14px;font-weight:700;margin-bottom:16px;color:var(--text)">Новая компания</div>
       <div class="form-grid">
         <div class="field"><label>Наименование компании *</label><input type="text" id="nc_name" placeholder="ТОО Ромашка"></div>
         <div class="field"><label>БИН / ИИН *</label><input type="text" id="nc_iin" placeholder="123456789012" maxlength="12"></div>
         <div class="field"><label>Руководитель</label><input type="text" id="nc_head" placeholder="Иванов Иван Иванович"></div>
-        <div class="field"><label>Код НО (налогового органа)</label><input type="text" id="nc_ogd" placeholder="0101"></div>
-        <div class="field"><label>Код территории (стр. 10А)</label><input type="text" id="nc_ter" placeholder="59001"></div>
-        <div class="field"><label>Форма собственности</label>
+        <div class="field"><label>Телефон</label><input type="text" id="nc_phone" placeholder="+7 701 000 00 00"></div>
+        <div class="field"><label>Организационная форма</label>
           <select id="nc_form">
-            <option>ТОО</option><option>ИП</option><option>АО</option><option>ГП</option><option>ОАО</option>
+            <option value="ТОО">ТОО</option>
+            <option value="ИП">ИП</option>
+            <option value="АО">АО</option>
           </select>
         </div>
+        <div class="field"><label>Режим налогообложения</label>
+          <select id="nc_mode">
+            <option value="ОУР">ОУР (Общеустановленный)</option>
+            <option value="Упрощёнка">Упрощённая декларация</option>
+          </select>
+        </div>
+        <div class="field"><label>Электронная почта</label><input type="text" id="nc_email" placeholder="buh@company.kz"></div>
+        <div class="field"><label>Адрес</label><input type="text" id="nc_addr" placeholder="Алматы, ул. Абая 1"></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="saveCompany()">Сохранить компанию</button>
+        <button class="btn btn-primary" onclick="saveCompany()">💾 Сохранить компанию</button>
         <button class="btn btn-ghost" onclick="closeAddCompanyForm()">Отмена</button>
       </div>
     </div>
@@ -523,8 +416,8 @@ body{
 
   <div class="card" style="background:var(--brand-light);border-color:rgba(26,77,143,.2)">
     <div style="font-size:13px;color:var(--brand);line-height:1.6">
-      💡 <strong>Как это работает:</strong> выберите активную компанию — она автоматически подставится в ФНО 300 и ФНО 200. 
-      Данные хранятся в вашем браузере. При переходе на вкладку с формой отчётности компания будет загружена.
+      💡 <strong>Как это работает:</strong> выберите активную компанию — она автоматически подставится в ФНО 300 и ФНО 200.
+      Данные хранятся в вашем браузере.
     </div>
   </div>
 </div>
@@ -545,15 +438,18 @@ body{
 
 <!-- ========== CALCULATOR ========== -->
 <div class="page" id="page-calc">
-  <div class="card" style="max-width:640px">
-    <div class="card-title">Налоговый калькулятор Казахстан 2025</div>
+  <div class="card" style="max-width:680px">
+    <div class="card-title">Налоговый калькулятор — Казахстан 2026</div>
     <div class="tax-tabs" id="taxTabs">
-      <button class="tax-tab active" onclick="setTax('nds',this)">НДС (12%)</button>
+      <button class="tax-tab active" onclick="setTax('nds',this)">НДС (16%)</button>
       <button class="tax-tab" onclick="setTax('kpn',this)">КПН (20%)</button>
       <button class="tax-tab" onclick="setTax('ipn',this)">ИПН (10%)</button>
       <button class="tax-tab" onclick="setTax('opv',this)">ОПВ (10%)</button>
-      <button class="tax-tab" onclick="setTax('so',this)">СО (3.5%)</button>
-      <button class="tax-tab" onclick="setTax('osms',this)">ОСМС (3%)</button>
+      <button class="tax-tab" onclick="setTax('opvr',this)">ОПВР (3.5%)</button>
+      <button class="tax-tab" onclick="setTax('so',this)">СО (5%)</button>
+      <button class="tax-tab" onclick="setTax('sn',this)">СН (6%)</button>
+      <button class="tax-tab" onclick="setTax('osms',this)">ООСМС (3%)</button>
+      <button class="tax-tab" onclick="setTax('vosms',this)">ВОСМС (2%)</button>
     </div>
     <label class="field" style="margin-bottom:14px">
       <span style="font-size:12px;font-weight:700;color:var(--text2);margin-bottom:5px;display:block">Сумма (тенге)</span>
@@ -561,46 +457,76 @@ body{
     </label>
     <div class="calc-result">
       <div><div class="cr-label">База / оборот</div><div class="cr-value" id="cr-base">1 000 000 <span>₸</span></div></div>
-      <div><div class="cr-label">Сумма налога</div><div class="cr-value" id="cr-tax">120 000 <span>₸</span></div></div>
-      <div><div class="cr-label">Итого с налогом</div><div class="cr-value" id="cr-total">1 120 000 <span>₸</span></div></div>
+      <div><div class="cr-label">Сумма налога</div><div class="cr-value" id="cr-tax">160 000 <span>₸</span></div></div>
+      <div><div class="cr-label">Итого с налогом</div><div class="cr-value" id="cr-total">1 160 000 <span>₸</span></div></div>
     </div>
   </div>
 
-  <div class="card" style="max-width:640px">
-    <div class="card-title" style="font-size:1rem">Ставки налогов — Казахстан 2025</div>
+  <div class="card" style="max-width:680px">
+    <div class="card-title" style="font-size:1rem">Ставки и базовые показатели — Казахстан 2026</div>
     <table class="rtable">
-      <thead><tr><th>Налог</th><th>Ставка</th><th>База</th><th>Форма</th></tr></thead>
+      <thead><tr><th>Показатель</th><th>Ставка / Значение</th><th>База расчёта</th><th>Форма</th></tr></thead>
       <tbody>
-        <tr><td>НДС</td><td>12% / 0%</td><td>Облагаемый оборот</td><td>ФНО 300.00</td></tr>
+        <tr><td><strong>МРП 2026</strong></td><td>4 325 ₸</td><td>Базовый показатель</td><td>—</td></tr>
+        <tr><td><strong>МЗП 2026</strong></td><td>85 000 ₸</td><td>Минимальная з/плата</td><td>—</td></tr>
+        <tr><td>НДС</td><td>16%</td><td>Облагаемый оборот</td><td>ФНО 300.00</td></tr>
         <tr><td>КПН</td><td>20%</td><td>Налогооблагаемый доход</td><td>ФНО 100.00</td></tr>
-        <tr><td>ИПН</td><td>10%</td><td>Облагаемый доход физлица</td><td>ФНО 200.00</td></tr>
-        <tr><td>ОПВ</td><td>10%</td><td>Доход работника</td><td>ФНО 200.00</td></tr>
-        <tr><td>СО</td><td>3.5%</td><td>Доход − ОПВ</td><td>ФНО 200.00</td></tr>
-        <tr><td>ОСМС</td><td>3%</td><td>Доход работника</td><td>ФНО 200.00</td></tr>
-        <tr><td>Упрощёнка</td><td>3%</td><td>Доход</td><td>ФНО 910.00</td></tr>
+        <tr><td>ИПН (с з/платы)</td><td>10% / 15%*</td><td>Доход − ОПВ − ВОСМС − 30 МРП</td><td>ФНО 200.00</td></tr>
+        <tr><td>ОПВ</td><td>10%</td><td>Доход (макс. 50 МЗП)</td><td>ФНО 200.00</td></tr>
+        <tr><td>ОПВР</td><td>3,5%</td><td>Доход работодателя</td><td>ФНО 200.00</td></tr>
+        <tr><td>Социальные отчисления (СО)</td><td>5%</td><td>Доход − ОПВ (1–7 МЗП)</td><td>ФНО 200.00</td></tr>
+        <tr><td>Социальный налог (СН)</td><td>6%</td><td>ФОТ − ОПВ − ВОСМС (ТОО ОУР)</td><td>ФНО 200.00</td></tr>
+        <tr><td>ВОСМС (работник)</td><td>2%</td><td>Доход (макс. 20 МЗП)</td><td>ФНО 200.00</td></tr>
+        <tr><td>ООСМС (работодатель)</td><td>3%</td><td>Доход (макс. 40 МЗП)</td><td>ФНО 200.00</td></tr>
+        <tr><td>Единый платёж (ЕП)</td><td>24,8%</td><td>ФОТ</td><td>ФНО 200.00</td></tr>
+        <tr><td>ОППВ (добровольные)</td><td>5%</td><td>Доход работника</td><td>ФНО 200.00</td></tr>
+        <tr><td>Упрощёнка (ИП/ТОО)</td><td>4%</td><td>Доход за полугодие</td><td>ФНО 910.00</td></tr>
       </tbody>
     </table>
+    <div style="margin-top:10px;font-size:12px;color:var(--text3);background:var(--warn-light);padding:10px 14px;border-radius:8px">
+      * ИПН 15% применяется к части дохода, превышающей 8 500 МРП (36 762 500 ₸) в год (нарастающим итогом). Базовый вычет — 30 МРП = 129 750 ₸/мес.
+    </div>
+  </div>
+
+  <!-- Калькулятор зарплаты -->
+  <div class="card" style="max-width:680px">
+    <div class="card-title" style="font-size:1rem">Калькулятор зарплаты (ОУР 2026)</div>
+    <div class="form-grid">
+      <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
+      <div class="field"><label>Вычет 30 МРП заявлен?</label>
+        <select id="salDed" onchange="calcSalary()">
+          <option value="1">Да (стандартный)</option>
+          <option value="0">Нет</option>
+        </select>
+      </div>
+    </div>
+    <div id="salResult" style="background:var(--surface2);border-radius:10px;padding:16px;font-size:13px;margin-top:10px"></div>
   </div>
 </div>
 
 <!-- ========== DEADLINES ========== -->
 <div class="page" id="page-deadlines">
   <div class="card">
-    <div class="card-title">Календарь сроков сдачи — 2025–2026</div>
+    <div class="card-title">Календарь сроков сдачи — 2026</div>
     <table class="rtable">
-      <thead><tr><th>Срок</th><th>Форма</th><th>Налог / Взнос</th><th>Период</th><th>Штраф</th></tr></thead>
+      <thead><tr><th>Срок</th><th>Форма</th><th>Налог / Взнос</th><th>Период</th><th>Штраф (МРП = 4 325 ₸)</th></tr></thead>
       <tbody>
-        <tr><td style="color:var(--red);font-weight:700">25 окт 2025</td><td>ФНО 300.00</td><td>НДС</td><td>III кв. 2025</td><td>15–30 МРП</td></tr>
-        <tr><td style="color:var(--warn);font-weight:700">31 окт 2025</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>III кв. 2025</td><td>5 МРП + пени</td></tr>
-        <tr><td>20 ноя 2025</td><td>ФНО 100.00</td><td>КПН (аванс)</td><td>ноябрь 2025</td><td>Пеня 1.5× ставка НБ РК</td></tr>
-        <tr><td>25 янв 2026</td><td>ФНО 300.00</td><td>НДС</td><td>IV кв. 2025</td><td>15–30 МРП</td></tr>
-        <tr><td>31 мар 2026</td><td>ФНО 100.00</td><td>КПН годовой</td><td>2025 год</td><td>30–150 МРП</td></tr>
-        <tr><td>31 мар 2026</td><td>ФНО 851.00</td><td>Земельный налог</td><td>2025 год</td><td>10 МРП + пени</td></tr>
-        <tr><td>31 мар 2026</td><td>ФНО 870.00</td><td>Имущественный налог</td><td>2025 год</td><td>10 МРП + пени</td></tr>
+        <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>I кв. 2026</td><td>15–30 МРП</td></tr>
+        <tr><td style="color:var(--red);font-weight:700">15 май 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>I кв. 2026</td><td>5 МРП + пени</td></tr>
+        <tr><td style="color:var(--warn);font-weight:700">25 июл 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>II кв. 2026</td><td>15–30 МРП</td></tr>
+        <tr><td style="color:var(--warn);font-weight:700">15 авг 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>II кв. 2026</td><td>5 МРП + пени</td></tr>
+        <tr><td>15 авг 2026</td><td>ФНО 910.00</td><td>Упрощённая декларация</td><td>I п/г 2026</td><td>5 МРП</td></tr>
+        <tr><td>25 окт 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>III кв. 2026</td><td>15–30 МРП</td></tr>
+        <tr><td>15 ноя 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>III кв. 2026</td><td>5 МРП + пени</td></tr>
+        <tr><td>25 янв 2027</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>IV кв. 2026</td><td>15–30 МРП</td></tr>
+        <tr><td>15 фев 2027</td><td>ФНО 910.00</td><td>Упрощённая декларация</td><td>II п/г 2026</td><td>5 МРП</td></tr>
+        <tr><td>31 мар 2027</td><td>ФНО 100.00</td><td>КПН годовой (20%)</td><td>2026 год</td><td>30–150 МРП</td></tr>
+        <tr><td>15 май 2027</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>IV кв. 2026</td><td>5 МРП + пени</td></tr>
       </tbody>
     </table>
     <div style="margin-top:12px;padding:10px 14px;background:var(--brand-light);border-radius:8px;font-size:12px;color:var(--brand)">
-      МРП в 2025 году = 3 932 ₸. При просрочке сверх 90 дней — административная ответственность по КоАП РК.
+      МРП в 2026 году = 4 325 ₸. При просрочке сверх 90 дней — административная ответственность по КоАП РК.
+      Новый НК РК (Закон 214-VIII от 18.07.2025) действует с 01.01.2026.
     </div>
   </div>
 </div>
@@ -608,17 +534,19 @@ body{
 <!-- ========== KBK ========== -->
 <div class="page" id="page-kbk">
   <div class="card">
-    <div class="card-title">КБК и КНП — Казахстан 2025</div>
+    <div class="card-title">КБК и КНП — Казахстан 2026</div>
     <table class="rtable">
       <thead><tr><th>КБК</th><th>Налог / Платёж</th><th>КНП (тип)</th><th>Периодичность</th></tr></thead>
       <tbody>
-        <tr><td style="font-family:monospace">101102</td><td>НДС на товары внутри страны</td><td>911 — текущий платёж</td><td>Квартальный</td></tr>
-        <tr><td style="font-family:monospace">101101</td><td>КПН с юридических лиц</td><td>911 — текущий, 912 — аванс</td><td>Авансы ежемесячно</td></tr>
-        <tr><td style="font-family:monospace">101201</td><td>ИПН у источника выплаты</td><td>911 — текущий</td><td>Квартальный</td></tr>
-        <tr><td style="font-family:monospace">902101</td><td>ОПВ (обяз. пенс. взносы)</td><td>171 — ОПВ работника</td><td>Ежемесячно</td></tr>
-        <tr><td style="font-family:monospace">902201</td><td>ОППВ (взносы работодателя)</td><td>172 — ОППВ</td><td>Ежемесячно</td></tr>
-        <tr><td style="font-family:monospace">904101</td><td>СО (социальные отчисления)</td><td>991 — текущий</td><td>Ежемесячно</td></tr>
-        <tr><td style="font-family:monospace">904201</td><td>ОСМС (медицинское страхование)</td><td>991 — текущий</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">101102</td><td>НДС на товары внутри страны (16%)</td><td>911 — текущий платёж</td><td>Квартальный</td></tr>
+        <tr><td style="font-family:monospace">101101</td><td>КПН с юридических лиц (20%)</td><td>911 — текущий, 912 — аванс</td><td>Авансы ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">101201</td><td>ИПН у источника выплаты (10%)</td><td>911 — текущий</td><td>Квартальный</td></tr>
+        <tr><td style="font-family:monospace">902101</td><td>ОПВ (обяз. пенс. взносы, 10%)</td><td>171 — ОПВ работника</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">902201</td><td>ОПВР (взносы работодателя, 3,5%)</td><td>172 — ОПВР</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">902301</td><td>ОППВ (доп. пенс. взносы, 5%)</td><td>173 — ОППВ</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">904101</td><td>СО (социальные отчисления, 5%)</td><td>991 — текущий</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">904201</td><td>ООСМС (работодатель, 3%)</td><td>991 — текущий</td><td>Ежемесячно</td></tr>
+        <tr><td style="font-family:monospace">904301</td><td>ВОСМС (работник, 2%)</td><td>991 — текущий</td><td>Ежемесячно</td></tr>
         <tr><td style="font-family:monospace">104401</td><td>Налог на имущество</td><td>911 — текущий</td><td>Ежеквартально</td></tr>
         <tr><td style="font-family:monospace">104301</td><td>Земельный налог</td><td>911 — текущий</td><td>Ежеквартально</td></tr>
         <tr><td style="font-family:monospace">104101</td><td>Налог на транспортные средства</td><td>911 — текущий</td><td>Ежегодно</td></tr>
@@ -636,7 +564,7 @@ body{
       Выбор активной компании
       <button class="modal-close" onclick="closeCompanyModal()">✕</button>
     </div>
-    <div class="company-list" id="modalCompanyList" style="max-height:320px;overflow-y:auto"></div>
+    <div id="modalCompanyList" style="max-height:360px;overflow-y:auto;display:flex;flex-direction:column;gap:10px"></div>
     <div id="noCompaniesMsg" style="display:none;text-align:center;padding:24px;color:var(--text3);font-size:13px">
       Компаний нет. Перейдите во вкладку «Компании», чтобы добавить.
     </div>
@@ -648,10 +576,11 @@ body{
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────
+// ─── CONSTANTS ────────────────────────────────────────────────────────────
 const LS_COMPANIES = 'buhotchet_companies';
 const LS_ACTIVE = 'buhotchet_active_company';
 
+// ─── STORAGE ─────────────────────────────────────────────────────────────
 function loadCompanies() {
   try { return JSON.parse(localStorage.getItem(LS_COMPANIES) || '[]'); } catch(e) { return []; }
 }
@@ -665,8 +594,6 @@ function setActive(comp) {
   if (comp) localStorage.setItem(LS_ACTIVE, JSON.stringify(comp));
   else localStorage.removeItem(LS_ACTIVE);
   updateHeaderCompany(comp);
-  // notify iframes via storage event (cross-origin won't work but same-origin will)
-  // Iframes watch 'storage' event on same origin
 }
 
 // ─── NAVIGATION ──────────────────────────────────────────────────────────
@@ -675,6 +602,129 @@ function showPage(id, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
+  // Показываем фильтр периода только на дашборде
+  const periodBar = document.getElementById('periodBarWrap');
+  if (periodBar) periodBar.style.display = (id === 'dashboard') ? 'flex' : 'none';
+  // Обновить дашборд при переключении на него
+  if (id === 'dashboard') refreshDashboard();
+}
+
+// ─── PERIOD ───────────────────────────────────────────────────────────────
+function onPeriodChange() {
+  const monthSel = document.getElementById('monthSel');
+  const quarterSel = document.getElementById('quarterSel');
+  // Логика: если выбран месяц ≠ all, очищаем квартал, и наоборот
+  if (event && event.target) {
+    if (event.target.id === 'monthSel' && monthSel.value !== 'all') {
+      quarterSel.value = 'all';
+    } else if (event.target.id === 'quarterSel' && quarterSel.value !== 'all') {
+      monthSel.value = 'all';
+    }
+  }
+  refreshDashboard();
+}
+
+function getPeriodLabel() {
+  const year = document.getElementById('yearSel').value;
+  const month = document.getElementById('monthSel').value;
+  const quarter = document.getElementById('quarterSel').value;
+  if (month !== 'all') {
+    const mNames = ['','Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+    return mNames[parseInt(month)] + ' ' + year;
+  }
+  if (quarter !== 'all') {
+    return ['','I','II','III','IV'][parseInt(quarter)] + ' квартал ' + year;
+  }
+  return year + ' год';
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────
+function refreshDashboard() {
+  // Читаем данные ФНО 300 из localStorage (сохранённые расчёты)
+  const year = parseInt(document.getElementById('yearSel').value);
+  const monthFilter = document.getElementById('monthSel').value;
+  const quarterFilter = document.getElementById('quarterSel').value;
+
+  // Ищем calcResult от fno300
+  let fno300Data = null;
+  try {
+    // fno300 сохраняет данные в fno300_data_buhotchet@portal.kz или admin
+    const keys = ['fno300_data_buhotchet_portal.kz', 'fno300_data_u_buhotchet_portal_kz'];
+    for (const k of Object.keys(localStorage)) {
+      if (k.startsWith('fno300_data_')) {
+        try {
+          const d = JSON.parse(localStorage.getItem(k) || '{}');
+          if (d.calcResult && d.reportYear === year) { fno300Data = d; break; }
+        } catch(e){}
+      }
+    }
+  } catch(e){}
+
+  let fno200Data = null;
+  try {
+    for (const k of Object.keys(localStorage)) {
+      if (k.startsWith('fno200_') || k === 'fno200state') {
+        try {
+          const d = JSON.parse(localStorage.getItem(k) || '{}');
+          if (d) { fno200Data = d; break; }
+        } catch(e){}
+      }
+    }
+  } catch(e){}
+
+  // Обновить KPI
+  updateDashKpi(fno300Data, fno200Data, year, monthFilter, quarterFilter);
+}
+
+function updateDashKpi(fno300, fno200, year, monthFilter, quarterFilter) {
+  // Определяем нужные кварталы
+  let quarters = [0,1,2,3];
+  if (quarterFilter !== 'all') {
+    quarters = [parseInt(quarterFilter) - 1];
+  } else if (monthFilter !== 'all') {
+    const m = parseInt(monthFilter);
+    quarters = [Math.floor((m-1)/3)];
+  }
+
+  const fmt = n => n === null || n === undefined ? '—' : Math.round(n).toLocaleString('ru-RU') + ' ₸';
+
+  if (fno300 && fno300.calcResult) {
+    const cr = fno300.calcResult;
+    let charged = 0, credit = 0;
+    quarters.forEach(q => {
+      if (cr[q]) {
+        charged += (cr[q].rSumB||0) + (cr[q].rMedB||0) + (cr[q].rPrintB||0) + (cr[q].rKorrB||0);
+        credit += (cr[q].pSumB||0) + (cr[q].pMedB||0) + (cr[q].fno328B||0) + (cr[q].pKorrNds||0) + (cr[q].gtdNds||0) + (cr[q].gtdEaesNds||0);
+      }
+    });
+    const pay = Math.max(0, charged - credit);
+    const refund = Math.max(0, credit - charged);
+
+    document.getElementById('dash-nds-charged').innerHTML = fmt(charged).replace(' ₸','') + ' <span>₸</span>';
+    document.getElementById('dash-nds-sub').textContent = getPeriodLabel() + ' · ФНО 300';
+    document.getElementById('dash-nds-credit').innerHTML = fmt(credit).replace(' ₸','') + ' <span>₸</span>';
+    document.getElementById('dash-nds-credit-sub').textContent = 'к зачёту · НДС 16%';
+    if (pay > 0) {
+      document.getElementById('dash-nds-pay').innerHTML = fmt(pay).replace(' ₸','') + ' <span style="font-size:12px">₸ к уплате</span>';
+      document.getElementById('dash-nds-pay-sub').textContent = 'перечислить в бюджет';
+    } else if (refund > 0) {
+      document.getElementById('dash-nds-pay').innerHTML = fmt(refund).replace(' ₸','') + ' <span style="font-size:12px">₸ возврат</span>';
+      document.getElementById('dash-nds-pay-sub').textContent = 'к возврату из бюджета';
+    } else {
+      document.getElementById('dash-nds-pay').innerHTML = '0 <span>₸</span>';
+      document.getElementById('dash-nds-pay-sub').textContent = 'НДС = 0';
+    }
+  }
+
+  if (fno200 && (fno200.monthEntries || fno200.savedCompanies)) {
+    // Считаем кол-во сотрудников из сохранённого состояния ФНО 200
+    const entries = fno200.monthEntries || [];
+    const empCount = new Set(entries.map(e => e.name || e.id).filter(Boolean)).size;
+    if (empCount > 0) {
+      document.getElementById('dash-emp').textContent = empCount;
+      document.getElementById('dash-emp-sub').textContent = 'уникальных сотрудников';
+    }
+  }
 }
 
 // ─── HEADER COMPANY ──────────────────────────────────────────────────────
@@ -698,7 +748,6 @@ function openCompanyModal() {
 function closeCompanyModal() {
   document.getElementById('companyModal').classList.remove('open');
 }
-
 function renderModalCompanyList() {
   const companies = loadCompanies();
   const active = loadActive();
@@ -711,75 +760,67 @@ function renderModalCompanyList() {
   }
   empty.style.display = 'none';
   list.innerHTML = companies.map((c, i) => `
-    <div class="company-item ${active && active.iin===c.iin?'active':''}">
-      <div class="company-badge">${(c.name||'?')[0].toUpperCase()}</div>
-      <div class="company-info">
-        <div class="company-item-name">${esc(c.name)}</div>
-        <div class="company-item-iin">${esc(c.iin||'')} · ${esc(c.form||'')}${c.head?' · '+esc(c.head):''}</div>
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:${active && active.iin===c.iin?'var(--brand-light)':'var(--surface2)'}">
+      <div style="width:38px;height:38px;border-radius:9px;background:var(--brand);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px;flex-shrink:0">${(c.name||'?')[0].toUpperCase()}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:14px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.name)}</div>
+        <div style="font-size:12px;color:var(--text3)">${esc(c.iin||'')} · ${esc(c.form||'')} · ${esc(c.mode||'')}</div>
       </div>
-      <button class="company-select-btn ${active && active.iin===c.iin?'selected':''}"
-        onclick="selectCompany(${i});closeCompanyModal()">
+      <button class="btn btn-sm ${active && active.iin===c.iin?'btn-primary':'btn-ghost'}" onclick="selectCompany(${i});closeCompanyModal()">
         ${active && active.iin===c.iin?'✓ Активна':'Выбрать'}
       </button>
     </div>
   `).join('');
 }
-
 function selectCompany(i) {
   const companies = loadCompanies();
   if (companies[i]) {
     setActive(companies[i]);
-    renderCompanyList();
+    renderCompanyGrid();
     renderModalCompanyList();
   }
 }
 
 // ─── COMPANIES PAGE ──────────────────────────────────────────────────────
-function renderCompanyList() {
+function renderCompanyGrid() {
   const companies = loadCompanies();
   const active = loadActive();
-  const list = document.getElementById('companyList');
+  const grid = document.getElementById('companyGrid');
   const empty = document.getElementById('emptyMsg');
   if (!companies.length) {
-    list.innerHTML = '';
-    empty.style.display = 'block';
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text3);font-size:14px" id="emptyMsg">Нет компаний. Нажмите «+ Добавить компанию».</div>';
     return;
   }
-  empty.style.display = 'none';
-  list.innerHTML = companies.map((c, i) => `
-    <div class="company-item ${active && active.iin===c.iin?'active':''}">
-      <div class="company-badge">${(c.name||'?')[0].toUpperCase()}</div>
-      <div class="company-info">
-        <div class="company-item-name">${esc(c.name)}</div>
-        <div class="company-item-iin">
-          БИН: ${esc(c.iin||'—')} · ${esc(c.form||'')}
-          ${c.head ? ' · ' + esc(c.head) : ''}
-          ${c.ogd ? ' · НО: ' + esc(c.ogd) : ''}
-        </div>
-      </div>
-      <div class="company-item-actions">
-        <button class="company-select-btn ${active && active.iin===c.iin?'selected':''}"
-          onclick="selectCompany(${i})">
+  grid.innerHTML = companies.map((c, i) => `
+    <div class="company-card ${active && active.iin===c.iin?'active':''}">
+      <div class="company-card-actions">
+        <button class="company-card-btn company-card-select ${active && active.iin===c.iin?'selected':''}" onclick="selectCompany(${i})" title="${active && active.iin===c.iin?'Активна':'Выбрать активной'}">
           ${active && active.iin===c.iin?'✓ Активна':'Выбрать'}
         </button>
-        <button class="company-del" onclick="deleteCompany(${i})" title="Удалить">×</button>
+        <button class="company-card-btn company-card-del" onclick="deleteCompanyCard(${i})" title="Удалить">✕</button>
+      </div>
+      <div class="company-card-badge">${(c.name||'?')[0].toUpperCase()}</div>
+      <div class="company-card-name">${esc(c.name)}</div>
+      <div class="company-card-meta">
+        БИН: ${esc(c.iin||'—')}<br>
+        ${esc(c.form||'')} · ${esc(c.mode||'')}<br>
+        ${c.head?'Рук.: '+esc(c.head)+'<br>':''}
+        ${c.phone?'Тел.: '+esc(c.phone):''}
       </div>
     </div>
   `).join('');
 }
-
 function openAddCompanyForm() {
   document.getElementById('addCompanyForm').style.display = 'block';
   document.getElementById('nc_name').focus();
 }
 function closeAddCompanyForm() {
   document.getElementById('addCompanyForm').style.display = 'none';
-  ['nc_name','nc_iin','nc_head','nc_ogd','nc_ter'].forEach(id => {
+  ['nc_name','nc_iin','nc_head','nc_phone','nc_email','nc_addr'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
 }
-
 function saveCompany() {
   const name = document.getElementById('nc_name').value.trim();
   const iin = document.getElementById('nc_iin').value.trim();
@@ -790,40 +831,38 @@ function saveCompany() {
     name,
     iin,
     head: document.getElementById('nc_head').value.trim(),
-    ogd: document.getElementById('nc_ogd').value.trim(),
-    ter: document.getElementById('nc_ter').value.trim(),
+    phone: document.getElementById('nc_phone').value.trim(),
     form: document.getElementById('nc_form').value,
+    mode: document.getElementById('nc_mode').value,
+    email: document.getElementById('nc_email').value.trim(),
+    addr: document.getElementById('nc_addr').value.trim(),
   };
   companies.push(comp);
   saveCompanies(companies);
   if (!loadActive()) setActive(comp);
-  renderCompanyList();
+  renderCompanyGrid();
   closeAddCompanyForm();
 }
-
-function deleteCompany(i) {
+function deleteCompanyCard(i) {
   const companies = loadCompanies();
   const active = loadActive();
   if (!confirm(`Удалить компанию «${companies[i].name}»?`)) return;
   const deleted = companies.splice(i, 1)[0];
   saveCompanies(companies);
-  if (active && active.iin === deleted.iin) {
-    setActive(companies[0] || null);
-  }
-  renderCompanyList();
+  if (active && active.iin === deleted.iin) setActive(companies[0] || null);
+  renderCompanyGrid();
 }
 
 // ─── CALCULATOR ──────────────────────────────────────────────────────────
-const TAX_RATES = { nds:12, kpn:20, ipn:10, opv:10, so:3.5, osms:3 };
-let currentRate = 12;
+const TAX_RATES = { nds:16, kpn:20, ipn:10, opv:10, opvr:3.5, so:5, sn:6, osms:3, vosms:2 };
+let currentRate = 16;
 
 function setTax(type, btn) {
-  currentRate = TAX_RATES[type] || 12;
+  currentRate = TAX_RATES[type] || 16;
   document.querySelectorAll('.tax-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   calcTax();
 }
-
 function calcTax() {
   const base = parseFloat(document.getElementById('calcInput').value) || 0;
   const tax = base * currentRate / 100;
@@ -834,9 +873,44 @@ function calcTax() {
   document.getElementById('cr-total').innerHTML = fmt(total) + ' <span>₸</span>';
 }
 
-// ─── PERIOD ───────────────────────────────────────────────────────────────
-function onPeriodChange() {
-  // Could sync to iframes if needed
+// ─── SALARY CALCULATOR ────────────────────────────────────────────────────
+function calcSalary() {
+  const MRP = 4325, MZP = 85000;
+  const gross = parseFloat(document.getElementById('salInput').value) || 0;
+  const hasDed = document.getElementById('salDed').value === '1';
+  if (gross <= 0) { document.getElementById('salResult').innerHTML = ''; return; }
+
+  const opv = Math.min(gross, MZP * 50) * 0.10;
+  const vosms = Math.min(gross, MZP * 20) * 0.02;
+  const ded = hasDed ? MRP * 30 : 0;
+  const ipnBase = Math.max(0, gross - opv - vosms - ded);
+  const ipn = ipnBase * 0.10;
+  const net = gross - opv - vosms - ipn;
+
+  // Расходы работодателя
+  const opvr = gross * 0.035;
+  const soBase = Math.min(Math.max(gross - opv, MZP), MZP * 7);
+  const so = soBase * 0.05;
+  const snBase = Math.max(gross - opv - vosms, 0);
+  const sn = snBase * 0.06;
+  const oosms = Math.min(gross, MZP * 40) * 0.03;
+
+  const fmt = n => Math.round(n).toLocaleString('ru-RU');
+  document.getElementById('salResult').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:13px">
+      <div style="font-weight:700;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;grid-column:1/-1">Удержания из зарплаты работника</div>
+      <div>ОПВ (10%)</div><div style="text-align:right;font-weight:700">${fmt(opv)} ₸</div>
+      <div>ВОСМС (2%)</div><div style="text-align:right;font-weight:700">${fmt(vosms)} ₸</div>
+      <div>ИПН (10%${hasDed?', вычет 30 МРП':''})</div><div style="text-align:right;font-weight:700">${fmt(ipn)} ₸</div>
+      <div style="font-weight:700;color:var(--green)">На руки</div><div style="text-align:right;font-weight:700;color:var(--green)">${fmt(net)} ₸</div>
+      <div style="font-weight:700;color:var(--text2);font-size:11px;text-transform:uppercase;letter-spacing:.5px;grid-column:1/-1;margin-top:8px">Расходы работодателя сверх зарплаты</div>
+      <div>ОПВР (3,5%)</div><div style="text-align:right;font-weight:700">${fmt(opvr)} ₸</div>
+      <div>СО (5%)</div><div style="text-align:right;font-weight:700">${fmt(so)} ₸</div>
+      <div>СН (6%)</div><div style="text-align:right;font-weight:700">${fmt(sn)} ₸</div>
+      <div>ООСМС (3%)</div><div style="text-align:right;font-weight:700">${fmt(oosms)} ₸</div>
+      <div style="font-weight:700;color:var(--red)">Итого расходы</div><div style="text-align:right;font-weight:700;color:var(--red)">${fmt(gross + opvr + so + sn + oosms)} ₸</div>
+    </div>
+  `;
 }
 
 // ─── UTILS ───────────────────────────────────────────────────────────────
@@ -848,9 +922,21 @@ function esc(s) {
 (function init() {
   const active = loadActive();
   updateHeaderCompany(active);
-  renderCompanyList();
+  renderCompanyGrid();
   calcTax();
+  calcSalary();
+  // По умолчанию — дашборд: показываем period bar
+  document.getElementById('periodBarWrap').style.display = 'flex';
+  // Устанавливаем 2026 год и май как текущий
+  document.getElementById('yearSel').value = '2026';
+  document.getElementById('monthSel').value = '5'; // май
+  refreshDashboard();
 })();
+
+// Закрыть модал при клике на overlay
+document.getElementById('companyModal').addEventListener('click', function(e){
+  if(e.target===this) closeCompanyModal();
+});
 </script>
 </body>
 </html>
