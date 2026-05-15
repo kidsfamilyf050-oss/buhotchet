@@ -50,17 +50,17 @@
       -webkit-font-smoothing: antialiased;
     }
     .app {
-      max-width: 1900px;
-      margin: 0 auto;
-      padding: 18px 20px;
+      max-width: 100%;
+      margin: 0;
+      padding: 10px 14px;
     }
     .hero {
       background: #fff;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
-      padding: 18px 20px;
-      margin-bottom: 14px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
     }
     .hero-top {
       display: flex;
@@ -93,7 +93,7 @@
       font-weight: 600;
     }
     html {
-      scrollbar-gutter: stable both-edges;
+      scrollbar-gutter: auto;
       scrollbar-width: thin;
       scrollbar-color: #c5cede #f0f2f7;
     }
@@ -243,8 +243,8 @@
     .nr-modal-save:hover { opacity: .9; }
     .grid {
       display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 14px;
+      grid-template-columns: 320px 1fr;
+      gap: 10px;
       align-items: start;
     }
     .panel {
@@ -1261,14 +1261,20 @@
           <div class="section-head" style="margin-bottom:10px">
             <div>
               <h3>Компании</h3>
-              <div class="small">Выберите компанию из общей базы портала.</div>
+              <div class="small">Сохраняйте несколько компаний и быстро переключайтесь между ними.</div>
             </div>
           </div>
           <div class="form-grid single">
             <div class="field">
-              <label for="savedCompanySelect">Выбрать компанию</label>
+              <label for="savedCompanySelect">Сохранённые компании</label>
               <select id="savedCompanySelect"></select>
             </div>
+          </div>
+          <div class="btn-row company-actions-grid">
+            <button class="secondary" id="saveCompanyBtn">Сохранить компанию</button>
+            <button class="secondary" id="saveAsCompanyBtn">Сохранить как новую</button>
+            <button class="secondary" id="newCompanyBtn">Новая компания</button>
+            <button class="danger" id="deleteCompanyBtn">Удалить</button>
           </div>
           <div id="companyManagerInfo" class="small company-manager-info"></div>
         </div>
@@ -1287,14 +1293,13 @@
           </div>
           <div class="field">
             <label for="reportYear">Год</label>
-            <input id="reportYear" type="number" min="2026" step="1" value="2026" />
+            <input id="reportYear" type="number" min="2026" step="1" />
           </div>
           <div class="field">
             <label for="companyType">Форма</label>
             <select id="companyType">
               <option value="too">ТОО</option>
               <option value="ip">ИП</option>
-              <option value="ao">АО</option>
             </select>
           </div>
           <div class="field">
@@ -1335,7 +1340,13 @@
           </ul>
         </div>
 
-
+        <div class="card" style="margin-top:12px; border:1px solid #cfe0ff; background:linear-gradient(180deg,#f7fbff,#eef5ff)">
+          <div class="tiny">Контакт для клиентов</div>
+          <div class="value" style="font-size:20px; margin-top:4px">Майнур Абдыкарымовна</div>
+          <div style="margin-top:10px">
+            <a href="https://wa.me/77764214191" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; padding:10px 12px; border-radius:12px; background:#25D366; color:#fff; font-weight:800;">WhatsApp: +7 776 421 41 91</a>
+          </div>
+        </div>
       </aside>
 
       <main class="panel">
@@ -4056,40 +4067,20 @@
     function renderCompanyManager() {
       const select = document.getElementById('savedCompanySelect');
       const info = document.getElementById('companyManagerInfo');
-      if (!select || !info) return;
-      // Читаем из общей базы портала
-      let portalCompanies = [];
-      try { portalCompanies = JSON.parse(localStorage.getItem('buhotchet_companies') || '[]'); } catch(e) {}
-      // Добавляем в state.savedCompanies если ещё нет
-      portalCompanies.forEach(pc => {
-        const exists = state.savedCompanies.find(s => s.company && s.company.bin === pc.iin);
-        if (!exists) {
-          state.savedCompanies.push({
-            id: pc.iin,
-            label: pc.name + ' (' + (pc.form||'') + ')',
-            savedAt: null,
-            company: {
-              name: pc.name,
-              bin: pc.iin,
-              companyType: pc.form === 'ИП' ? 'ip' : 'too',
-              taxMode: pc.mode === 'Упрощёнка' ? 'simple' : 'our',
-              year: new Date().getFullYear(),
-              head: pc.head || ''
-            },
-            monthEntries: []
-          });
-        }
-      });
-      const options = ['<option value="">— Не выбрана —</option>']
+      const deleteBtn = document.getElementById('deleteCompanyBtn');
+      if (!select || !info || !deleteBtn) return;
+      const options = ['<option value="">Текущая несохранённая карточка</option>']
         .concat(state.savedCompanies.map((item) => `<option value="${item.id}">${escapeHtml(item.label)}</option>`));
       select.innerHTML = options.join('');
       select.value = state.activeCompanyId || '';
       const active = state.savedCompanies.find((item) => item.id === state.activeCompanyId);
       if (active) {
-        info.textContent = `Активная компания: ${active.label}.`;
+        const savedAt = active.savedAt ? new Date(active.savedAt).toLocaleString('ru-RU') : 'не указано';
+        info.textContent = `Активная карточка: ${active.label}. Последнее сохранение: ${savedAt}.`;
       } else {
-        info.textContent = 'Выберите компанию из выпадающего списка.';
+        info.textContent = 'Сохраните текущую карточку компании, чтобы быстро переключаться между несколькими клиентами в этом браузере.';
       }
+      deleteBtn.disabled = !active;
     }
 
     function saveCurrentCompany(forceNew = false) {
@@ -4417,7 +4408,10 @@
       }
       loadSavedCompany(nextId);
     });
-    // Company buttons removed - managed via portal
+    document.getElementById('saveCompanyBtn').addEventListener('click', () => saveCurrentCompany(false));
+    document.getElementById('saveAsCompanyBtn').addEventListener('click', () => saveCurrentCompany(true));
+    document.getElementById('newCompanyBtn').addEventListener('click', startNewCompany);
+    document.getElementById('deleteCompanyBtn').addEventListener('click', deleteSavedCompany);
     document.getElementById('companyType').addEventListener('change', (e) => {
       state.company.companyType = e.target.value;
       if (state.company.companyType !== 'ip') {
@@ -5406,13 +5400,6 @@
     window.handleMonthHeaderKey = handleMonthHeaderKey;
     window.exportSingleQuarterJson = exportSingleQuarterJson;
     window.loadSavedCompany = loadSavedCompany;
-  
-    // Слушаем смену активной компании из портала
-    window.addEventListener('storage', function(e) {
-      if (e.key === 'buhotchet_active_company' || e.key === 'buhotchet_companies') {
-        render();
-      }
-    });
-</script>
+  </script>
 </body>
 </html>

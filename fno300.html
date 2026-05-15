@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ФНО 300 — Декларация по НДС (16%) · НК РК 2026 · БухОтчет</title>
+<title>ФНО 300 — декларация по НДС · НК РК 2026</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
@@ -73,7 +73,7 @@ body{
   box-shadow:var(--shadow);
   position:sticky;top:0;z-index:100;
 }
-.header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,2.2vw,16px);width:100%;max-width:1200px;margin:0 auto}
+.header-inner{display:flex;flex-wrap:wrap;align-items:center;gap:clamp(10px,2.2vw,16px);width:100%;max-width:100%;margin:0 auto}
 .logo-wrap{display:flex;align-items:center;gap:12px;flex:1;min-width:min(100%,240px)}
 .logo-badge{
   font-family:var(--font-display);
@@ -115,15 +115,15 @@ body{
 .company-iin{font-size:12px;color:var(--text3);font-weight:500}
 
 /* MAIN */
-.main{max-width:min(1180px,100%);margin:0 auto;padding:clamp(20px,4vw,36px) clamp(14px,4vw,28px) 48px}
+.main{max-width:100%;margin:0;padding:16px 16px 32px}
 
 /* CARD */
 .card{
   background:var(--surface);
   border:1px solid var(--border);
-  border-radius:clamp(14px,2vw,var(--radius-lg));
-  padding:clamp(22px,4vw,34px);
-  margin-bottom:clamp(16px,3vw,26px);
+  border-radius:var(--radius);
+  padding:18px 20px;
+  margin-bottom:16px;
   box-shadow:var(--shadow),0 1px 0 rgba(255,255,255,.85) inset;
 }
 .section-title{
@@ -491,11 +491,40 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
     </div>
     <div class="company-list" id="companyList"></div>
     <div class="divider"></div>
-    <div style="font-size:12px;color:var(--text3);padding:8px 0">
-      💡 Компании добавляются во вкладке <strong>«Компании»</strong> портала БухОтчет.
+    <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">+ Добавить компанию</div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Название компании</label>
+        <input type="text" id="newCompName" placeholder="ТОО Ромашка">
+      </div>
+      <div>
+        <label class="field-label">БИН / ИИН</label>
+        <input type="text" id="newCompIin" placeholder="123456789012">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Руководитель</label>
+        <input type="text" id="newCompHead" placeholder="Иванов Иван Иванович">
+      </div>
+      <div>
+        <label class="field-label">Код НО</label>
+        <input type="text" id="newCompOgd" placeholder="0101">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label class="field-label">Код территории (стр. 10А ИСНА)</label>
+        <input type="text" id="newComp10A" placeholder="59001">
+      </div>
+      <div>
+        <label class="field-label">Номер налоговой регистрации (10Б)</label>
+        <input type="text" id="newComp10B" placeholder="0015197">
+      </div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-ghost" onclick="closeModal()">Закрыть</button>
+      <button class="btn btn-primary" onclick="addCompany()">Добавить</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Отмена</button>
     </div>
   </div>
 </div>
@@ -703,7 +732,18 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
       </div>
     </details>
   </div>
-<!-- REPORT SECTION -->
+
+  <div class="pay-card print-include">
+    <h3>Оплата и контакты</h3>
+    <p><strong>ТОО «ASMAYA CONSULTING»</strong><br>
+    Адрес: Алматы, ул. Манаса, 22Б<br>
+    БИН: 251040020245</p>
+    <p><strong>Банк:</strong> АО «Kaspi Bank» · КБе 17 · БИК CASPKZKA<br>
+    <span class="mono">KZ22722S000049168358</span></p>
+    <p style="font-size:12px;color:var(--text3)">Данные приложения хранятся локально в браузере.</p>
+  </div>
+
+  <!-- REPORT SECTION -->
   <div id="reportSection" class="hidden print-include">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
       <div class="section-title" style="margin-bottom:0">Сводный отчёт ФНО 300</div>
@@ -1403,17 +1443,9 @@ function openModal() {
 function closeModal() { document.getElementById('companyModal').classList.remove('open'); }
 
 function renderCompanyList() {
-  // Читаем компании из общей базы портала
-  let portalCompanies = [];
-  try { portalCompanies = JSON.parse(localStorage.getItem('buhotchet_companies') || '[]'); } catch(e) {}
-  if (!portalCompanies.length) {
-    companies = [];
-  } else {
-    companies = portalCompanies;
-  }
   const el = document.getElementById('companyList');
   if (!companies.length) {
-    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Компаний нет. Добавьте их во вкладке «Компании» портала.</div>';
+    el.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text3);font-size:13px">Нет сохранённых компаний</div>';
     return;
   }
   el.innerHTML = companies.map((c,i) => `
@@ -1421,8 +1453,9 @@ function renderCompanyList() {
       <div style="font-size:22px">🏢</div>
       <div class="company-item-info">
         <div class="company-item-name">${esc(c.name)}</div>
-        <div class="company-item-iin">БИН/ИИН: ${esc(c.iin)} · ${esc(c.form||'')} · ${esc(c.mode||'')}</div>
+        <div class="company-item-iin">БИН/ИИН: ${esc(c.iin)}${c.ogd?' · НО: '+c.ogd:''}</div>
       </div>
+      <button class="company-item-del" onclick="event.stopPropagation();deleteCompany(${i})">✕</button>
     </div>`).join('');
 }
 
