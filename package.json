@@ -1,0 +1,19 @@
+{
+  "name": "buhotchet",
+  "version": "1.1.0",
+  "description": "БухОтчет — портал бухгалтерской отчётности Казахстан",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.21.2",
+    "pg": "^8.16.0"
+  }
+}
