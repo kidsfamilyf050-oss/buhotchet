@@ -470,36 +470,36 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
       </table>
       <div style="margin-top:10px;font-size:11px;color:var(--text3);background:var(--warn-light);padding:8px 12px;border-radius:7px">* ИПН 15% с дохода >8 500 МРП/год (36,7 млн ₸). Базовый вычет: 30 МРП = 129 750 ₸/мес.</div>
     </div>
-  </div></div>
-</div>
 
-<!-- ── SALARY CALCULATOR ── -->
-<div class="card" style="max-width:740px">
-  <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты (ОУР 2026)</div>
-  <div class="form-grid">
-    <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
-    <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
-      <select id="salDed" onchange="calcSalary()">
-        <option value="1">Да — заявление подано</option>
-        <option value="0">Нет</option>
-      </select>
+    <!-- ── SALARY CALCULATOR ── -->
+    <div class="card" style="max-width:740px">
+      <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты (ОУР 2026)</div>
+      <div class="form-grid">
+        <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
+        <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
+          <select id="salDed" onchange="calcSalary()">
+            <option value="1">Да — заявление подано</option>
+            <option value="0">Нет</option>
+          </select>
+        </div>
+        <div class="field"><label>Тип занятости</label>
+          <select id="salType" onchange="calcSalary()">
+            <option value="emp">Наёмный работник (ТОО ОУР)</option>
+            <option value="ip_our">ИП на ОУР</option>
+            <option value="ip_simple">ИП Упрощёнка</option>
+          </select>
+        </div>
+        <div class="field"><label>Гражданство</label>
+          <select id="salCitizen" onchange="calcSalary()">
+            <option value="kz">Гражданин РК</option>
+            <option value="foreign">Иностранец</option>
+          </select>
+        </div>
+      </div>
+      <div id="salResult" style="background:var(--surface2);border-radius:10px;padding:16px;font-size:13px;margin-top:4px"></div>
+      <div id="salTotal" style="margin-top:12px"></div>
     </div>
-    <div class="field"><label>Тип занятости</label>
-      <select id="salType" onchange="calcSalary()">
-        <option value="emp">Наёмный работник (ТОО ОУР)</option>
-        <option value="ip_our">ИП на ОУР</option>
-        <option value="ip_simple">ИП Упрощёнка</option>
-      </select>
-    </div>
-    <div class="field"><label>Гражданство</label>
-      <select id="salCitizen" onchange="calcSalary()">
-        <option value="kz">Гражданин РК</option>
-        <option value="foreign">Иностранец</option>
-      </select>
-    </div>
-  </div>
-  <div id="salResult" style="background:var(--surface2);border-radius:10px;padding:16px;font-size:13px;margin-top:4px"></div>
-  <div id="salTotal" style="margin-top:12px"></div>
+  </div></div>
 </div>
 
 <!-- ── DEADLINES ── -->
