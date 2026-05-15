@@ -382,6 +382,21 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
 .dl-date.urgent{background:var(--red-light);color:var(--red)}
 .dl-date.soon{background:var(--warn-light);color:var(--warn)}
 .dl-date.ok{background:var(--green-light);color:var(--green)}
+/* Глазик пароля */
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:38px}
+.pass-eye{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:0;line-height:1}
+.pass-eye:hover{color:#64748b}
+/* Оферта */
+.oferta-link{color:#94a3b8;font-size:11px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit}
+.oferta-link:hover{color:#64748b}
+.oferta-modal{max-width:700px;max-height:80vh}
+.oferta-body{font-size:13px;color:var(--text2);line-height:1.7;max-height:55vh;overflow-y:auto;padding:4px}
+.oferta-body h3{font-size:14px;font-weight:700;color:var(--text);margin:16px 0 6px}
+.oferta-body p{margin-bottom:10px}
+.check-row{display:flex;align-items:flex-start;gap:10px;margin:12px 0}
+.check-row input[type=checkbox]{width:16px;height:16px;flex-shrink:0;margin-top:2px;cursor:pointer}
+.check-row label{font-size:12px;color:#64748b;cursor:pointer;line-height:1.5}
 
 @media(max-width:768px){
   .kpi-grid{grid-template-columns:1fr 1fr}
@@ -590,7 +605,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
       <!-- LOGIN -->
       <div class="auth-panel active" id="panelLogin">
         <div class="af"><label>Логин</label><input id="loginLogin" type="text" placeholder="ваш-логин" autocomplete="username"></div>
-        <div class="af"><label>Пароль</label><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+        <div class="af"><label>Пароль</label><div class="pass-wrap"><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"><button type="button" class="pass-eye" onclick="togglePass('loginPass',this)">👁</button></div></div>
         <button class="btn-auth" id="loginBtn" onclick="doLogin()">Войти</button>
         <div style="text-align:center;margin-top:10px">
           <button class="auth-link" onclick="switchTab('forgot')">Забыли пароль?</button>
@@ -604,7 +619,11 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="af"><label>Логин * (латиница и цифры)</label><input id="regLogin" type="text" placeholder="ivan_buh" autocomplete="username"></div>
         <div class="af"><label>Email *</label><input id="regEmail" type="email" placeholder="buh@company.kz"></div>
         <div class="af"><label>Телефон</label><input id="regPhone" type="tel" placeholder="+7 701 000 00 00"></div>
-        <div class="af"><label>Пароль * (мин. 6 символов)</label><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"></div>
+        <div class="af"><label>Пароль * (мин. 6 символов)</label><div class="pass-wrap"><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"><button type="button" class="pass-eye" onclick="togglePass('regPass',this)">👁</button></div></div>
+        <div class="check-row">
+          <input type="checkbox" id="ofertaCheck">
+          <label for="ofertaCheck">Я ознакомился и согласен с <button class="oferta-link" onclick="openOferta()">Публичной офертой</button> и <button class="oferta-link" onclick="openOferta()">Политикой конфиденциальности</button></label>
+        </div>
         <button class="btn-auth" id="registerBtn" onclick="doRegister()">Отправить заявку</button>
         <div class="auth-msg" id="registerMsg"></div>
       </div>
@@ -930,6 +949,73 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
   </div><!-- /app-content -->
 </div><!-- /appShell -->
 
+<!-- OFERTA MODAL -->
+<div class="modal-overlay" id="ofertaModal">
+  <div class="modal oferta-modal">
+    <div class="modal-title">Публичная оферта и Политика конфиденциальности <button class="modal-close" onclick="closeOferta()">✕</button></div>
+    <div class="oferta-body">
+      <h3>1. Общие положения</h3>
+      <p>Настоящая публичная оферта (далее — «Оферта») является официальным предложением ИП «БухОтчет» (далее — «Оператор») физическим и юридическим лицам (далее — «Пользователь») об использовании портала бухгалтерской отчётности <strong>buhotchet.site</strong>.</p>
+      <p>Регистрация на портале означает полное и безоговорочное принятие условий настоящей Оферты.</p>
+
+      <h3>2. Предмет оферты</h3>
+      <p>Оператор предоставляет Пользователю доступ к программному комплексу для автоматизации бухгалтерской отчётности в Республике Казахстан, включая расчёт налогов по формам ФНО 200, ФНО 300 и иным формам согласно НК РК.</p>
+
+      <h3>3. Тарифы и оплата</h3>
+      <p><strong>Базовый</strong> — 25 000 ₸/год: доступ к одной форме (ФНО 200 или ФНО 300 на выбор).<br>
+      <strong>Pro</strong> — 40 000 ₸/год: полный доступ к ФНО 200 и ФНО 300.<br>
+      <strong>Дополнительный пользователь</strong> — +10 000 ₸/год к любому тарифу.<br>
+      Оплата производится за 1 год вперёд. Возврат средств не производится.</p>
+
+      <h3>4. Ответственность Оператора</h3>
+      <p>Портал предоставляется «как есть» (as-is). Оператор <strong>не несёт ответственности</strong> за:</p>
+      <p>— ошибки в расчётах, возникшие вследствие некорректного ввода данных Пользователем;<br>
+      — возможные изменения налогового законодательства РК после даты последнего обновления системы;<br>
+      — убытки, штрафы и пени, возникшие в результате использования или неиспользования портала;<br>
+      — временную недоступность сервиса по техническим причинам (плановые работы, сбои хостинга).</p>
+      <p>Пользователь несёт самостоятельную ответственность за правильность и полноту введённых данных, а также за своевременную сдачу отчётности в налоговые органы РК.</p>
+
+      <h3>5. Защита персональных данных</h3>
+      <p>Оператор обязуется:</p>
+      <p>— не передавать персональные данные Пользователя третьим лицам без его согласия;<br>
+      — использовать данные исключительно для обеспечения работы сервиса;<br>
+      — хранить данные на защищённых серверах с ограниченным доступом;<br>
+      — применять шифрование при передаче данных (HTTPS/TLS).</p>
+      <p>Пользователь вводит данные добровольно. Данные хранятся в базе PostgreSQL на серверах Railway.com (США, регион US-West). Оператор не гарантирует 100% защиту от несанкционированного доступа вследствие действий третьих лиц.</p>
+
+      <h3>6. Конфиденциальность данных компаний</h3>
+      <p>Данные о компаниях, сотрудниках и финансовых показателях, введённые Пользователем, являются конфиденциальными. Оператор не анализирует и не использует эти данные в коммерческих целях. Доступ к данным имеет только Пользователь и уполномоченный администратор портала в целях технической поддержки.</p>
+
+      <h3>7. Прекращение доступа</h3>
+      <p>Оператор вправе заблокировать доступ Пользователя при нарушении условий Оферты, использовании сервиса в незаконных целях или по истечении оплаченного периода.</p>
+
+      <h3>8. Применимое право</h3>
+      <p>Оферта регулируется законодательством Республики Казахстан. Все споры разрешаются в судебном порядке по месту нахождения Оператора.</p>
+
+      <h3>9. Контакты</h3>
+      <p>По вопросам оферты и технической поддержки: <strong>admin@buhotchet.site</strong> или через форму на сайте buhotchet.site</p>
+    </div>
+    <div class="divider"></div>
+    <button class="btn btn-primary" onclick="acceptOferta()">✓ Принять и закрыть</button>
+  </div>
+</div>
+
+<!-- RESET PASSWORD MODAL (по токену из письма) -->
+<div class="modal-overlay" id="resetModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-title">Сброс пароля</div>
+    <div style="font-size:13px;color:var(--text2);margin-bottom:14px" id="resetUserInfo">Задайте новый пароль для вашего аккаунта.</div>
+    <div class="af"><label>Новый пароль (мин. 6 символов)</label>
+      <div class="pass-wrap"><input id="resetPass" type="password" placeholder="••••••••"><button type="button" class="pass-eye" onclick="togglePass('resetPass',this)">👁</button></div>
+    </div>
+    <div class="af"><label>Повторите пароль</label>
+      <div class="pass-wrap"><input id="resetPass2" type="password" placeholder="••••••••"><button type="button" class="pass-eye" onclick="togglePass('resetPass2',this)">👁</button></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="doResetPassword()">Сохранить новый пароль</button>
+    <div class="auth-msg" id="resetMsg"></div>
+  </div>
+</div>
+
 <!-- COMPANY MODAL -->
 <div class="modal-overlay" id="compModal">
   <div class="modal">
@@ -1015,6 +1101,7 @@ async function doRegister() {
   const email=$('regEmail').value.trim(), phone=$('regPhone').value.trim();
   const pass=$('regPass').value;
   if (!full_name||!login||!email||!pass){showAuthMsg('registerMsg','Заполните все обязательные поля','err');return}
+  if (!$('ofertaCheck')?.checked){showAuthMsg('registerMsg','Необходимо принять Публичную оферту','err');return}
   if (pass.length<6){showAuthMsg('registerMsg','Пароль минимум 6 символов','err');return}
   $('registerBtn').disabled=true; $('registerBtn').textContent='Отправляю...';
   try {
@@ -1371,8 +1458,71 @@ async function removeSubUser(userId) {
   } catch(e){}
 }
 
+// ── SHOW/HIDE PASSWORD ────────────────────────────────────────────────────────
+function togglePass(inputId, btn) {
+  const inp = $(inputId);
+  if (!inp) return;
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+// ── OFERTA ────────────────────────────────────────────────────────────────────
+function openOferta() { $('ofertaModal').classList.add('open'); }
+function closeOferta() { $('ofertaModal').classList.remove('open'); }
+function acceptOferta() { $('ofertaCheck').checked = true; closeOferta(); }
+$('ofertaModal').addEventListener('click', function(e){ if(e.target===this) closeOferta(); });
+
+// ── RESET PASSWORD BY TOKEN ────────────────────────────────────────────────────
+let resetToken = null;
+
+async function checkResetToken() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  if (!token) return;
+  resetToken = token;
+  try {
+    const r = await fetch(API + '/api/auth/reset-check?token=' + token);
+    const data = await r.json();
+    if (data.ok) {
+      $('resetUserInfo').innerHTML = `Сброс пароля для аккаунта: <strong>${data.login}</strong>`;
+      $('resetModal').classList.add('open');
+    } else {
+      alert('Ссылка для сброса пароля недействительна или истекла. Запросите новую.');
+    }
+  } catch(e) { console.error('[reset-check]', e); }
+}
+
+async function doResetPassword() {
+  const p1 = $('resetPass').value, p2 = $('resetPass2').value;
+  if (!p1 || p1.length < 6) { showAuthMsg('resetMsg','Минимум 6 символов','err'); return; }
+  if (p1 !== p2) { showAuthMsg('resetMsg','Пароли не совпадают','err'); return; }
+  try {
+    const r = await fetch(API + '/api/auth/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ token: resetToken, newPassword: p1 })
+    });
+    const data = await r.json();
+    if (data.ok) {
+      showAuthMsg('resetMsg','✅ Пароль успешно изменён! Теперь войдите с новым паролем.','ok');
+      setTimeout(() => {
+        $('resetModal').classList.remove('open');
+        // Убрать token из URL
+        window.history.replaceState({}, '', '/');
+        openAuth('login');
+      }, 2000);
+    } else {
+      const m = { invalid_token:'Ссылка недействительна', password_too_short:'Минимум 6 символов' };
+      showAuthMsg('resetMsg', m[data.error]||'Ошибка. Попробуйте снова.', 'err');
+    }
+  } catch(e) { showAuthMsg('resetMsg','Сервер недоступен','err'); }
+}
+
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 (async function boot() {
+  // Проверить токен сброса пароля в URL
+  await checkResetToken();
+
   if (!authToken) return; // Показываем лендинг
   try {
     const r = await api('GET','/api/auth/me');
