@@ -436,3 +436,39 @@ app.post('/api/auth/change-password', requireAuth, requireDb, async (req, res) =
     res.json(result);
   } catch(e) { console.error(e); res.status(500).json({ ok:false, error:'server_error' }); }
 });
+
+// ── SUB USERS API ─────────────────────────────────────────────────────────────
+app.get('/api/sub-users', requireAuth, requireDb, async (req, res) => {
+  try {
+    const users = await db.getSubUsers(req.user.id);
+    res.json({ ok:true, users });
+  } catch(e) { res.status(500).json({ ok:false, error:'server_error' }); }
+});
+
+app.post('/api/sub-users', requireAuth, requireDb, async (req, res) => {
+  try {
+    const result = await db.addSubUser(req.user.id, req.body?.login||'');
+    res.json(result);
+  } catch(e) { res.status(500).json({ ok:false, error:'server_error' }); }
+});
+
+app.delete('/api/sub-users/:userId', requireAuth, requireDb, async (req, res) => {
+  try {
+    await db.removeSubUser(req.user.id, parseInt(req.params.userId));
+    res.json({ ok:true });
+  } catch(e) { res.status(500).json({ ok:false, error:'server_error' }); }
+});
+
+// ── NOTIFY ADMIN on register ───────────────────────────────────────────────────
+app.post('/api/auth/notify-admin', requireDb, async (req, res) => {
+  const { userName, userLogin, userEmail } = req.body||{};
+  const adminEmail = process.env.ADMIN_EMAIL||'';
+  if (adminEmail) {
+    const tariffInfo = `\n\nТарифы:\n• Базовый — 25 000 ₸/год (одна форма)\n• Pro — 40 000 ₸/год (обе формы)\n• Доп. пользователь — +10 000 ₸/год`;
+    await sendEmail(adminEmail,
+      '🆕 Новая заявка — БухОтчет',
+      `Новый пользователь: ${userName} (${userLogin})\nEmail: ${userEmail}${tariffInfo}\n\nОдобрите в AdminPanel: https://buhotchet.site`
+    ).catch(()=>{});
+  }
+  res.json({ ok:true });
+});

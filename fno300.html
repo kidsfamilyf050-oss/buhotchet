@@ -778,7 +778,13 @@ function workspaceStorageId() {
 
 function dataStorageKey() {
   const id = workspaceStorageId();
-  return id ? ('fno300_data_' + id) : null;
+  if (!id) return null;
+  const iin = activeCompany ? ('_c' + String(activeCompany.iin).replace(/[^a-z0-9]/gi,'')) : '';
+  return 'fno300_data_' + id + iin;
+}
+function baseStorageKey() {
+  const id = workspaceStorageId();
+  return id ? ('fno300_base_' + id) : null;
 }
 
 function readWorkspaceDisk() {
@@ -1396,13 +1402,21 @@ window.addEventListener('storage', function(e){
   if (e.key === 'buhotchet_active_company') {
     try {
       var pc = JSON.parse(e.newValue || 'null');
-      if (pc && pc.name) {
+      if (pc && pc.name && (!activeCompany || pc.iin !== activeCompany.iin)) {
         activeCompany = pc;
         var cn = document.getElementById('headerCompName');
         var ci = document.getElementById('headerCompIin');
         if (cn) cn.textContent = pc.name;
         if (ci) ci.textContent = pc.iin || '';
+        // Перезагрузить данные для новой компании
+        loadWorkspaceIntoState();
       }
+    } catch(err){}
+  }
+  if (e.key === 'buhotchet_companies') {
+    try {
+      var comps = JSON.parse(e.newValue || '[]');
+      if (comps.length) companies = comps;
     } catch(err){}
   }
 });
@@ -1441,8 +1455,11 @@ function selectCompany(i) {
   activeCompany = companies[i];
   document.getElementById('headerCompName').textContent = activeCompany.name;
   document.getElementById('headerCompIin').textContent = 'БИН/ИИН: ' + activeCompany.iin;
+  // Сохранить в общий localStorage портала
+  localStorage.setItem('buhotchet_active_company', JSON.stringify(activeCompany));
   closeModal();
-  persistWorkspace();
+  // Перезагрузить данные ЭТОЙ компании (ключ хранилища включает ИИН)
+  loadWorkspaceIntoState();
 }
 
 function deleteCompany(i) {

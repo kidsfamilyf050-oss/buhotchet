@@ -2320,9 +2320,13 @@
     }
     function getUserDataStorageKey() {
       const e = normalizeAccountEmail(window.__asmayaUserEmail);
-      if (e === '__demo__') return `${STORAGE_KEY_MAIN}__demo`;
-      if (e) return `${STORAGE_KEY_MAIN}__${encodeURIComponent(e)}`;
-      return STORAGE_KEY_MAIN;
+      // Ключ включает ИИН компании — у каждой компании свои сотрудники
+      const compIin = (window.__buhotchetActiveCompany && window.__buhotchetActiveCompany.iin)
+        ? '_c' + String(window.__buhotchetActiveCompany.iin).replace(/[^a-z0-9]/gi,'')
+        : '';
+      if (e === '__demo__') return `${STORAGE_KEY_MAIN}__demo${compIin}`;
+      if (e) return `${STORAGE_KEY_MAIN}__${encodeURIComponent(e)}${compIin}`;
+      return STORAGE_KEY_MAIN + compIin;
     }
     const MONTH_WORK_DAYS_2026 = [19, 20, 18, 22, 17, 22, 22, 20, 22, 21, 21, 22];
     /** Праздничные нерабочие дни РК 2026 (ориентир по официальному календарю; переносы выходных учтены упрощённо). */
@@ -4929,28 +4933,35 @@
       // БухОтчет портал: авто-вход без пароля
       showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
       // Подхватить компанию из портала
-      function applyPortalCompany(compData) {
+      function applyPortalCompany(compData, reload) {
         if (!compData || !compData.name) return;
+        const prevIin = window.__buhotchetActiveCompany && window.__buhotchetActiveCompany.iin;
+        const changed = prevIin !== compData.iin;
+        window.__buhotchetActiveCompany = compData;
         try {
           const binEl = document.getElementById('companyBin');
           const nameEl = document.getElementById('companyName');
           if (binEl) binEl.value = compData.iin || '';
           if (nameEl) nameEl.value = compData.name || '';
-          // Также ищем в шапке/state
           if (typeof state !== 'undefined') {
             if (!state.company) state.company = {};
             state.company.bin = compData.iin || '';
             state.company.name = compData.name || '';
           }
+          // Если компания изменилась — перезагрузить данные сотрудников
+          if (changed && reload !== false && typeof restore === 'function') {
+            restore();
+            if (typeof render === 'function') render();
+          }
         } catch(e2){}
       }
       try {
         const pc = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
-        if (pc) applyPortalCompany(pc);
+        if (pc) applyPortalCompany(pc, false); // не перезагружать при первом запуске
       } catch(e){}
       window.addEventListener('storage', function(ev){
         if (ev.key === 'buhotchet_active_company') {
-          try { applyPortalCompany(JSON.parse(ev.newValue || 'null')); } catch(e){}
+          try { applyPortalCompany(JSON.parse(ev.newValue || 'null'), true); } catch(e){}
         }
       });
     })();

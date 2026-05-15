@@ -507,48 +507,54 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
   <!-- TARIFFS -->
   <div class="tariffs-section">
     <div class="tariffs-inner">
-      <div class="section-title">Тарифы</div>
-      <div class="section-sub">Выберите подходящий план для вашего бизнеса</div>
+      <div class="section-title">Тарифы и цены</div>
+      <div class="section-sub">Прозрачное ценообразование · Оплата за год · Поддержка включена</div>
       <div class="tariffs-grid">
         <div class="tariff-card">
-          <div class="tariff-name">ФНО 200</div>
-          <div class="tariff-price">По запросу <span></span></div>
-          <div class="tariff-desc">Только расчёт зарплаты и взносов</div>
+          <div class="tariff-name">Базовый</div>
+          <div class="tariff-price">25 000 <span>₸/год</span></div>
+          <div class="tariff-desc">Одна форма на выбор: ФНО 200 или ФНО 300</div>
           <ul class="tariff-features">
-            <li>ФНО 200 (ИПН, ОПВ, ОСМС)</li>
-            <li>Неограниченно сотрудников</li>
-            <li>Excel-выгрузка</li>
-            <li>Несколько компаний</li>
-            <li>Калькулятор зарплаты</li>
+            <li>ФНО 200 <b>или</b> ФНО 300 (на выбор)</li>
+            <li>Неограниченно компаний</li>
+            <li>Все калькуляторы</li>
+            <li>Сроки, КБК/КНП</li>
+            <li>+ 10 000 ₸/год за каждого доп. пользователя</li>
           </ul>
           <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
         <div class="tariff-card featured">
-          <div class="tariff-badge">⭐ Популярный</div>
-          <div class="tariff-name">Все формы</div>
-          <div class="tariff-price">По запросу <span></span></div>
-          <div class="tariff-desc">Полный доступ ко всем формам</div>
+          <div class="tariff-badge">⭐ Выгоднее</div>
+          <div class="tariff-name">Pro</div>
+          <div class="tariff-price">40 000 <span>₸/год</span></div>
+          <div class="tariff-desc">Полный доступ: ФНО 200 + ФНО 300</div>
           <ul class="tariff-features">
-            <li>ФНО 200 + ФНО 300</li>
+            <li>ФНО 200 (ИПН, ОПВ, ОСМС)</li>
+            <li>ФНО 300 (НДС 16%)</li>
             <li>Неограниченно компаний</li>
-            <li>Все калькуляторы</li>
-            <li>Сроки и КБК/КНП</li>
-            <li>Приоритетная поддержка</li>
+            <li>Все калькуляторы и справочники</li>
+            <li>+ 10 000 ₸/год за каждого доп. пользователя</li>
           </ul>
           <button class="btn-hero-primary" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
         <div class="tariff-card">
-          <div class="tariff-name">ФНО 300</div>
-          <div class="tariff-price">По запросу <span></span></div>
-          <div class="tariff-desc">Только декларация по НДС</div>
+          <div class="tariff-name">Доп. пользователь</div>
+          <div class="tariff-price">10 000 <span>₸/год</span></div>
+          <div class="tariff-desc">Добавьте коллег к своей компании</div>
           <ul class="tariff-features">
-            <li>ФНО 300 (НДС 16%)</li>
-            <li>Загрузка документов</li>
-            <li>Реестры ЭСФ и ГТД</li>
-            <li>Несколько компаний</li>
-            <li>Квартальные отчёты</li>
+            <li>Доступ к вашим компаниям</li>
+            <li>Те же права что у основного аккаунта</li>
+            <li>Отдельный логин и пароль</li>
+            <li>Управление из вашего кабинета</li>
+            <li>Подключается к любому тарифу</li>
           </ul>
           <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:28px;padding:18px 24px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);border-radius:14px;max-width:700px;margin-left:auto;margin-right:auto">
+        <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.6">
+          💳 После регистрации администратор свяжется с вами для оплаты и активации доступа.<br>
+          Оплата через Kaspi или перевод. <strong style="color:var(--gold)">Первые 7 дней — бесплатный тестовый доступ.</strong>
         </div>
       </div>
     </div>
@@ -675,6 +681,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <button class="nav-btn" onclick="showPage('deadlines',this)">📅 Сроки</button>
     <button class="nav-btn" onclick="showPage('kbk',this)">🔢 КБК/КНП</button>
     <button class="nav-btn" id="navAdmin" style="display:none" onclick="showPage('admin',this)">⚙️ Админ</button>
+    <button class="nav-btn" id="navMyUsers" style="display:none" onclick="showPage('myusers',this)">👥 Мои пользователи</button>
   </div>
 
   <div class="app-content">
@@ -888,6 +895,38 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
       </div></div>
     </div>
 
+    <!-- MY USERS (sub-users for non-admin) -->
+    <div class="page" id="page-myusers">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card">
+          <div class="card-title">
+            Мои пользователи
+            <div style="font-size:12px;color:var(--text3);font-weight:400">+10 000 ₸/год за каждого</div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.6;background:var(--brand-light);padding:12px 14px;border-radius:9px;border:1px solid rgba(26,77,143,.2)">
+            💡 Добавьте коллег — они получат доступ к вашим компаниям с теми же правами.<br>
+            Каждый пользователь входит со своим логином и паролем.
+          </div>
+          <div class="form-grid" style="max-width:480px;margin-bottom:8px">
+            <div class="field"><label>Логин пользователя</label><input type="text" id="suLogin" placeholder="логин-коллеги"></div>
+            <div style="display:flex;align-items:flex-end"><button class="btn btn-primary" onclick="addSubUser()" style="width:100%">+ Добавить</button></div>
+          </div>
+          <div class="auth-msg" id="suMsg"></div>
+          <div class="divider"></div>
+          <div id="subUsersList"><div style="color:var(--text3);font-size:13px">Загрузка...</div></div>
+        </div>
+        <div class="card" style="background:var(--warn-light);border-color:rgba(154,95,10,.2)">
+          <div style="font-size:13px;color:var(--warn)">
+            <strong>Тарифы:</strong><br>
+            Базовый — 25 000 ₸/год (одна форма: ФНО 200 или ФНО 300)<br>
+            Pro — 40 000 ₸/год (обе формы: ФНО 200 + ФНО 300)<br>
+            Доп. пользователь — +10 000 ₸/год<br><br>
+            Для оплаты и смены тарифа обратитесь к администратору.
+          </div>
+        </div>
+      </div></div>
+    </div>
+
   </div><!-- /app-content -->
 </div><!-- /appShell -->
 
@@ -1014,7 +1053,15 @@ function initApp() {
   const tn={all:'Все формы',fno200:'ФНО 200',fno300:'ФНО 300',none:'Нет доступа'};
   $('hUserName').textContent = currentUser.name||currentUser.login;
   $('hTariff').textContent = tn[currentUser.tariff]||currentUser.tariff;
-  if (currentUser.role==='admin') $('navAdmin').style.display='';
+  if (currentUser.role==='admin') {
+    $('navAdmin').style.display='';
+  } else {
+    // Показать "Мои пользователи" для обычных пользователей с тарифом
+    if (currentUser.tariff !== 'none') {
+      $('navMyUsers').style.display='';
+      loadSubUsers();
+    }
+  }
   const t=currentUser.tariff;
   const has300=t==='all'||t==='fno300', has200=t==='all'||t==='fno200';
   if (!has300) $('navFno300').classList.add('locked');
@@ -1040,6 +1087,7 @@ function showPage(id, btn) {
   const pb=$('periodBar');
   if(pb) pb.style.display=(id==='dashboard')?'flex':'none';
   if(id==='admin') loadAdmin();
+  if(id==='myusers') loadSubUsers();
   if(id==='dashboard') refreshDash();
 }
 
@@ -1276,6 +1324,52 @@ async function approveU(id){await api('POST',`/api/admin/users/${id}/approve`,{t
 async function rejectU(id){if(!confirm('Удалить заявку?'))return;await api('DELETE',`/api/admin/users/${id}`);loadAdmin();}
 async function changeTariff(id,t){await api('POST',`/api/admin/users/${id}/tariff`,{tariff:t});}
 async function adminAct(id,action){if(action==='delete'&&!confirm('Удалить пользователя?'))return;await api('POST',`/api/admin/users/${id}/${action}`);loadAdmin();}
+
+// ── SUB USERS ─────────────────────────────────────────────────────────────────
+async function loadSubUsers() {
+  try {
+    const r = await api('GET','/api/sub-users');
+    if (!r.ok) { $('subUsersList').innerHTML='<div style="color:var(--text3)">Ошибка загрузки</div>'; return; }
+    const users = r.users||[];
+    if (!users.length) {
+      $('subUsersList').innerHTML='<div style="color:var(--text3);font-size:13px;padding:12px 0">Нет добавленных пользователей. Введите логин выше и нажмите «+ Добавить».</div>';
+      return;
+    }
+    $('subUsersList').innerHTML = users.map(u=>`
+      <div class="admin-row">
+        <div style="flex:1">
+          <div style="font-weight:700;font-size:13px">${esc(u.full_name)} <span style="color:var(--text3);font-weight:400">(${esc(u.login)})</span></div>
+          <div style="font-size:11px;color:var(--text3)">${esc(u.email||'—')} · Добавлен: ${new Date(u.added_at).toLocaleDateString('ru-RU')}</div>
+        </div>
+        <span class="status-badge status-${u.status}">${{approved:'Активен',pending:'Ожидает',blocked:'Блок.'}[u.status]||u.status}</span>
+        <button class="btn btn-sm btn-danger" onclick="removeSubUser(${u.id})">✕ Удалить</button>
+      </div>`).join('');
+  } catch(e) { $('subUsersList').innerHTML='<div style="color:var(--red)">Ошибка</div>'; }
+}
+
+async function addSubUser() {
+  const login = $('suLogin').value.trim();
+  if (!login) { showAuthMsg('suMsg','Введите логин пользователя','err'); return; }
+  try {
+    const r = await api('POST','/api/sub-users',{login});
+    if (r.ok) {
+      showAuthMsg('suMsg','✅ Пользователь добавлен!','ok');
+      $('suLogin').value='';
+      loadSubUsers();
+    } else {
+      const m={user_not_found:'Пользователь не найден',already_added:'Уже добавлен',cannot_add_self:'Нельзя добавить себя'};
+      showAuthMsg('suMsg',m[r.error]||('Ошибка: '+r.error),'err');
+    }
+  } catch(e){ showAuthMsg('suMsg','Сервер недоступен','err'); }
+}
+
+async function removeSubUser(userId) {
+  if (!confirm('Удалить пользователя из вашего списка?')) return;
+  try {
+    await api('DELETE',`/api/sub-users/${userId}`);
+    loadSubUsers();
+  } catch(e){}
+}
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 (async function boot() {

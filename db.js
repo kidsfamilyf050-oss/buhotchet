@@ -80,6 +80,14 @@ async function initDb() {
       updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       PRIMARY KEY (user_id, storage_key)
     );
+    -- Субпользователи (добавлены главным пользователем)
+    CREATE TABLE IF NOT EXISTS sub_users (
+      id          SERIAL PRIMARY KEY,
+      owner_id    INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      user_id     INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      UNIQUE(owner_id, user_id)
+    );
     CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
     CREATE INDEX IF NOT EXISTS idx_kv_user ON kv_store(user_id);
   `);
@@ -272,3 +280,35 @@ module.exports = {
   getUserCompanies, saveUserCompanies,
   getKv, putKv, bulkPutKv
 };
+
+// ── SUB USERS ─────────────────────────────────────────────────────────────────
+async function getSubUsers(ownerId) {
+  const { rows } = await pool.query(
+    `SELECT u.id,u.login,u.full_name,u.email,u.status,u.tariff,s.created_at AS added_at
+     FROM sub_users s JOIN users u ON u.id=s.user_id
+     WHERE s.owner_id=$1 ORDER BY s.created_at`, [ownerId]
+  );
+  return rows;
+}
+
+async function addSubUser(ownerId, userLogin) {
+  const { rows } = await pool.query(
+    `SELECT id FROM users WHERE login=$1`, [userLogin.trim().toLowerCase()]
+  );
+  if (!rows.length) return { ok:false, error:'user_not_found' };
+  const userId = rows[0].id;
+  if (userId === ownerId) return { ok:false, error:'cannot_add_self' };
+  try {
+    await pool.query(
+      `INSERT INTO sub_users(owner_id,user_id) VALUES($1,$2) ON CONFLICT DO NOTHING`,
+      [ownerId, userId]
+    );
+    return { ok:true };
+  } catch(e) { return { ok:false, error:'already_added' }; }
+}
+
+async function removeSubUser(ownerId, userId) {
+  await pool.query(`DELETE FROM sub_users WHERE owner_id=$1 AND user_id=$2`, [ownerId, userId]);
+}
+
+module.exports = Object.assign(module.exports, { getSubUsers, addSubUser, removeSubUser });
