@@ -3,878 +3,1111 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>БухОтчет — Казахстан</title>
-<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<title>БухОтчет — Автоматизация бухгалтерской отчётности Казахстан</title>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --brand:#1A4D8F; --brand2:#2E6BC4; --brand-light:#EAF2FF;
-  --gold:#C9A227; --gold-light:#FFF8E6;
-  --surface:#fffef9; --surface2:#f4f1eb; --bg:#ece8e0;
-  --border:rgba(26,22,18,.1); --border2:rgba(26,22,18,.18);
-  --text:#141210; --text2:#4a433a; --text3:#7a7166;
-  --green:#1d6b45; --green-light:#dff3e8;
-  --red:#b42318; --red-light:#fce8e6;
-  --warn:#9a5f0a; --warn-light:#f8edd8;
+  --brand:#1A4D8F;--brand2:#2E6BC4;--brand-light:#EAF2FF;
+  --gold:#C9A227;--gold-light:#FFF8E6;
+  --surface:#fffef9;--surface2:#f4f1eb;--bg:#ece8e0;
+  --border:rgba(26,22,18,.1);--border2:rgba(26,22,18,.18);
+  --text:#141210;--text2:#4a433a;--text3:#7a7166;
+  --green:#1d6b45;--green-light:#dff3e8;
+  --red:#b42318;--red-light:#fce8e6;
+  --warn:#9a5f0a;--warn-light:#f8edd8;
   --shadow:0 1px 3px rgba(20,18,16,.06),0 8px 24px rgba(20,18,16,.08);
   --radius:14px;
 }
 html,body{height:100%;overflow:hidden}
-body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;background:#0d1b2e}
 
-/* ═══════════════════════════════════════════════ AUTH SCREEN */
-#authScreen{
-  position:fixed;inset:0;z-index:9000;
-  background:linear-gradient(135deg,#1A2E4A 0%,#1A4D8F 50%,#0D3D6E 100%);
-  display:flex;align-items:center;justify-content:center;
-  padding:20px;
+/* ══ LANDING PAGE ══════════════════════════════════════════════════════════ */
+#landingPage{
+  position:fixed;inset:0;z-index:9000;overflow-y:auto;
+  background:linear-gradient(160deg,#0a1628 0%,#0d2244 40%,#1a3a6e 70%,#0d1628 100%);
 }
-#authScreen.hidden{display:none}
+#landingPage.hidden{display:none}
+
+/* Hero */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 20px;text-align:center;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(46,107,196,.25) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.35);
+  border-radius:999px;padding:6px 18px;margin-bottom:28px;
+  font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.5px;text-transform:uppercase;
+}
+.hero-logo{
+  display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px;
+}
+.hero-logo-icon{
+  width:64px;height:64px;background:linear-gradient(135deg,var(--gold),#e8b820);
+  border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:800;color:#fff;letter-spacing:-1px;
+  box-shadow:0 8px 32px rgba(201,162,39,.4);
+}
+.hero-logo-text{font-size:42px;font-weight:800;color:#fff;letter-spacing:-1px}
+.hero-logo-text span{color:var(--gold)}
+.hero-title{
+  font-size:clamp(26px,5vw,52px);font-weight:800;color:#fff;
+  line-height:1.15;margin-bottom:18px;max-width:800px;
+}
+.hero-title em{color:var(--gold);font-style:normal}
+.hero-sub{
+  font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.7);
+  max-width:600px;margin:0 auto 36px;line-height:1.6;
+}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:48px}
+.btn-hero-primary{
+  background:linear-gradient(135deg,var(--gold),#e8b820);color:#0a1628;
+  border:none;border-radius:12px;padding:14px 32px;font-size:16px;font-weight:800;
+  cursor:pointer;font-family:inherit;transition:all .2s;
+  box-shadow:0 4px 20px rgba(201,162,39,.45);
+}
+.btn-hero-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,162,39,.55)}
+.btn-hero-ghost{
+  background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);
+  border-radius:12px;padding:14px 32px;font-size:16px;font-weight:600;
+  cursor:pointer;font-family:inherit;transition:all .2s;
+}
+.btn-hero-ghost:hover{background:rgba(255,255,255,.18);transform:translateY(-2px)}
+
+/* Stats */
+.hero-stats{
+  display:flex;gap:32px;flex-wrap:wrap;justify-content:center;
+  padding:20px 32px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:16px;margin-bottom:60px;
+}
+.stat-item{text-align:center}
+.stat-num{font-size:28px;font-weight:800;color:var(--gold);line-height:1}
+.stat-label{font-size:12px;color:rgba(255,255,255,.55);margin-top:4px}
+
+/* Features */
+.features{
+  background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.08);
+  padding:64px 20px;
+}
+.features-inner{max-width:1100px;margin:0 auto}
+.section-title{text-align:center;font-size:clamp(22px,4vw,36px);font-weight:800;color:#fff;margin-bottom:10px}
+.section-sub{text-align:center;color:rgba(255,255,255,.55);margin-bottom:48px;font-size:16px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feat-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:28px;transition:all .2s;
+}
+.feat-card:hover{background:rgba(255,255,255,.1);border-color:rgba(201,162,39,.3);transform:translateY(-4px)}
+.feat-icon{
+  width:52px;height:52px;border-radius:12px;display:flex;align-items:center;
+  justify-content:center;font-size:24px;margin-bottom:16px;
+}
+.feat-icon.blue{background:rgba(46,107,196,.2)}
+.feat-icon.gold{background:rgba(201,162,39,.2)}
+.feat-icon.green{background:rgba(29,107,69,.2)}
+.feat-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:8px}
+.feat-desc{font-size:13px;color:rgba(255,255,255,.6);line-height:1.6}
+
+/* Forms section */
+.forms-section{padding:64px 20px;background:rgba(0,0,0,.15);border-top:1px solid rgba(255,255,255,.06)}
+.forms-inner{max-width:1100px;margin:0 auto}
+.forms-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:48px}
+.form-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;padding:24px;display:flex;align-items:flex-start;gap:16px;
+}
+.form-card-icon{
+  width:48px;height:48px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;flex-shrink:0;
+}
+.form-card-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:6px}
+.form-card-desc{font-size:13px;color:rgba(255,255,255,.55);line-height:1.5}
+.form-card-tag{
+  display:inline-block;margin-top:10px;padding:3px 10px;border-radius:999px;
+  font-size:11px;font-weight:700;background:rgba(201,162,39,.2);color:var(--gold);
+}
+
+/* Tariffs */
+.tariffs-section{padding:64px 20px;border-top:1px solid rgba(255,255,255,.06)}
+.tariffs-inner{max-width:900px;margin:0 auto}
+.tariffs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:48px}
+.tariff-card{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:18px;padding:28px;text-align:center;position:relative;transition:all .2s;
+}
+.tariff-card.featured{
+  background:linear-gradient(135deg,rgba(46,107,196,.3),rgba(26,77,143,.2));
+  border-color:rgba(201,162,39,.5);transform:scale(1.04);
+}
+.tariff-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--gold);color:#0a1628;font-size:11px;font-weight:800;
+  padding:4px 14px;border-radius:999px;white-space:nowrap;
+}
+.tariff-name{font-size:18px;font-weight:800;color:#fff;margin-bottom:8px;margin-top:8px}
+.tariff-price{font-size:32px;font-weight:800;color:var(--gold);margin-bottom:4px}
+.tariff-price span{font-size:14px;color:rgba(255,255,255,.5);font-weight:400}
+.tariff-desc{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:18px}
+.tariff-features{list-style:none;text-align:left;margin-bottom:24px}
+.tariff-features li{font-size:13px;color:rgba(255,255,255,.7);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:8px}
+.tariff-features li::before{content:'✓';color:var(--gold);font-weight:800;flex-shrink:0}
+
+/* CTA */
+.cta-section{
+  padding:64px 20px;text-align:center;
+  background:linear-gradient(135deg,rgba(26,77,143,.4),rgba(46,107,196,.2));
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.cta-title{font-size:clamp(22px,4vw,38px);font-weight:800;color:#fff;margin-bottom:16px}
+.cta-sub{color:rgba(255,255,255,.65);font-size:16px;margin-bottom:32px;max-width:500px;margin-left:auto;margin-right:auto}
+
+/* Footer */
+.footer{
+  background:rgba(0,0,0,.3);border-top:1px solid rgba(255,255,255,.06);
+  padding:24px 20px;text-align:center;font-size:12px;color:rgba(255,255,255,.3);
+}
+
+/* ══ AUTH MODAL ════════════════════════════════════════════════════════════ */
+#authModal{
+  position:fixed;inset:0;z-index:9100;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+#authModal.open{display:flex}
 .auth-box{
-  background:#fff;border-radius:20px;
-  width:420px;max-width:100%;
-  box-shadow:0 32px 80px rgba(0,0,0,.35);
-  overflow:hidden;
+  background:#fff;border-radius:20px;width:440px;max-width:100%;
+  box-shadow:0 32px 80px rgba(0,0,0,.4);overflow:hidden;
+  animation:slideUp .25s ease;
 }
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 .auth-head{
-  background:linear-gradient(135deg,#1A4D8F,#2E6BC4);
-  padding:28px 32px 24px;text-align:center;color:#fff;
+  background:linear-gradient(135deg,#0d2244,#1a4d8f);
+  padding:24px 28px 20px;text-align:center;color:#fff;position:relative;
 }
-.auth-logo{width:52px;height:52px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;margin:0 auto 12px;letter-spacing:-.5px}
-.auth-title{font-size:22px;font-weight:700;margin-bottom:4px}
-.auth-sub{font-size:13px;opacity:.75}
+.auth-close{
+  position:absolute;top:12px;right:14px;background:rgba(255,255,255,.15);
+  border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;
+  font-size:16px;display:flex;align-items:center;justify-content:center;
+  font-family:inherit;
+}
+.auth-head-logo{font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px;margin-bottom:4px}
+.auth-head-logo span{color:var(--gold)}
+.auth-head-sub{font-size:12px;opacity:.65}
 .auth-tabs{display:flex;border-bottom:1px solid #e5e7eb}
-.auth-tab{flex:1;padding:13px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;color:#6b7280;border-bottom:2px solid transparent;transition:all .15s;background:none;border-left:none;border-right:none;border-top:none;font-family:inherit}
+.auth-tab{
+  flex:1;padding:12px;text-align:center;font-size:13px;font-weight:600;cursor:pointer;
+  color:#6b7280;border-bottom:2px solid transparent;transition:all .15s;
+  background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;
+}
 .auth-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
-.auth-body{padding:24px 28px 28px}
+.auth-body{padding:22px 28px 26px}
 .auth-panel{display:none}
 .auth-panel.active{display:block}
-.af{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
-.af label{font-size:12px;font-weight:700;color:var(--text2)}
-.af input{background:#f8f9fa;border:1px solid #d1d5db;border-radius:9px;padding:10px 13px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:border-color .18s}
+.af{display:flex;flex-direction:column;gap:4px;margin-bottom:13px}
+.af label{font-size:11px;font-weight:700;color:#374151;letter-spacing:.02em}
+.af input{
+  background:#f9fafb;border:1px solid #d1d5db;border-radius:9px;
+  padding:10px 12px;font-size:14px;font-family:inherit;color:#111;outline:none;transition:all .18s;
+}
 .af input:focus{border-color:var(--brand2);background:#fff;box-shadow:0 0 0 3px rgba(46,107,196,.1)}
-.btn-auth{width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;border:none;font-family:inherit;background:var(--brand);color:#fff;transition:all .15s;margin-top:4px}
-.btn-auth:hover{background:var(--brand2);transform:translateY(-1px)}
+.btn-auth{
+  width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:700;
+  cursor:pointer;border:none;font-family:inherit;
+  background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;
+  transition:all .18s;margin-top:4px;
+  box-shadow:0 3px 12px rgba(26,77,143,.3);
+}
+.btn-auth:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(26,77,143,.4)}
 .btn-auth:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.auth-msg{font-size:12px;margin-top:10px;padding:9px 12px;border-radius:8px;text-align:center;display:none}
-.auth-msg.err{background:var(--red-light);color:var(--red);display:block}
-.auth-msg.ok{background:var(--green-light);color:var(--green);display:block}
-.auth-msg.warn{background:var(--warn-light);color:var(--warn);display:block}
+.auth-msg{
+  font-size:12px;margin-top:10px;padding:9px 12px;border-radius:8px;
+  text-align:center;display:none;
+}
+.auth-msg.err{background:#fce8e6;color:#b42318;display:block}
+.auth-msg.ok{background:#dff3e8;color:#1d6b45;display:block}
+.auth-msg.warn{background:#f8edd8;color:#9a5f0a;display:block}
+.auth-link{
+  background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;
+  font-family:inherit;text-decoration:underline;padding:0;
+}
+.auth-link:hover{color:#64748b}
+.auth-divider{height:1px;background:#e5e7eb;margin:14px 0}
 
-/* ═══════════════════════════════════════════════ MAIN APP */
+/* ══ APP SHELL ════════════════════════════════════════════════════════════ */
 #appShell{display:flex;flex-direction:column;height:100%;visibility:hidden}
 #appShell.visible{visibility:visible}
 
-/* HEADER */
-.header{background:var(--brand);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,.25);z-index:100}
-.logo-area{display:flex;align-items:center;gap:12px}
-.logo-icon{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;flex-shrink:0}
-.logo-name{font-size:16px;font-weight:700;color:#fff}
-.logo-sub{font-size:10px;color:rgba(255,255,255,.6)}
-.header-right{display:flex;align-items:center;gap:10px}
-.user-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:5px 11px}
-.user-name{font-size:12px;font-weight:600;color:#fff}
-.user-tariff{font-size:10px;color:rgba(255,255,255,.6)}
-.btn-logout{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:7px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s}
-.btn-logout:hover{background:rgba(255,255,255,.25)}
-.period-bar{display:flex;align-items:center;gap:8px}
-.period-sel{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:7px;color:#fff;font-family:inherit;font-size:12px;padding:5px 8px;cursor:pointer;outline:none}
+.app-header{
+  background:var(--brand);padding:0 18px;display:flex;align-items:center;
+  justify-content:space-between;height:52px;flex-shrink:0;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);z-index:100;
+}
+.app-logo{display:flex;align-items:center;gap:10px}
+.app-logo-icon{
+  width:32px;height:32px;background:var(--gold);border-radius:7px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:#fff;flex-shrink:0;
+}
+.app-logo-name{font-size:15px;font-weight:700;color:#fff}
+.app-logo-sub{font-size:10px;color:rgba(255,255,255,.55)}
+.app-header-right{display:flex;align-items:center;gap:8px}
+.period-bar{display:flex;align-items:center;gap:6px}
+.period-sel{
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  border-radius:6px;color:#fff;font-family:inherit;font-size:11px;padding:4px 7px;
+  cursor:pointer;outline:none;
+}
 .period-sel option{color:#000}
-.company-chip{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:7px;padding:5px 10px;cursor:pointer;transition:background .15s;max-width:180px}
+.company-chip{
+  display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:4px 9px;
+  cursor:pointer;transition:background .15s;max-width:160px;
+}
 .company-chip:hover{background:rgba(255,255,255,.2)}
-.company-chip-name{font-size:12px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.company-chip-iin{font-size:10px;color:rgba(255,255,255,.6)}
+.company-chip-name{font-size:11px;font-weight:600;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-chip-iin{font-size:9px;color:rgba(255,255,255,.55)}
+.user-badge{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  border-radius:7px;padding:4px 9px;cursor:pointer;
+}
+.user-name{font-size:11px;font-weight:600;color:#fff}
+.user-tariff{font-size:9px;color:rgba(255,255,255,.55)}
+.btn-logout{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;
+  cursor:pointer;font-family:inherit;
+}
+.btn-logout:hover{background:rgba(255,255,255,.2)}
 
-/* NAV */
-.nav{background:#1A3D70;display:flex;gap:2px;padding:0 16px;border-bottom:2px solid var(--gold);flex-shrink:0;overflow-x:auto}
-.nav-btn{background:none;border:none;cursor:pointer;padding:9px 14px;font-family:inherit;font-size:12px;font-weight:500;color:rgba(255,255,255,.6);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;white-space:nowrap}
+.app-nav{
+  background:#1A3D70;display:flex;gap:1px;padding:0 14px;
+  border-bottom:2px solid var(--gold);flex-shrink:0;overflow-x:auto;
+}
+.nav-btn{
+  background:none;border:none;cursor:pointer;padding:8px 13px;
+  font-family:inherit;font-size:12px;font-weight:500;
+  color:rgba(255,255,255,.6);border-bottom:2px solid transparent;
+  margin-bottom:-2px;transition:color .15s;white-space:nowrap;
+}
 .nav-btn:hover{color:rgba(255,255,255,.85)}
 .nav-btn.active{color:#fff;border-bottom-color:var(--gold)}
-.nav-btn.locked{opacity:.4;cursor:not-allowed}
-.nav-btn.locked:hover{color:rgba(255,255,255,.6)}
+.nav-btn.locked{opacity:.35;cursor:not-allowed}
 
-/* CONTENT AREA */
 .app-content{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.page{display:none;flex:1;overflow-y:auto;height:100%}
+.page{display:none;flex:1;overflow-y:auto}
 .page.active{display:flex;flex-direction:column}
-
-/* ─── iframe pages: полный экран без ограничений ─── */
 .page-iframe{display:none;flex:1;overflow:hidden}
 .page-iframe.active{display:flex;flex-direction:column}
 .iframe-full{flex:1;width:100%;border:none;display:block}
-
-/* ─── scroll pages ─── */
-.scroll-content{flex:1;overflow-y:auto;padding:20px}
+.scroll-wrap{flex:1;overflow-y:auto;padding:18px}
 .inner{max-width:1200px;margin:0 auto}
 
-/* CARDS */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:18px;box-shadow:var(--shadow)}
-.card-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-
-/* KPI GRID */
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;position:relative;overflow:hidden}
+/* Cards */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:13px 15px;position:relative;overflow:hidden}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .kpi-card.blue::before{background:var(--brand2)}
 .kpi-card.gold::before{background:var(--gold)}
 .kpi-card.green::before{background:var(--green)}
 .kpi-card.red::before{background:var(--red)}
-.kpi-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-weight:600}
-.kpi-value{font-size:20px;font-weight:700;color:var(--text)}
-.kpi-value span{font-size:12px;font-weight:400;color:var(--text3)}
-.kpi-sub{font-size:11px;margin-top:3px;color:var(--text3)}
-
-/* COMPANY GRID */
-.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:16px}
-.company-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;transition:all .18s;position:relative}
+.kpi-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-weight:600}
+.kpi-value{font-size:19px;font-weight:700;color:var(--text)}
+.kpi-value span{font-size:11px;font-weight:400;color:var(--text3)}
+.kpi-sub{font-size:10px;margin-top:3px;color:var(--text3)}
+.company-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-bottom:14px}
+.company-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:15px;cursor:pointer;transition:all .18s;position:relative}
 .company-card:hover,.company-card.active{border-color:rgba(26,77,143,.45);background:var(--brand-light)}
 .company-card.active{border-color:var(--brand)}
-.company-card-badge{width:40px;height:40px;border-radius:9px;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;margin-bottom:10px}
-.company-card-name{font-weight:700;font-size:13px;color:var(--text);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-card-badge{width:38px;height:38px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;margin-bottom:9px}
+.company-card-name{font-weight:700;font-size:13px;color:var(--text);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .company-card-meta{font-size:11px;color:var(--text3);line-height:1.5}
-.company-card-actions{position:absolute;top:10px;right:10px;display:flex;gap:3px}
+.company-card-actions{position:absolute;top:9px;right:9px;display:flex;gap:3px}
 .cc-btn{background:none;border:none;cursor:pointer;padding:3px 6px;border-radius:5px;font-size:11px;font-weight:700;transition:all .15s}
-.cc-select{background:var(--brand-light);color:var(--brand)}
-.cc-select:hover,.cc-select.selected{background:var(--brand);color:#fff}
+.cc-sel{background:var(--brand-light);color:var(--brand)}
+.cc-sel:hover,.cc-sel.on{background:var(--brand);color:#fff}
 .cc-del{background:var(--red-light);color:var(--red)}
 .cc-del:hover{background:var(--red);color:#fff}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:11px}
 .field{display:flex;flex-direction:column;gap:4px}
 .field label{font-size:11px;font-weight:700;color:var(--text2)}
-.field input,.field select{background:var(--surface2);border:1px solid var(--border2);border-radius:9px;padding:9px 12px;font-size:13px;font-family:inherit;color:var(--text);outline:none;transition:border-color .18s;width:100%}
+.field input,.field select{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 11px;font-size:13px;font-family:inherit;color:var(--text);outline:none;transition:border-color .18s;width:100%}
 .field input:focus,.field select:focus{border-color:rgba(46,107,196,.55);background:var(--surface);box-shadow:0 0 0 3px rgba(46,107,196,.1)}
-
-/* BUTTONS */
-.btn{padding:9px 18px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:6px;transition:all .15s;white-space:nowrap}
+.btn{padding:8px 16px;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:5px;transition:all .15s;white-space:nowrap}
 .btn:hover{transform:translateY(-1px)}
 .btn-primary{background:var(--brand);color:#fff}
 .btn-primary:hover{background:var(--brand2)}
 .btn-danger{background:var(--red);color:#fff}
 .btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
-.btn-ghost:hover{background:var(--surface);color:var(--text)}
 .btn-success{background:var(--green);color:#fff}
 .btn-warn{background:var(--warn);color:#fff}
-.btn-sm{padding:6px 11px;font-size:11px;border-radius:7px}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-
-/* TABLE */
-.rtable{width:100%;border-collapse:collapse;font-size:13px}
-.rtable th{text-align:left;padding:8px 11px;background:var(--surface2);color:var(--text3);font-weight:700;border-bottom:1px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.4px}
-.rtable td{padding:9px 11px;border-bottom:1px solid var(--border);color:var(--text)}
+.btn-sm{padding:5px 10px;font-size:11px;border-radius:6px}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}
+.divider{height:1px;background:var(--border);margin:13px 0}
+.rtable{width:100%;border-collapse:collapse;font-size:12px}
+.rtable th{text-align:left;padding:7px 10px;background:var(--surface2);color:var(--text3);font-weight:700;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+.rtable td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text)}
 .rtable tr:last-child td{border-bottom:none}
 .rtable tr:hover td{background:var(--surface2)}
-
-/* MODAL */
+.tax-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.tax-tab{font-family:inherit;font-size:11px;font-weight:600;padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s}
+.tax-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.big-input{font-family:inherit;font-size:20px;font-weight:700;padding:11px 14px;border:1px solid var(--border2);border-radius:8px;background:var(--surface2);color:var(--text);width:100%;outline:none;margin-bottom:11px}
+.calc-result{background:var(--brand);border-radius:9px;padding:15px 17px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.cr-label{font-size:10px;color:rgba(255,255,255,.65);margin-bottom:3px}
+.cr-value{font-size:15px;font-weight:700;color:#fff}
 .modal-overlay{position:fixed;inset:0;background:rgba(14,12,10,.5);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
-.modal{background:var(--surface);border-radius:16px;padding:24px;width:520px;max-width:calc(100vw - 28px);box-shadow:0 24px 56px rgba(20,18,16,.18);max-height:85vh;overflow-y:auto;border:1px solid var(--border)}
-.modal-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
-.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);line-height:1}
-.modal-close:hover{color:var(--text)}
-.divider{height:1px;background:var(--border);margin:14px 0}
-
-/* ADMIN PANEL */
-.admin-user-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);margin-bottom:8px;flex-wrap:wrap}
-.admin-user-info{flex:1;min-width:150px}
-.admin-user-login{font-weight:700;font-size:13px}
-.admin-user-meta{font-size:11px;color:var(--text3)}
-.tariff-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
-.tariff-all{background:#dbeafe;color:#1e40af}
-.tariff-fno200{background:#d1fae5;color:#065f46}
-.tariff-fno300{background:#fef3c7;color:#92400e}
-.tariff-none{background:#f3f4f6;color:#6b7280}
-.status-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+.modal{background:var(--surface);border-radius:14px;padding:22px;width:500px;max-width:calc(100vw - 24px);box-shadow:0 24px 56px rgba(20,18,16,.18);max-height:85vh;overflow-y:auto;border:1px solid var(--border)}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;font-size:18px;cursor:pointer;color:var(--text3)}
+.admin-row{display:flex;align-items:center;gap:9px;padding:9px 12px;border:1px solid var(--border);border-radius:9px;background:var(--surface2);margin-bottom:7px;flex-wrap:wrap}
+.status-badge,.tariff-badge2{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700}
 .status-approved{background:var(--green-light);color:var(--green)}
 .status-pending{background:var(--warn-light);color:var(--warn)}
 .status-blocked{background:var(--red-light);color:var(--red)}
-
-/* DEADLINE */
-.dl-item{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);gap:10px;font-size:13px}
+.dl-item{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);gap:9px;font-size:12px}
 .dl-item:last-child{border-bottom:none}
-.dl-date{width:40px;height:40px;border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
-.dl-day{font-size:14px;font-weight:700;line-height:1}
-.dl-mon{font-size:9px;text-transform:uppercase}
+.dl-date{width:38px;height:38px;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.dl-day{font-size:13px;font-weight:700;line-height:1}
+.dl-mon{font-size:8px;text-transform:uppercase}
 .dl-date.urgent{background:var(--red-light);color:var(--red)}
 .dl-date.soon{background:var(--warn-light);color:var(--warn)}
 .dl-date.ok{background:var(--green-light);color:var(--green)}
-
-/* CALC */
-.tax-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
-.tax-tab{font-family:inherit;font-size:11px;font-weight:600;padding:5px 12px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text2);cursor:pointer;transition:all .15s}
-.tax-tab.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-.big-input{font-family:inherit;font-size:20px;font-weight:700;padding:12px 15px;border:1px solid var(--border2);border-radius:9px;background:var(--surface2);color:var(--text);width:100%;outline:none;margin-bottom:12px}
-.calc-result{background:var(--brand);border-radius:9px;padding:16px 18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-.cr-label{font-size:10px;color:rgba(255,255,255,.65);margin-bottom:3px}
-.cr-value{font-size:16px;font-weight:700;color:#fff}
 
 @media(max-width:768px){
   .kpi-grid{grid-template-columns:1fr 1fr}
   .form-grid{grid-template-columns:1fr}
   .calc-result{grid-template-columns:1fr}
   .company-grid{grid-template-columns:1fr}
-  .header{padding:0 12px}
-  .nav{padding:0 8px}
-  .period-bar{display:none}
+  .features-grid,.forms-grid,.tariffs-grid{grid-template-columns:1fr}
+  .tariff-card.featured{transform:none}
+  .hero-stats{gap:18px}
+  .app-header{padding:0 10px}
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════ AUTH SCREEN ════════════════════════════ -->
-<div id="authScreen">
+<!-- ══════════════ LANDING ══════════════ -->
+<div id="landingPage">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-badge">🇰🇿 Казахстан · Налоговый кодекс 2026</div>
+    <div class="hero-logo">
+      <div class="hero-logo-icon">БО</div>
+      <div class="hero-logo-text">Бух<span>Отчет</span></div>
+    </div>
+    <h1 class="hero-title">Бухгалтерская отчётность<br><em>без ошибок и стресса</em></h1>
+    <p class="hero-sub">Автоматизированные ФНО 200, ФНО 300 и расчёт зарплаты. Актуальные ставки 2026 года. Всё в одном месте — просто, быстро, надёжно.</p>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="openAuth('login')">🚀 Войти в систему</button>
+      <button class="btn-hero-ghost" onclick="openAuth('register')">📝 Зарегистрироваться</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><div class="stat-num">НДС 16%</div><div class="stat-label">актуальная ставка</div></div>
+      <div class="stat-item"><div class="stat-num">4 325 ₸</div><div class="stat-label">МРП 2026</div></div>
+      <div class="stat-item"><div class="stat-num">85 000 ₸</div><div class="stat-label">МЗП 2026</div></div>
+      <div class="stat-item"><div class="stat-num">ФНО 200</div><div class="stat-label">ИПН, ОПВ, СО, ОСМС</div></div>
+      <div class="stat-item"><div class="stat-num">ФНО 300</div><div class="stat-label">Декларация по НДС</div></div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="features">
+    <div class="features-inner">
+      <div class="section-title">Всё что нужно бухгалтеру</div>
+      <div class="section-sub">Один портал для всех налоговых форм и расчётов</div>
+      <div class="features-grid">
+        <div class="feat-card">
+          <div class="feat-icon blue">📋</div>
+          <div class="feat-title">ФНО 300 — Декларация по НДС</div>
+          <div class="feat-desc">Автоматический расчёт НДС 16%, загрузка документов, квартальные отчёты. Поддержка реестров, ГТД, ЭСФ и ФНО 328.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon gold">💼</div>
+          <div class="feat-title">ФНО 200 — ИПН, ОПВ, ОСМС</div>
+          <div class="feat-desc">Расчёт зарплаты для всех сотрудников. ИПН, ОПВ, ОПВР, СО, СН, ООСМС, ВОСМС по ставкам 2026 года. Excel-выгрузка.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon green">🧮</div>
+          <div class="feat-title">Налоговый калькулятор</div>
+          <div class="feat-desc">Мгновенный расчёт НДС, КПН, ИПН, ОПВ и всех взносов. Калькулятор зарплаты: удержания и расходы работодателя.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon blue">🏢</div>
+          <div class="feat-title">Несколько компаний</div>
+          <div class="feat-desc">ТОО, ИП, АО. Режимы ОУР и Упрощёнка. Данные каждой компании хранятся отдельно — не перепутаете.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon gold">📅</div>
+          <div class="feat-title">Сроки и дедлайны</div>
+          <div class="feat-desc">Календарь сдачи отчётности на весь 2026 год. Размеры штрафов в МРП. Никогда не пропустите дедлайн.</div>
+        </div>
+        <div class="feat-card">
+          <div class="feat-icon green">🔐</div>
+          <div class="feat-title">Безопасность данных</div>
+          <div class="feat-desc">Данные хранятся в защищённой базе PostgreSQL на сервере. Доступ только после авторизации. Каждый пользователь видит только свои данные.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMS -->
+  <div class="forms-section">
+    <div class="forms-inner">
+      <div class="section-title">Поддерживаемые формы 2026</div>
+      <div class="section-sub">Актуальные ставки по Налоговому кодексу РК (Закон 214-VIII от 18.07.2025)</div>
+      <div class="forms-grid">
+        <div class="form-card">
+          <div class="form-card-icon" style="background:rgba(46,107,196,.2)">📋</div>
+          <div>
+            <div class="form-card-title">ФНО 300.00 — НДС</div>
+            <div class="form-card-desc">Декларация по налогу на добавленную стоимость. Квартальная сдача. Реестры счетов-фактур, ГТД, импорт из ЕАЭС.</div>
+            <div class="form-card-tag">НДС 16% · Квартально · до 25-го</div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-card-icon" style="background:rgba(201,162,39,.2)">💼</div>
+          <div>
+            <div class="form-card-title">ФНО 200.00 — ИПН/ОПВ</div>
+            <div class="form-card-desc">Декларация по ИПН у источника. ОПВ, ОПВР, ОППВ, СО, СН, ООСМС, ВОСМС. Для наёмных работников и ИП.</div>
+            <div class="form-card-tag">ИПН 10% · Квартально · до 15-го</div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-card-icon" style="background:rgba(29,107,69,.2)">📊</div>
+          <div>
+            <div class="form-card-title">ФНО 910.00 — Упрощёнка</div>
+            <div class="form-card-desc">Упрощённая декларация для ИП и ТОО на специальном налоговом режиме. 4% от дохода, полугодовая.</div>
+            <div class="form-card-tag">4% от дохода · Полугодово</div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-card-icon" style="background:rgba(185,28,28,.15)">🏛️</div>
+          <div>
+            <div class="form-card-title">ФНО 100.00 — КПН</div>
+            <div class="form-card-desc">Корпоративный подоходный налог для ТОО/АО на ОУР. Годовая декларация + ежемесячные авансы.</div>
+            <div class="form-card-tag">КПН 20% · Годовая · до 31 марта</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARIFFS -->
+  <div class="tariffs-section">
+    <div class="tariffs-inner">
+      <div class="section-title">Тарифы</div>
+      <div class="section-sub">Выберите подходящий план для вашего бизнеса</div>
+      <div class="tariffs-grid">
+        <div class="tariff-card">
+          <div class="tariff-name">ФНО 200</div>
+          <div class="tariff-price">По запросу <span></span></div>
+          <div class="tariff-desc">Только расчёт зарплаты и взносов</div>
+          <ul class="tariff-features">
+            <li>ФНО 200 (ИПН, ОПВ, ОСМС)</li>
+            <li>Неограниченно сотрудников</li>
+            <li>Excel-выгрузка</li>
+            <li>Несколько компаний</li>
+            <li>Калькулятор зарплаты</li>
+          </ul>
+          <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
+        </div>
+        <div class="tariff-card featured">
+          <div class="tariff-badge">⭐ Популярный</div>
+          <div class="tariff-name">Все формы</div>
+          <div class="tariff-price">По запросу <span></span></div>
+          <div class="tariff-desc">Полный доступ ко всем формам</div>
+          <ul class="tariff-features">
+            <li>ФНО 200 + ФНО 300</li>
+            <li>Неограниченно компаний</li>
+            <li>Все калькуляторы</li>
+            <li>Сроки и КБК/КНП</li>
+            <li>Приоритетная поддержка</li>
+          </ul>
+          <button class="btn-hero-primary" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
+        </div>
+        <div class="tariff-card">
+          <div class="tariff-name">ФНО 300</div>
+          <div class="tariff-price">По запросу <span></span></div>
+          <div class="tariff-desc">Только декларация по НДС</div>
+          <ul class="tariff-features">
+            <li>ФНО 300 (НДС 16%)</li>
+            <li>Загрузка документов</li>
+            <li>Реестры ЭСФ и ГТД</li>
+            <li>Несколько компаний</li>
+            <li>Квартальные отчёты</li>
+          </ul>
+          <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">Готовы автоматизировать отчётность?</div>
+    <div class="cta-sub">Зарегистрируйтесь и начните работу. Администратор активирует ваш аккаунт в течение 1 рабочего дня.</div>
+    <div class="hero-btns">
+      <button class="btn-hero-primary" onclick="openAuth('register')">📝 Создать аккаунт</button>
+      <button class="btn-hero-ghost" onclick="openAuth('login')">Уже есть аккаунт →</button>
+    </div>
+  </div>
+
+  <div class="footer">БухОтчет · Портал бухгалтерской отчётности · Казахстан 2026 · buhotchet.site</div>
+</div>
+
+<!-- ══════════════ AUTH MODAL ══════════════ -->
+<div id="authModal">
   <div class="auth-box">
     <div class="auth-head">
-      <div class="auth-logo">БО</div>
-      <div class="auth-title">БухОтчет</div>
-      <div class="auth-sub">Портал бухгалтерской отчётности · Казахстан 2026</div>
+      <button class="auth-close" onclick="closeAuth()">✕</button>
+      <div class="auth-head-logo">Бух<span>Отчет</span></div>
+      <div class="auth-head-sub">Портал бухгалтерской отчётности · Казахстан 2026</div>
     </div>
     <div class="auth-tabs">
-      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Вход</button>
-      <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Регистрация</button>
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Вход</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Регистрация</button>
     </div>
     <div class="auth-body">
 
       <!-- LOGIN -->
       <div class="auth-panel active" id="panelLogin">
-        <div class="af"><label>Логин</label><input id="loginLogin" type="text" placeholder="Ваш логин" autocomplete="username"></div>
+        <div class="af"><label>Логин</label><input id="loginLogin" type="text" placeholder="ваш-логин" autocomplete="username"></div>
         <div class="af"><label>Пароль</label><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
-        <button class="btn-auth" onclick="doLogin()" id="loginBtn">Войти</button>
-        <div style="text-align:center;margin-top:8px">
-          <button onclick="showPanel('forgot')" style="background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline">Забыли пароль?</button>
+        <button class="btn-auth" id="loginBtn" onclick="doLogin()">Войти</button>
+        <div style="text-align:center;margin-top:10px">
+          <button class="auth-link" onclick="switchTab('forgot')">Забыли пароль?</button>
         </div>
         <div class="auth-msg" id="loginMsg"></div>
-      </div>
-
-      <!-- FORGOT -->
-      <div class="auth-panel" id="panelForgot">
-        <div style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.5">Введите ваш логин — вышлем временный пароль на почту.</div>
-        <div class="af"><label>Логин</label><input id="forgotLogin" type="text" placeholder="ваш-логин"></div>
-        <button class="btn-auth" onclick="doForgotPassword()" id="forgotBtn">Отправить инструкцию</button>
-        <div style="text-align:center;margin-top:8px">
-          <button onclick="showPanel('login')" style="background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline">← Назад ко входу</button>
-        </div>
-        <div class="auth-msg" id="forgotMsg"></div>
-      </div>
-
-      <!-- CHANGE PASSWORD -->
-      <div class="auth-panel" id="panelChangePass">
-        <div style="font-size:13px;color:#64748b;margin-bottom:14px">Введите текущий и новый пароль.</div>
-        <div class="af"><label>Текущий пароль</label><input id="cpOld" type="password" placeholder="••••••••"></div>
-        <div class="af"><label>Новый пароль (мин. 6 символов)</label><input id="cpNew" type="password" placeholder="••••••••"></div>
-        <div class="af"><label>Повтор нового пароля</label><input id="cpNew2" type="password" placeholder="••••••••"></div>
-        <button class="btn-auth" onclick="doChangePassword()" id="cpBtn">Сменить пароль</button>
-        <div class="auth-msg" id="cpMsg"></div>
       </div>
 
       <!-- REGISTER -->
       <div class="auth-panel" id="panelRegister">
         <div class="af"><label>ФИО *</label><input id="regName" type="text" placeholder="Иванов Иван Иванович"></div>
-        <div class="af"><label>Логин * (латиница, без пробелов)</label><input id="regLogin" type="text" placeholder="ivan_company" autocomplete="username"></div>
-        <div class="af"><label>E-mail</label><input id="regEmail" type="email" placeholder="you@company.kz"></div>
+        <div class="af"><label>Логин * (латиница и цифры)</label><input id="regLogin" type="text" placeholder="ivan_buh" autocomplete="username"></div>
+        <div class="af"><label>Email *</label><input id="regEmail" type="email" placeholder="buh@company.kz"></div>
         <div class="af"><label>Телефон</label><input id="regPhone" type="tel" placeholder="+7 701 000 00 00"></div>
         <div class="af"><label>Пароль * (мин. 6 символов)</label><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"></div>
-        <button class="btn-auth" onclick="doRegister()" id="registerBtn">Отправить заявку</button>
+        <button class="btn-auth" id="registerBtn" onclick="doRegister()">Отправить заявку</button>
         <div class="auth-msg" id="registerMsg"></div>
       </div>
 
+      <!-- FORGOT -->
+      <div class="auth-panel" id="panelForgot">
+        <div style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.5">
+          Введите ваш логин — вышлем временный пароль на вашу почту.
+        </div>
+        <div class="af"><label>Логин</label><input id="forgotLogin" type="text" placeholder="ваш-логин"></div>
+        <button class="btn-auth" id="forgotBtn" onclick="doForgot()">Отправить инструкцию</button>
+        <div style="text-align:center;margin-top:10px">
+          <button class="auth-link" onclick="switchTab('login')">← Назад ко входу</button>
+        </div>
+        <div class="auth-msg" id="forgotMsg"></div>
+      </div>
+
     </div>
   </div>
 </div>
 
-<!-- ════════════════════════════ APP SHELL ════════════════════════════ -->
+<!-- ══════════════ APP SHELL ══════════════ -->
 <div id="appShell">
-
-<!-- HEADER -->
-<div class="header">
-  <div class="logo-area">
-    <div class="logo-icon">БО</div>
-    <div>
-      <div class="logo-name">БухОтчет</div>
-      <div class="logo-sub">Республика Казахстан</div>
-    </div>
-  </div>
-
-  <div class="period-bar" id="periodBar">
-    <select class="period-sel" id="yearSel" onchange="onPeriodChange()">
-      <option value="2024">2024</option><option value="2025">2025</option>
-      <option value="2026" selected>2026</option><option value="2027">2027</option>
-      <option value="2028">2028</option><option value="2029">2029</option>
-    </select>
-    <select class="period-sel" id="monthSel" onchange="onPeriodChange()">
-      <option value="all" selected>Весь год</option>
-      <option value="1">Январь</option><option value="2">Февраль</option><option value="3">Март</option>
-      <option value="4">Апрель</option><option value="5">Май</option><option value="6">Июнь</option>
-      <option value="7">Июль</option><option value="8">Август</option><option value="9">Сентябрь</option>
-      <option value="10">Октябрь</option><option value="11">Ноябрь</option><option value="12">Декабрь</option>
-    </select>
-    <select class="period-sel" id="quarterSel" onchange="onPeriodChange()">
-      <option value="all" selected>Все кварталы</option>
-      <option value="1">I квартал</option><option value="2">II квартал</option>
-      <option value="3">III квартал</option><option value="4">IV квартал</option>
-    </select>
-  </div>
-
-  <div class="header-right">
-    <div class="company-chip" onclick="openCompanyModal()" id="companyChip">
+  <div class="app-header">
+    <div class="app-logo">
+      <div class="app-logo-icon">БО</div>
       <div>
-        <div class="company-chip-name" id="headerCompName">Выберите компанию</div>
-        <div class="company-chip-iin" id="headerCompIin">▾</div>
+        <div class="app-logo-name">БухОтчет</div>
+        <div class="app-logo-sub">Республика Казахстан</div>
       </div>
     </div>
-    <div class="user-badge" style="cursor:pointer" onclick="openChangePass()" title="Нажмите чтобы сменить пароль">
-      <div>
-        <div class="user-name" id="headerUserName">—</div>
-        <div class="user-tariff" id="headerTariff">— · 🔑 Сменить пароль</div>
-      </div>
+    <div class="period-bar" id="periodBar" style="display:none">
+      <select class="period-sel" id="yearSel" onchange="onPeriodChange()">
+        <option value="2024">2024</option><option value="2025">2025</option>
+        <option value="2026" selected>2026</option><option value="2027">2027</option>
+        <option value="2028">2028</option><option value="2029">2029</option>
+      </select>
+      <select class="period-sel" id="monthSel" onchange="onPeriodChange()">
+        <option value="all" selected>Весь год</option>
+        <option value="1">Янв</option><option value="2">Фев</option><option value="3">Мар</option>
+        <option value="4">Апр</option><option value="5">Май</option><option value="6">Июн</option>
+        <option value="7">Июл</option><option value="8">Авг</option><option value="9">Сен</option>
+        <option value="10">Окт</option><option value="11">Ноя</option><option value="12">Дек</option>
+      </select>
+      <select class="period-sel" id="quarterSel" onchange="onPeriodChange()">
+        <option value="all" selected>Все кварталы</option>
+        <option value="1">I кв.</option><option value="2">II кв.</option>
+        <option value="3">III кв.</option><option value="4">IV кв.</option>
+      </select>
     </div>
-    <button class="btn-logout" onclick="doLogout()">Выйти</button>
+    <div class="app-header-right">
+      <div class="company-chip" onclick="openCompanyModal()">
+        <div>
+          <div class="company-chip-name" id="hCompName">Выберите компанию</div>
+          <div class="company-chip-iin" id="hCompIin">▾</div>
+        </div>
+      </div>
+      <div class="user-badge" onclick="openChangePass()">
+        <div>
+          <div class="user-name" id="hUserName">—</div>
+          <div class="user-tariff" id="hTariff">—</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Выйти</button>
+    </div>
   </div>
-</div>
 
-<!-- NAV -->
-<div class="nav" id="mainNav">
-  <button class="nav-btn active" onclick="showPage('dashboard',this)">📊 Дашборд</button>
-  <button class="nav-btn" onclick="showPage('companies',this)">🏢 Компании</button>
-  <button class="nav-btn" id="navFno300" onclick="openFno('fno300',this)">📋 ФНО 300</button>
-  <button class="nav-btn" id="navFno200" onclick="openFno('fno200',this)">💼 ФНО 200</button>
-  <button class="nav-btn" onclick="showPage('calc',this)">🧮 Калькулятор</button>
-  <button class="nav-btn" onclick="showPage('deadlines',this)">📅 Сроки</button>
-  <button class="nav-btn" onclick="showPage('kbk',this)">🔢 КБК/КНП</button>
-  <button class="nav-btn" id="navAdmin" style="display:none" onclick="showPage('admin',this)">⚙️ Администратор</button>
-</div>
+  <div class="app-nav" id="mainNav">
+    <button class="nav-btn active" onclick="showPage('dashboard',this)">📊 Дашборд</button>
+    <button class="nav-btn" onclick="showPage('companies',this)">🏢 Компании</button>
+    <button class="nav-btn" id="navFno300" onclick="openFno('fno300',this)">📋 ФНО 300</button>
+    <button class="nav-btn" id="navFno200" onclick="openFno('fno200',this)">💼 ФНО 200</button>
+    <button class="nav-btn" onclick="showPage('calc',this)">🧮 Калькулятор</button>
+    <button class="nav-btn" onclick="showPage('deadlines',this)">📅 Сроки</button>
+    <button class="nav-btn" onclick="showPage('kbk',this)">🔢 КБК/КНП</button>
+    <button class="nav-btn" id="navAdmin" style="display:none" onclick="showPage('admin',this)">⚙️ Админ</button>
+  </div>
 
-<!-- APP CONTENT -->
-<div class="app-content">
+  <div class="app-content">
 
-<!-- ── iframe ФНО 300 ── -->
-<div class="page-iframe" id="page-fno300">
-  <iframe class="iframe-full" id="iframe300" src="fno300.html" title="ФНО 300"></iframe>
-</div>
-
-<!-- ── iframe ФНО 200 ── -->
-<div class="page-iframe" id="page-fno200">
-  <iframe class="iframe-full" id="iframe200" src="fno200.html" title="ФНО 200"></iframe>
-</div>
-
-<!-- ── DASHBOARD ── -->
-<div class="page active" id="page-dashboard">
-  <div class="scroll-content"><div class="inner">
-    <div class="kpi-grid">
-      <div class="kpi-card blue"><div class="kpi-label">Сотрудников (ФНО 200)</div><div class="kpi-value" id="dash-emp">—</div><div class="kpi-sub" id="dash-emp-sub">нет данных</div></div>
-      <div class="kpi-card gold"><div class="kpi-label">НДС начислен (ФНО 300)</div><div class="kpi-value" id="dash-nds-ch">— <span>₸</span></div><div class="kpi-sub" id="dash-nds-ch-sub">нет данных</div></div>
-      <div class="kpi-card green"><div class="kpi-label">НДС к зачёту</div><div class="kpi-value" id="dash-nds-cr">— <span>₸</span></div><div class="kpi-sub">нет данных</div></div>
-      <div class="kpi-card red"><div class="kpi-label">НДС к уплате</div><div class="kpi-value" id="dash-nds-pay">—</div><div class="kpi-sub" id="dash-pay-sub">нет данных</div></div>
+    <!-- iframe FNO 300 -->
+    <div class="page-iframe" id="page-fno300">
+      <iframe class="iframe-full" id="iframe300" src="fno300.html"></iframe>
     </div>
-    <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
-      <div class="card">
-        <div class="card-title">Активные формы</div>
-        <table class="rtable">
-          <thead><tr><th>Форма</th><th>Описание</th><th>Ставка</th><th>Период</th></tr></thead>
-          <tbody>
-            <tr><td>ФНО 300.00</td><td>Декларация по НДС</td><td>16%</td><td>Квартальная</td></tr>
-            <tr><td>ФНО 200.00</td><td>ИПН, ОПВ, СО, ОСМС</td><td>Разные</td><td>Квартальная</td></tr>
-            <tr><td>ФНО 910.00</td><td>Упрощённая декларация</td><td>4%</td><td>Полугодовая</td></tr>
-            <tr><td>ФНО 100.00</td><td>КПН корпоративный</td><td>20%</td><td>Годовая</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <div class="card-title" style="font-size:1rem">Ближайшие сроки 2026</div>
-        <div class="dl-item"><div class="dl-date urgent"><div class="dl-day">25</div><div class="dl-mon">апр</div></div><div><div style="font-weight:700;font-size:13px">ФНО 300 (НДС)</div><div style="font-size:11px;color:var(--text3)">I кв. 2026</div></div></div>
-        <div class="dl-item"><div class="dl-date urgent"><div class="dl-day">15</div><div class="dl-mon">май</div></div><div><div style="font-weight:700;font-size:13px">ФНО 200 (ИПН)</div><div style="font-size:11px;color:var(--text3)">I кв. 2026</div></div></div>
-        <div class="dl-item"><div class="dl-date soon"><div class="dl-day">25</div><div class="dl-mon">июл</div></div><div><div style="font-weight:700;font-size:13px">ФНО 300 (НДС)</div><div style="font-size:11px;color:var(--text3)">II кв. 2026</div></div></div>
-        <div class="dl-item"><div class="dl-date ok"><div class="dl-day">15</div><div class="dl-mon">авг</div></div><div><div style="font-weight:700;font-size:13px">ФНО 200 (ИПН)</div><div style="font-size:11px;color:var(--text3)">II кв. 2026</div></div></div>
-      </div>
+    <!-- iframe FNO 200 -->
+    <div class="page-iframe" id="page-fno200">
+      <iframe class="iframe-full" id="iframe200" src="fno200.html"></iframe>
     </div>
-  </div></div>
-</div>
 
-<!-- ── COMPANIES ── -->
-<div class="page" id="page-companies">
-  <div class="scroll-content"><div class="inner">
-    <div class="card">
-      <div class="card-title">Мои компании <button class="btn btn-primary btn-sm" onclick="openAddCompany()">+ Добавить</button></div>
-      <div class="company-grid" id="companyGrid">
-        <div style="grid-column:1/-1;text-align:center;padding:28px;color:var(--text3)" id="emptyCompMsg">Нет компаний. Нажмите «+ Добавить».</div>
-      </div>
-      <div id="addCompanyForm" style="display:none">
-        <div class="divider"></div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:12px">Новая компания</div>
-        <div class="form-grid">
-          <div class="field"><label>Наименование *</label><input type="text" id="nc_name" placeholder="ТОО Ромашка"></div>
-          <div class="field"><label>БИН / ИИН *</label><input type="text" id="nc_iin" placeholder="123456789012" maxlength="12"></div>
-          <div class="field"><label>Руководитель</label><input type="text" id="nc_head" placeholder="Иванов Иван Иванович"></div>
-          <div class="field"><label>Телефон</label><input type="text" id="nc_phone" placeholder="+7 701 000 00 00"></div>
-          <div class="field"><label>Форма</label>
-            <select id="nc_form"><option value="ТОО">ТОО</option><option value="ИП">ИП</option><option value="АО">АО</option></select>
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="kpi-grid">
+          <div class="kpi-card blue"><div class="kpi-label">Сотрудников (ФНО 200)</div><div class="kpi-value" id="d-emp">—</div><div class="kpi-sub">нет данных</div></div>
+          <div class="kpi-card gold"><div class="kpi-label">НДС начислен (ФНО 300)</div><div class="kpi-value" id="d-ch">— <span>₸</span></div><div class="kpi-sub" id="d-ch-s">нет данных</div></div>
+          <div class="kpi-card green"><div class="kpi-label">НДС к зачёту</div><div class="kpi-value" id="d-cr">— <span>₸</span></div><div class="kpi-sub">нет данных</div></div>
+          <div class="kpi-card red"><div class="kpi-label">НДС к уплате</div><div class="kpi-value" id="d-pay">—</div><div class="kpi-sub" id="d-pay-s">нет данных</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+          <div class="card">
+            <div class="card-title">Активные формы</div>
+            <table class="rtable">
+              <thead><tr><th>Форма</th><th>Описание</th><th>Ставка</th><th>Период</th></tr></thead>
+              <tbody>
+                <tr><td>ФНО 300.00</td><td>Декларация по НДС</td><td>16%</td><td>Квартальная</td></tr>
+                <tr><td>ФНО 200.00</td><td>ИПН, ОПВ, СО, ОСМС</td><td>Разные</td><td>Квартальная</td></tr>
+                <tr><td>ФНО 910.00</td><td>Упрощённая декларация</td><td>4%</td><td>Полугодовая</td></tr>
+                <tr><td>ФНО 100.00</td><td>КПН корпоративный</td><td>20%</td><td>Годовая</td></tr>
+              </tbody>
+            </table>
           </div>
-          <div class="field"><label>Режим</label>
-            <select id="nc_mode"><option value="ОУР">ОУР</option><option value="Упрощёнка">Упрощёнка</option></select>
+          <div class="card">
+            <div class="card-title" style="font-size:1rem">Ближайшие сроки</div>
+            <div class="dl-item"><div class="dl-date urgent"><div class="dl-day">25</div><div class="dl-mon">апр</div></div><div><div style="font-weight:700;font-size:12px">ФНО 300 (НДС)</div><div style="font-size:11px;color:var(--text3)">I кв. 2026</div></div></div>
+            <div class="dl-item"><div class="dl-date urgent"><div class="dl-day">15</div><div class="dl-mon">май</div></div><div><div style="font-weight:700;font-size:12px">ФНО 200 (ИПН)</div><div style="font-size:11px;color:var(--text3)">I кв. 2026</div></div></div>
+            <div class="dl-item"><div class="dl-date soon"><div class="dl-day">25</div><div class="dl-mon">июл</div></div><div><div style="font-weight:700;font-size:12px">ФНО 300 (НДС)</div><div style="font-size:11px;color:var(--text3)">II кв. 2026</div></div></div>
+            <div class="dl-item"><div class="dl-date ok"><div class="dl-day">15</div><div class="dl-mon">авг</div></div><div><div style="font-weight:700;font-size:12px">ФНО 200 (ИПН)</div><div style="font-size:11px;color:var(--text3)">II кв. 2026</div></div></div>
           </div>
         </div>
-        <div class="btn-row">
-          <button class="btn btn-primary" onclick="saveCompany()">💾 Сохранить</button>
-          <button class="btn btn-ghost" onclick="closeAddCompany()">Отмена</button>
+      </div></div>
+    </div>
+
+    <!-- COMPANIES -->
+    <div class="page" id="page-companies">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card">
+          <div class="card-title">Мои компании <button class="btn btn-primary btn-sm" onclick="openAddComp()">+ Добавить</button></div>
+          <div class="company-grid" id="compGrid">
+            <div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text3)">Нет компаний. Нажмите «+ Добавить».</div>
+          </div>
+          <div id="addCompForm" style="display:none">
+            <div class="divider"></div>
+            <div class="form-grid">
+              <div class="field"><label>Наименование *</label><input type="text" id="nc_name" placeholder="ТОО Ромашка"></div>
+              <div class="field"><label>БИН / ИИН *</label><input type="text" id="nc_iin" placeholder="123456789012" maxlength="12"></div>
+              <div class="field"><label>Руководитель</label><input type="text" id="nc_head" placeholder="Иванов И.И."></div>
+              <div class="field"><label>Телефон</label><input type="text" id="nc_phone" placeholder="+7 701 000 00 00"></div>
+              <div class="field"><label>Форма</label>
+                <select id="nc_form"><option value="ТОО">ТОО</option><option value="ИП">ИП</option><option value="АО">АО</option></select>
+              </div>
+              <div class="field"><label>Режим</label>
+                <select id="nc_mode"><option value="ОУР">ОУР</option><option value="Упрощёнка">Упрощёнка</option></select>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" onclick="saveComp()">💾 Сохранить</button>
+              <button class="btn btn-ghost" onclick="closeAddComp()">Отмена</button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="card" style="background:var(--brand-light);border-color:rgba(26,77,143,.2)">
-      <div style="font-size:13px;color:var(--brand);line-height:1.6">💡 Выбранная компания автоматически подставляется в ФНО 300 и ФНО 200.</div>
-    </div>
-  </div></div>
-</div>
-
-<!-- ── CALCULATOR ── -->
-<div class="page" id="page-calc">
-  <div class="scroll-content"><div class="inner">
-    <div class="card" style="max-width:640px">
-      <div class="card-title">Налоговый калькулятор · 2026</div>
-      <div class="tax-tabs">
-        <button class="tax-tab active" onclick="setTax('nds',this)">НДС 16%</button>
-        <button class="tax-tab" onclick="setTax('kpn',this)">КПН 20%</button>
-        <button class="tax-tab" onclick="setTax('ipn',this)">ИПН 10%</button>
-        <button class="tax-tab" onclick="setTax('opv',this)">ОПВ 10%</button>
-        <button class="tax-tab" onclick="setTax('opvr',this)">ОПВР 3.5%</button>
-        <button class="tax-tab" onclick="setTax('so',this)">СО 5%</button>
-        <button class="tax-tab" onclick="setTax('sn',this)">СН 6%</button>
-        <button class="tax-tab" onclick="setTax('osms',this)">ООСМС 3%</button>
-        <button class="tax-tab" onclick="setTax('vosms',this)">ВОСМС 2%</button>
-      </div>
-      <input type="number" class="big-input" id="calcInput" value="1000000" oninput="calcTax()">
-      <div class="calc-result">
-        <div><div class="cr-label">База</div><div class="cr-value" id="cr-base">1 000 000 ₸</div></div>
-        <div><div class="cr-label">Налог</div><div class="cr-value" id="cr-tax">160 000 ₸</div></div>
-        <div><div class="cr-label">Итого</div><div class="cr-value" id="cr-total">1 160 000 ₸</div></div>
-      </div>
-    </div>
-    <div class="card" style="max-width:640px">
-      <div class="card-title" style="font-size:1rem">Ставки и показатели · Казахстан 2026</div>
-      <table class="rtable">
-        <thead><tr><th>Показатель</th><th>Ставка</th><th>База</th></tr></thead>
-        <tbody>
-          <tr><td><b>МРП 2026</b></td><td>4 325 ₸</td><td>—</td></tr>
-          <tr><td><b>МЗП 2026</b></td><td>85 000 ₸</td><td>—</td></tr>
-          <tr><td>НДС</td><td>16%</td><td>Облагаемый оборот</td></tr>
-          <tr><td>КПН</td><td>20%</td><td>Налогооблагаемый доход</td></tr>
-          <tr><td>ИПН (с з/платы)</td><td>10% / 15%*</td><td>Доход − ОПВ − ВОСМС − 30 МРП</td></tr>
-          <tr><td>ОПВ</td><td>10%</td><td>Доход (макс. 50 МЗП)</td></tr>
-          <tr><td>ОПВР</td><td>3,5%</td><td>ФОТ работодателя</td></tr>
-          <tr><td>СО</td><td>5%</td><td>Доход − ОПВ (1–7 МЗП)</td></tr>
-          <tr><td>СН (ТОО ОУР)</td><td>6%</td><td>ФОТ − ОПВ − ВОСМС</td></tr>
-          <tr><td>ВОСМС</td><td>2%</td><td>Доход (макс. 20 МЗП)</td></tr>
-          <tr><td>ООСМС</td><td>3%</td><td>Доход (макс. 40 МЗП)</td></tr>
-          <tr><td>Упрощёнка</td><td>4%</td><td>Доход за полугодие</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:10px;font-size:11px;color:var(--text3);background:var(--warn-light);padding:8px 12px;border-radius:7px">* ИПН 15% с дохода >8 500 МРП/год (36,7 млн ₸). Базовый вычет: 30 МРП = 129 750 ₸/мес.</div>
-    </div>
-
-    <!-- ── SALARY CALCULATOR ── -->
-    <div class="card" style="max-width:740px">
-      <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты (ОУР 2026)</div>
-      <div class="form-grid">
-        <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
-        <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
-          <select id="salDed" onchange="calcSalary()">
-            <option value="1">Да — заявление подано</option>
-            <option value="0">Нет</option>
-          </select>
+        <div class="card" style="background:var(--brand-light);border-color:rgba(26,77,143,.2)">
+          <div style="font-size:13px;color:var(--brand)">💡 Выбранная компания автоматически подставляется в ФНО 300 и ФНО 200.</div>
         </div>
-        <div class="field"><label>Тип занятости</label>
-          <select id="salType" onchange="calcSalary()">
-            <option value="emp">Наёмный работник (ТОО ОУР)</option>
-            <option value="ip_our">ИП на ОУР</option>
-            <option value="ip_simple">ИП Упрощёнка</option>
-          </select>
+      </div></div>
+    </div>
+
+    <!-- CALC -->
+    <div class="page" id="page-calc">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card" style="max-width:680px">
+          <div class="card-title">Налоговый калькулятор · 2026</div>
+          <div class="tax-tabs">
+            <button class="tax-tab active" onclick="setTax('nds',this)">НДС 16%</button>
+            <button class="tax-tab" onclick="setTax('kpn',this)">КПН 20%</button>
+            <button class="tax-tab" onclick="setTax('ipn',this)">ИПН 10%</button>
+            <button class="tax-tab" onclick="setTax('opv',this)">ОПВ 10%</button>
+            <button class="tax-tab" onclick="setTax('opvr',this)">ОПВР 3.5%</button>
+            <button class="tax-tab" onclick="setTax('so',this)">СО 5%</button>
+            <button class="tax-tab" onclick="setTax('sn',this)">СН 6%</button>
+            <button class="tax-tab" onclick="setTax('osms',this)">ООСМС 3%</button>
+            <button class="tax-tab" onclick="setTax('vosms',this)">ВОСМС 2%</button>
+          </div>
+          <input type="number" class="big-input" id="calcInput" value="1000000" oninput="calcTax()">
+          <div class="calc-result">
+            <div><div class="cr-label">База</div><div class="cr-value" id="cr-base">1 000 000 ₸</div></div>
+            <div><div class="cr-label">Налог</div><div class="cr-value" id="cr-tax">160 000 ₸</div></div>
+            <div><div class="cr-label">Итого</div><div class="cr-value" id="cr-total">1 160 000 ₸</div></div>
+          </div>
         </div>
-        <div class="field"><label>Гражданство</label>
-          <select id="salCitizen" onchange="calcSalary()">
-            <option value="kz">Гражданин РК</option>
-            <option value="foreign">Иностранец</option>
-          </select>
+        <div class="card" style="max-width:680px">
+          <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты · 2026</div>
+          <div class="form-grid">
+            <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
+            <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
+              <select id="salDed" onchange="calcSalary()">
+                <option value="1">Да — заявление подано</option><option value="0">Нет</option>
+              </select>
+            </div>
+            <div class="field"><label>Тип занятости</label>
+              <select id="salType" onchange="calcSalary()">
+                <option value="emp">Наёмный работник (ТОО ОУР)</option>
+                <option value="ip_our">ИП на ОУР</option>
+                <option value="ip_simple">ИП Упрощёнка</option>
+              </select>
+            </div>
+            <div class="field"><label>Гражданство</label>
+              <select id="salCitizen" onchange="calcSalary()">
+                <option value="kz">Гражданин РК</option><option value="foreign">Иностранец</option>
+              </select>
+            </div>
+          </div>
+          <div id="salResult" style="background:var(--surface2);border-radius:9px;padding:14px;font-size:13px"></div>
+          <div id="salTotal" style="margin-top:10px"></div>
         </div>
-      </div>
-      <div id="salResult" style="background:var(--surface2);border-radius:10px;padding:16px;font-size:13px;margin-top:4px"></div>
-      <div id="salTotal" style="margin-top:12px"></div>
+        <div class="card" style="max-width:680px">
+          <div class="card-title" style="font-size:1rem">Ставки · Казахстан 2026</div>
+          <table class="rtable">
+            <thead><tr><th>Показатель</th><th>Ставка</th><th>База</th></tr></thead>
+            <tbody>
+              <tr><td><b>МРП 2026</b></td><td>4 325 ₸</td><td>Базовый показатель</td></tr>
+              <tr><td><b>МЗП 2026</b></td><td>85 000 ₸</td><td>Минимальная з/п</td></tr>
+              <tr><td>НДС</td><td>16%</td><td>Облагаемый оборот</td></tr>
+              <tr><td>КПН</td><td>20%</td><td>Налогооблагаемый доход</td></tr>
+              <tr><td>ИПН</td><td>10% / 15%*</td><td>Доход − ОПВ − ВОСМС − 30 МРП</td></tr>
+              <tr><td>ОПВ</td><td>10%</td><td>Доход (макс. 50 МЗП)</td></tr>
+              <tr><td>ОПВР</td><td>3,5%</td><td>ФОТ работодателя</td></tr>
+              <tr><td>СО</td><td>5%</td><td>Доход − ОПВ (1–7 МЗП)</td></tr>
+              <tr><td>СН (ТОО ОУР)</td><td>6%</td><td>ФОТ − ОПВ − ВОСМС</td></tr>
+              <tr><td>ВОСМС</td><td>2%</td><td>Доход (макс. 20 МЗП)</td></tr>
+              <tr><td>ООСМС</td><td>3%</td><td>Доход (макс. 40 МЗП)</td></tr>
+              <tr><td>Упрощёнка</td><td>4%</td><td>Доход за полугодие</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:8px;font-size:11px;color:var(--text3);background:var(--warn-light);padding:8px 11px;border-radius:7px">* ИПН 15% с дохода >8 500 МРП/год (36,7 млн ₸). Вычет: 30 МРП = 129 750 ₸/мес.</div>
+        </div>
+      </div></div>
     </div>
-  </div></div>
-</div>
 
-<!-- ── DEADLINES ── -->
-<div class="page" id="page-deadlines">
-  <div class="scroll-content"><div class="inner">
-    <div class="card">
-      <div class="card-title">Сроки сдачи 2026</div>
-      <table class="rtable">
-        <thead><tr><th>Срок</th><th>Форма</th><th>Налог</th><th>Период</th><th>Штраф</th></tr></thead>
-        <tbody>
-          <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>I кв. 2026</td><td>15–30 МРП</td></tr>
-          <tr><td style="color:var(--red);font-weight:700">15 май 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>I кв. 2026</td><td>5 МРП + пени</td></tr>
-          <tr><td style="color:var(--warn);font-weight:700">25 июл 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>II кв. 2026</td><td>15–30 МРП</td></tr>
-          <tr><td style="color:var(--warn);font-weight:700">15 авг 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>II кв. 2026</td><td>5 МРП + пени</td></tr>
-          <tr><td>15 авг 2026</td><td>ФНО 910.00</td><td>Упрощёнка</td><td>I п/г 2026</td><td>5 МРП</td></tr>
-          <tr><td>25 окт 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>III кв. 2026</td><td>15–30 МРП</td></tr>
-          <tr><td>15 ноя 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>III кв. 2026</td><td>5 МРП + пени</td></tr>
-          <tr><td>25 янв 2027</td><td>ФНО 300.00</td><td>НДС 16%</td><td>IV кв. 2026</td><td>15–30 МРП</td></tr>
-          <tr><td>31 мар 2027</td><td>ФНО 100.00</td><td>КПН 20%</td><td>2026 год</td><td>30–150 МРП</td></tr>
-        </tbody>
-      </table>
-      <div style="margin-top:10px;font-size:12px;color:var(--brand);background:var(--brand-light);padding:9px 13px;border-radius:8px">МРП 2026 = 4 325 ₸. Новый НК РК (Закон 214-VIII от 18.07.2025) действует с 01.01.2026.</div>
+    <!-- DEADLINES -->
+    <div class="page" id="page-deadlines">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card">
+          <div class="card-title">Сроки сдачи 2026</div>
+          <table class="rtable">
+            <thead><tr><th>Срок</th><th>Форма</th><th>Налог</th><th>Период</th><th>Штраф (МРП=4325₸)</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>I кв.</td><td>15–30 МРП</td></tr>
+              <tr><td style="color:var(--red);font-weight:700">15 май 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>I кв.</td><td>5 МРП + пени</td></tr>
+              <tr><td style="color:var(--warn);font-weight:700">25 июл 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>II кв.</td><td>15–30 МРП</td></tr>
+              <tr><td style="color:var(--warn);font-weight:700">15 авг 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>II кв.</td><td>5 МРП + пени</td></tr>
+              <tr><td>15 авг 2026</td><td>ФНО 910.00</td><td>Упрощёнка</td><td>I п/г</td><td>5 МРП</td></tr>
+              <tr><td>25 окт 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>III кв.</td><td>15–30 МРП</td></tr>
+              <tr><td>15 ноя 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>III кв.</td><td>5 МРП + пени</td></tr>
+              <tr><td>25 янв 2027</td><td>ФНО 300.00</td><td>НДС 16%</td><td>IV кв.</td><td>15–30 МРП</td></tr>
+              <tr><td>31 мар 2027</td><td>ФНО 100.00</td><td>КПН 20%</td><td>2026 год</td><td>30–150 МРП</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;font-size:12px;color:var(--brand);background:var(--brand-light);padding:9px 13px;border-radius:8px">МРП 2026 = 4 325 ₸ · НК РК (Закон 214-VIII от 18.07.2025)</div>
+        </div>
+      </div></div>
     </div>
-  </div></div>
-</div>
 
-<!-- ── KBK ── -->
-<div class="page" id="page-kbk">
-  <div class="scroll-content"><div class="inner">
-    <div class="card">
-      <div class="card-title">КБК и КНП · Казахстан 2026</div>
-      <table class="rtable">
-        <thead><tr><th>КБК</th><th>Налог / Платёж</th><th>КНП</th><th>Периодичность</th></tr></thead>
-        <tbody>
-          <tr><td style="font-family:monospace">101102</td><td>НДС (16%)</td><td>911</td><td>Квартальный</td></tr>
-          <tr><td style="font-family:monospace">101101</td><td>КПН (20%)</td><td>911 / 912 (аванс)</td><td>Авансы ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">101201</td><td>ИПН у источника (10%)</td><td>911</td><td>Квартальный</td></tr>
-          <tr><td style="font-family:monospace">902101</td><td>ОПВ (10%)</td><td>171</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">902201</td><td>ОПВР (3,5%)</td><td>172</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">902301</td><td>ОППВ (5%)</td><td>173</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">904101</td><td>СО (5%)</td><td>991</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">904201</td><td>ООСМС (3%)</td><td>991</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">904301</td><td>ВОСМС (2%)</td><td>991</td><td>Ежемесячно</td></tr>
-          <tr><td style="font-family:monospace">104401</td><td>Налог на имущество</td><td>911</td><td>Ежеквартально</td></tr>
-          <tr><td style="font-family:monospace">104301</td><td>Земельный налог</td><td>911</td><td>Ежеквартально</td></tr>
-        </tbody>
-      </table>
+    <!-- KBK -->
+    <div class="page" id="page-kbk">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card">
+          <div class="card-title">КБК и КНП · Казахстан 2026</div>
+          <table class="rtable">
+            <thead><tr><th>КБК</th><th>Налог / Платёж</th><th>КНП</th><th>Периодичность</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace">101102</td><td>НДС (16%)</td><td>911</td><td>Квартально</td></tr>
+              <tr><td style="font-family:monospace">101101</td><td>КПН (20%)</td><td>911/912</td><td>Авансы ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">101201</td><td>ИПН у источника (10%)</td><td>911</td><td>Квартально</td></tr>
+              <tr><td style="font-family:monospace">902101</td><td>ОПВ (10%)</td><td>171</td><td>Ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">902201</td><td>ОПВР (3,5%)</td><td>172</td><td>Ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">902301</td><td>ОППВ (5%)</td><td>173</td><td>Ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">904101</td><td>СО (5%)</td><td>991</td><td>Ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">904201</td><td>ООСМС (3%)</td><td>991</td><td>Ежемесячно</td></tr>
+              <tr><td style="font-family:monospace">904301</td><td>ВОСМС (2%)</td><td>991</td><td>Ежемесячно</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div></div>
     </div>
-  </div></div>
-</div>
 
-<!-- ── ADMIN ── -->
-<div class="page" id="page-admin">
-  <div class="scroll-content"><div class="inner">
-    <div class="card">
-      <div class="card-title">Заявки на регистрацию <button class="btn btn-ghost btn-sm" onclick="loadAdminData()">↻ Обновить</button></div>
-      <div id="pendingList"><div style="color:var(--text3);font-size:13px">Загрузка...</div></div>
+    <!-- ADMIN -->
+    <div class="page" id="page-admin">
+      <div class="scroll-wrap"><div class="inner">
+        <div class="card">
+          <div class="card-title">Заявки на регистрацию <button class="btn btn-ghost btn-sm" onclick="loadAdmin()">↻ Обновить</button></div>
+          <div id="pendingList"><div style="color:var(--text3);font-size:13px">Загрузка...</div></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Все пользователи</div>
+          <div id="allUsersList"><div style="color:var(--text3);font-size:13px">Загрузка...</div></div>
+        </div>
+      </div></div>
     </div>
-    <div class="card">
-      <div class="card-title">Все пользователи</div>
-      <div id="allUsersList"><div style="color:var(--text3);font-size:13px">Загрузка...</div></div>
-    </div>
-  </div></div>
-</div>
 
-</div><!-- /app-content -->
+  </div><!-- /app-content -->
 </div><!-- /appShell -->
 
 <!-- COMPANY MODAL -->
-<div class="modal-overlay" id="companyModal">
+<div class="modal-overlay" id="compModal">
   <div class="modal">
-    <div class="modal-title">Выбор компании <button class="modal-close" onclick="closeCompanyModal()">✕</button></div>
-    <div id="modalCompList" style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px"></div>
-    <div id="noCompModal" style="display:none;text-align:center;padding:20px;color:var(--text3);font-size:13px">Нет компаний. Добавьте во вкладке «Компании».</div>
+    <div class="modal-title">Выбор компании <button class="modal-close" onclick="closeCompModal()">✕</button></div>
+    <div id="compModalList" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:8px"></div>
+    <div id="compModalEmpty" style="display:none;text-align:center;padding:20px;color:var(--text3);font-size:13px">Нет компаний. Добавьте во вкладке «Компании».</div>
     <div class="divider"></div>
-    <button class="btn btn-ghost btn-sm" onclick="closeCompanyModal();showPage('companies',document.querySelectorAll('.nav-btn')[1])">+ Управление компаниями</button>
+    <button class="btn btn-ghost btn-sm" onclick="closeCompModal();showPage('companies',document.querySelectorAll('.nav-btn')[1])">+ Управление компаниями</button>
+  </div>
+</div>
+
+<!-- CHANGE PASSWORD MODAL -->
+<div class="modal-overlay" id="cpModal">
+  <div class="modal">
+    <div class="modal-title">Смена пароля <button class="modal-close" onclick="closeCpModal()">✕</button></div>
+    <div class="af"><label>Текущий пароль</label><input id="cpOld" type="password" placeholder="••••••••"></div>
+    <div class="af"><label>Новый пароль (мин. 6 символов)</label><input id="cpNew" type="password" placeholder="••••••••"></div>
+    <div class="af"><label>Повтор нового пароля</label><input id="cpNew2" type="password" placeholder="••••••••"></div>
+    <button class="btn btn-primary" style="width:100%" onclick="doChangePass()">Сменить пароль</button>
+    <div class="auth-msg" id="cpMsg"></div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════ STATE
 const API = 'https://buhotchet-production.up.railway.app';
-let authToken = localStorage.getItem('bho_token') || '';
-let currentUser = null;
-let companies = [];
-let activeCompany = null;
-
-// ═══════════════════════════════════════════════════════════════ UTILS
 const $ = id => document.getElementById(id);
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function fmt(n) { return Math.round(n||0).toLocaleString('ru-RU'); }
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function fmt(n){return Math.round(n||0).toLocaleString('ru-RU')}
 
+let authToken = localStorage.getItem('bho_token')||'';
+let currentUser = null;
+let companies = [], activeCompany = null;
+
+// ── API ──────────────────────────────────────────────────────────────────────
 async function api(method, path, body) {
-  const opts = {
-    method,
-    headers: { 'Content-Type':'application/json', 'Authorization':'Bearer '+authToken }
-  };
-  if (body !== undefined) opts.body = JSON.stringify(body);
-  const r = await fetch(API + path, opts);
+  const opts = { method, headers:{'Content-Type':'application/json','Authorization':'Bearer '+authToken} };
+  if (body!==undefined) opts.body = JSON.stringify(body);
+  const r = await fetch(API+path, opts);
   return r.json();
 }
 
-// ═══════════════════════════════════════════════════════════════ AUTH SCREEN
-function showPanel(name) {
-  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
-  const panelMap = { login:'panelLogin', register:'panelRegister', forgot:'panelForgot', changepass:'panelChangePass' };
-  const tabMap   = { login:0, register:1 };
-  const p = $(panelMap[name]);
-  if (p) p.classList.add('active');
-  if (tabMap[name] !== undefined) document.querySelectorAll('.auth-tab')[tabMap[name]].classList.add('active');
+// ── LANDING & AUTH ───────────────────────────────────────────────────────────
+function openAuth(tab) {
+  $('authModal').classList.add('open');
+  switchTab(tab||'login');
 }
-function switchAuthTab(tab) { showPanel(tab); }
+function closeAuth() { $('authModal').classList.remove('open'); }
 
-async function doForgotPassword() {
-  const login = $('forgotLogin').value.trim();
-  if (!login) { showAuthMsg('forgotMsg','Введите логин','err'); return; }
+$('authModal').addEventListener('click', function(e){ if(e.target===this) closeAuth(); });
+
+function switchTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));
+  const tabs = {login:0, register:1};
+  if (tabs[tab]!==undefined) document.querySelectorAll('.auth-tab')[tabs[tab]].classList.add('active');
+  const p = $('panel'+tab.charAt(0).toUpperCase()+tab.slice(1));
+  if (p) p.classList.add('active');
+}
+
+function showAuthMsg(id, text, type) {
+  const el = $(id); el.textContent=text; el.className='auth-msg '+type;
+}
+
+async function doLogin() {
+  const login=$('loginLogin').value.trim(), pass=$('loginPass').value;
+  if (!login||!pass){showAuthMsg('loginMsg','Введите логин и пароль','err');return}
+  $('loginBtn').disabled=true; $('loginBtn').textContent='Вхожу...';
+  try {
+    const r = await api('POST','/api/auth/login',{login,password:pass});
+    if (r.ok) {
+      authToken=r.token; localStorage.setItem('bho_token',authToken);
+      currentUser=r.user; closeAuth(); initApp();
+    } else {
+      const m={wrong_credentials:'Неверный логин или пароль',pending_approval:'Ожидайте одобрения администратора',blocked:'Доступ заблокирован'};
+      showAuthMsg('loginMsg',m[r.error]||('Ошибка: '+r.error),'err');
+    }
+  } catch(e){ showAuthMsg('loginMsg','Сервер недоступен. Попробуйте позже.','err'); }
+  $('loginBtn').disabled=false; $('loginBtn').textContent='Войти';
+}
+
+async function doRegister() {
+  const full_name=$('regName').value.trim(), login=$('regLogin').value.trim();
+  const email=$('regEmail').value.trim(), phone=$('regPhone').value.trim();
+  const pass=$('regPass').value;
+  if (!full_name||!login||!email||!pass){showAuthMsg('registerMsg','Заполните все обязательные поля','err');return}
+  if (pass.length<6){showAuthMsg('registerMsg','Пароль минимум 6 символов','err');return}
+  $('registerBtn').disabled=true; $('registerBtn').textContent='Отправляю...';
+  try {
+    const r = await api('POST','/api/auth/register',{full_name,login:login.toLowerCase(),email,phone,password:pass});
+    if (r.ok) {
+      showAuthMsg('registerMsg','✅ Заявка отправлена! Ожидайте одобрения администратора.','ok');
+      api('POST','/api/auth/notify-admin',{userName:full_name,userLogin:login,userEmail:email}).catch(()=>{});
+      setTimeout(()=>switchTab('login'),3000);
+    } else {
+      const m={login_taken:'Логин занят',missing_fields:'Заполните все поля',invalid_login:'Логин: только латиница и цифры',password_too_short:'Пароль минимум 6 символов'};
+      showAuthMsg('registerMsg',m[r.error]||('Ошибка: '+r.error),'err');
+    }
+  } catch(e){ showAuthMsg('registerMsg','Сервер недоступен','err'); }
+  $('registerBtn').disabled=false; $('registerBtn').textContent='Отправить заявку';
+}
+
+async function doForgot() {
+  const login=$('forgotLogin').value.trim();
+  if (!login){showAuthMsg('forgotMsg','Введите логин','err');return}
   $('forgotBtn').disabled=true; $('forgotBtn').textContent='Отправляю...';
   try {
     const r = await api('POST','/api/auth/forgot',{login});
     if (r.ok) showAuthMsg('forgotMsg','✅ Временный пароль отправлен на вашу почту!','ok');
     else {
-      const m = {not_found:'Логин не найден',no_email:'Email не привязан к аккаунту'};
-      showAuthMsg('forgotMsg', m[r.error]||'Ошибка. Попробуйте позже.','err');
+      const m={not_found:'Логин не найден',no_email:'Email не привязан к аккаунту'};
+      showAuthMsg('forgotMsg',m[r.error]||'Ошибка. Обратитесь к администратору.','err');
     }
-  } catch(e) { showAuthMsg('forgotMsg','Сервер недоступен','err'); }
+  } catch(e){ showAuthMsg('forgotMsg','Сервер недоступен','err'); }
   $('forgotBtn').disabled=false; $('forgotBtn').textContent='Отправить инструкцию';
 }
 
-function openChangePass() {
-  // Показать модал смены пароля
-  $('authScreen').classList.remove('hidden');
-  $('appShell').classList.remove('visible');
-  showPanel('changepass');
-}
-
-async function doChangePassword() {
-  const oldP = $('cpOld').value, newP = $('cpNew').value, newP2 = $('cpNew2').value;
-  if (!oldP||!newP) { showAuthMsg('cpMsg','Заполните все поля','err'); return; }
-  if (newP!==newP2) { showAuthMsg('cpMsg','Пароли не совпадают','err'); return; }
-  if (newP.length<6) { showAuthMsg('cpMsg','Минимум 6 символов','err'); return; }
-  $('cpBtn').disabled=true; $('cpBtn').textContent='Сохраняю...';
-  try {
-    const r = await api('POST','/api/auth/change-password',{oldPassword:oldP,newPassword:newP});
-    if (r.ok) {
-      showAuthMsg('cpMsg','✅ Пароль успешно изменён!','ok');
-      setTimeout(()=>{ $('authScreen').classList.add('hidden'); $('appShell').classList.add('visible'); },1500);
-    } else {
-      const m = {wrong_password:'Неверный текущий пароль'};
-      showAuthMsg('cpMsg', m[r.error]||'Ошибка','err');
-    }
-  } catch(e) { showAuthMsg('cpMsg','Сервер недоступен','err'); }
-  $('cpBtn').disabled=false; $('cpBtn').textContent='Сменить пароль';
-}
-
-function showAuthMsg(id, text, type) {
-  const el = $(id);
-  el.textContent = text;
-  el.className = 'auth-msg ' + type;
-}
-
-async function doLogin() {
-  const login = $('loginLogin').value.trim();
-  const password = $('loginPass').value;
-  if (!login||!password) { showAuthMsg('loginMsg','Введите логин и пароль','err'); return; }
-  $('loginBtn').disabled = true;
-  $('loginBtn').textContent = 'Вхожу...';
-  try {
-    const r = await api('POST','/api/auth/login',{login,password});
-    if (!r.ok) {
-      const msgs = { wrong_credentials:'Неверный логин или пароль', pending_approval:'Заявка на рассмотрении у администратора', blocked:'Доступ заблокирован' };
-      showAuthMsg('loginMsg', msgs[r.error]||'Ошибка входа','err');
-    } else {
-      authToken = r.token;
-      localStorage.setItem('bho_token', authToken);
-      currentUser = r.user;
-      initApp();
-    }
-  } catch(e) { showAuthMsg('loginMsg','Сервер недоступен. Проверьте подключение.','err'); }
-  $('loginBtn').disabled = false;
-  $('loginBtn').textContent = 'Войти';
-}
-
-async function doRegister() {
-  const full_name = $('regName').value.trim();
-  const login = $('regLogin').value.trim();
-  const email = $('regEmail').value.trim();
-  const phone = $('regPhone').value.trim();
-  const password = $('regPass').value;
-  if (!full_name||!login||!password) { showAuthMsg('registerMsg','Заполните обязательные поля','err'); return; }
-  if (password.length<6) { showAuthMsg('registerMsg','Пароль минимум 6 символов','err'); return; }
-  if (!/^[a-z0-9_]+$/i.test(login)) { showAuthMsg('registerMsg','Логин: только латинские буквы, цифры и _','err'); return; }
-  $('registerBtn').disabled = true;
-  $('registerBtn').textContent = 'Отправляю...';
-  try {
-    const r = await api('POST','/api/auth/register',{full_name,login:login.toLowerCase(),email,phone,password});
-    if (!r.ok) {
-      const msgs = { login_taken:'Логин занят. Выберите другой.', missing_fields:'Заполните все обязательные поля' };
-      showAuthMsg('registerMsg', msgs[r.error]||'Ошибка регистрации','err');
-    } else {
-      showAuthMsg('registerMsg','Заявка отправлена! Ожидайте одобрения администратора.','ok');
-      setTimeout(()=>switchAuthTab('login'),2500);
-    }
-  } catch(e) { showAuthMsg('registerMsg','Сервер недоступен','err'); }
-  $('registerBtn').disabled = false;
-  $('registerBtn').textContent = 'Отправить заявку';
-}
-
-// Enter в полях логина
-['loginLogin','loginPass'].forEach(id => {
-  $(id)?.addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-});
-
-// ═══════════════════════════════════════════════════════════════ APP INIT
-async function initApp() {
-  // Проверить сессию
-  if (authToken && !currentUser) {
-    try {
-      const r = await api('GET','/api/auth/me');
-      if (r.ok) currentUser = r.user;
-      else { authToken=''; localStorage.removeItem('bho_token'); }
-    } catch(e) {}
-  }
-
-  if (!currentUser) {
-    $('authScreen').classList.remove('hidden');
-    $('appShell').classList.remove('visible');
-    return;
-  }
-
-  // Показать приложение
-  $('authScreen').classList.add('hidden');
+// ── APP ───────────────────────────────────────────────────────────────────────
+function initApp() {
+  $('landingPage').classList.add('hidden');
   $('appShell').classList.add('visible');
-
-  // Обновить шапку
-  $('headerUserName').textContent = currentUser.name || currentUser.login;
-  const tariffNames = { all:'Все формы', fno200:'ФНО 200', fno300:'ФНО 300', none:'Нет доступа' };
-  $('headerTariff').textContent = tariffNames[currentUser.tariff] || currentUser.tariff;
-
-  // Навигация по тарифу
-  applyTariffNav();
-
-  // Показать кнопку админа
+  const tn={all:'Все формы',fno200:'ФНО 200',fno300:'ФНО 300',none:'Нет доступа'};
+  $('hUserName').textContent = currentUser.name||currentUser.login;
+  $('hTariff').textContent = tn[currentUser.tariff]||currentUser.tariff;
   if (currentUser.role==='admin') $('navAdmin').style.display='';
-
-  // Загрузить компании
-  await loadCompanies();
-
-  // Вернуться на Дашборд
+  const t=currentUser.tariff;
+  const has300=t==='all'||t==='fno300', has200=t==='all'||t==='fno200';
+  if (!has300) $('navFno300').classList.add('locked');
+  if (!has200) $('navFno200').classList.add('locked');
+  loadCompanies();
   showPage('dashboard', document.querySelector('.nav-btn'));
-}
-
-function applyTariffNav() {
-  const t = currentUser?.tariff || 'none';
-  const has300 = t==='all'||t==='fno300';
-  const has200 = t==='all'||t==='fno200';
-  const n300 = $('navFno300'), n200 = $('navFno200');
-  if (n300) { n300.classList.toggle('locked', !has300); n300.title = has300?'':'Нет доступа к ФНО 300 (тариф)'; }
-  if (n200) { n200.classList.toggle('locked', !has200); n200.title = has200?'':'Нет доступа к ФНО 200 (тариф)'; }
+  calcTax(); calcSalary();
 }
 
 async function doLogout() {
-  try { await api('POST','/api/auth/logout'); } catch(e) {}
-  authToken = '';
-  currentUser = null;
+  try { await api('POST','/api/auth/logout'); } catch(e){}
   authToken=''; currentUser=null; localStorage.removeItem('bho_token');
-  $('appShell').classList.remove('visible'); $('authScreen').classList.remove('hidden');
-  showPanel('login');
+  $('appShell').classList.remove('visible');
+  $('landingPage').classList.remove('hidden');
 }
 
-// ═══════════════════════════════════════════════════════════════ NAVIGATION
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
 function showPage(id, btn) {
-  // Скрыть все обычные страницы и iframe-страницы
-  document.querySelectorAll('.page, .page-iframe').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-  const page = $('page-'+id);
-  if (page) page.classList.add('active');
-  if (btn) btn.classList.add('active');
-
-  // Period bar — только на дашборде
-  $('periodBar').style.display = (id==='dashboard') ? 'flex' : 'none';
-
-  if (id==='admin') loadAdminData();
-  if (id==='dashboard') refreshDashboard();
+  document.querySelectorAll('.page,.page-iframe').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const p=$('page-'+id); if(p) p.classList.add('active');
+  if(btn) btn.classList.add('active');
+  const pb=$('periodBar');
+  if(pb) pb.style.display=(id==='dashboard')?'flex':'none';
+  if(id==='admin') loadAdmin();
+  if(id==='dashboard') refreshDash();
 }
 
 function openFno(id, btn) {
-  const t = currentUser?.tariff || 'none';
-  const ok = t==='all' || t===id;
-  if (!ok) { alert('У вас нет доступа к этой форме. Обратитесь к администратору.'); return; }
+  const t=currentUser?.tariff||'none';
+  if(t!=='all'&&t!==id){alert('Нет доступа к этой форме. Обратитесь к администратору.');return}
   showPage(id, btn);
 }
 
-// ═══════════════════════════════════════════════════════════════ PERIOD
+// ── PERIOD ────────────────────────────────────────────────────────────────────
 function onPeriodChange() {
-  const ms = $('monthSel'), qs = $('quarterSel');
-  if (!ms||!qs) return;
-  if (event?.target?.id==='monthSel' && ms.value!=='all') qs.value='all';
-  else if (event?.target?.id==='quarterSel' && qs.value!=='all') ms.value='all';
-  refreshDashboard();
+  const ms=$('monthSel'),qs=$('quarterSel');
+  if(!ms||!qs) return;
+  if(event?.target?.id==='monthSel'&&ms.value!=='all') qs.value='all';
+  else if(event?.target?.id==='quarterSel'&&qs.value!=='all') ms.value='all';
+  refreshDash();
 }
 
-// ═══════════════════════════════════════════════════════════════ DASHBOARD
-function refreshDashboard() {
-  const year = parseInt($('yearSel')?.value||2026);
-  const monthF = $('monthSel')?.value||'all';
-  const quarterF = $('quarterSel')?.value||'all';
-  let quarters = [0,1,2,3];
-  if (quarterF!=='all') quarters=[parseInt(quarterF)-1];
-  else if (monthF!=='all') quarters=[Math.floor((parseInt(monthF)-1)/3)];
-
-  // Пробуем прочитать из localStorage (fno300 сохраняет там calcResult)
-  let fno300data = null;
-  for (const k of Object.keys(localStorage)) {
-    if (k.startsWith('fno300_data_')) {
+// ── DASHBOARD ─────────────────────────────────────────────────────────────────
+function refreshDash() {
+  for(const k of Object.keys(localStorage)) {
+    if(k.startsWith('fno300_data_')) {
       try {
-        const d = JSON.parse(localStorage.getItem(k)||'{}');
-        if (d.calcResult && d.reportYear===year) { fno300data=d; break; }
+        const d=JSON.parse(localStorage.getItem(k)||'{}');
+        const year=parseInt($('yearSel')?.value||2026);
+        if(d.calcResult&&d.reportYear===year) {
+          const cr=d.calcResult; let ch=0,cre=0;
+          [0,1,2,3].forEach(q=>{if(cr[q]){ch+=(cr[q].rSumB||0);cre+=(cr[q].pSumB||0);}});
+          $('d-ch').innerHTML=fmt(ch)+' <span>₸</span>';
+          $('d-ch-s').textContent='ФНО 300 · '+year;
+          $('d-cr').innerHTML=fmt(cre)+' <span>₸</span>';
+          const pay=Math.max(0,ch-cre);
+          $('d-pay').innerHTML=fmt(pay)+' <span style="font-size:10px">₸</span>';
+          $('d-pay-s').textContent=pay>0?'к уплате':'НДС = 0';
+          break;
+        }
       } catch(e){}
     }
   }
-  if (fno300data?.calcResult) {
-    const cr = fno300data.calcResult;
-    let ch=0,cre=0;
-    quarters.forEach(q => {
-      if (cr[q]) {
-        ch+=(cr[q].rSumB||0)+(cr[q].rMedB||0)+(cr[q].rPrintB||0)+(cr[q].rKorrB||0);
-        cre+=(cr[q].pSumB||0)+(cr[q].pMedB||0)+(cr[q].fno328B||0)+(cr[q].pKorrNds||0)+(cr[q].gtdNds||0)+(cr[q].gtdEaesNds||0);
-      }
-    });
-    const pay = Math.max(0,ch-cre), ref=Math.max(0,cre-ch);
-    $('dash-nds-ch').innerHTML = fmt(ch)+' <span>₸</span>';
-    $('dash-nds-ch-sub').textContent = 'ФНО 300 · '+year;
-    $('dash-nds-cr').innerHTML = fmt(cre)+' <span>₸</span>';
-    $('dash-nds-pay').innerHTML = fmt(pay||ref)+' <span style="font-size:11px">₸</span>';
-    $('dash-pay-sub').textContent = pay>0?'к уплате':ref>0?'к возврату':'НДС = 0';
-  }
 }
 
-// ═══════════════════════════════════════════════════════════════ COMPANIES
+// ── COMPANIES ─────────────────────────────────────────────────────────────────
 async function loadCompanies() {
   try {
-    const r = await api('GET','/api/companies');
-    if (r.ok) { companies = r.companies||[]; }
-    else { companies = JSON.parse(localStorage.getItem('buhotchet_companies')||'[]'); }
-  } catch(e) {
-    companies = JSON.parse(localStorage.getItem('buhotchet_companies')||'[]');
-  }
-  const saved = localStorage.getItem('buhotchet_active_company');
-  if (saved) {
-    try { const a=JSON.parse(saved); activeCompany = companies.find(c=>c.iin===a.iin)||null; } catch(e){}
-  }
-  renderCompanyGrid();
-  updateHeaderCompany();
+    const r=await api('GET','/api/companies');
+    if(r.ok) companies=r.companies||[];
+    else companies=JSON.parse(localStorage.getItem('buhotchet_companies')||'[]');
+  } catch(e){ companies=JSON.parse(localStorage.getItem('buhotchet_companies')||'[]'); }
+  const s=localStorage.getItem('buhotchet_active_company');
+  if(s) try{ const a=JSON.parse(s); activeCompany=companies.find(c=>c.iin===a.iin)||null; }catch(e){}
+  renderCompGrid(); updateHComp();
 }
 
-async function syncCompanies() {
-  localStorage.setItem('buhotchet_companies', JSON.stringify(companies));
-  if (activeCompany) localStorage.setItem('buhotchet_active_company', JSON.stringify(activeCompany));
+async function syncComps() {
+  localStorage.setItem('buhotchet_companies',JSON.stringify(companies));
+  if(activeCompany) localStorage.setItem('buhotchet_active_company',JSON.stringify(activeCompany));
   else localStorage.removeItem('buhotchet_active_company');
-  try { await api('PUT','/api/companies',{companies}); } catch(e){}
+  try{ await api('PUT','/api/companies',{companies}); }catch(e){}
 }
 
-function renderCompanyGrid() {
-  const grid = $('companyGrid');
-  if (!companies.length) {
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:28px;color:var(--text3)" id="emptyCompMsg">Нет компаний. Нажмите «+ Добавить».</div>';
-    return;
-  }
-  grid.innerHTML = companies.map((c,i) => `
-    <div class="company-card ${activeCompany&&activeCompany.iin===c.iin?'active':''}">
+function renderCompGrid() {
+  const g=$('compGrid');
+  if(!companies.length){ g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text3)">Нет компаний. Нажмите «+ Добавить».</div>'; return; }
+  g.innerHTML=companies.map((c,i)=>`
+    <div class="company-card ${activeCompany?.iin===c.iin?'active':''}">
       <div class="company-card-actions">
-        <button class="cc-btn cc-select ${activeCompany&&activeCompany.iin===c.iin?'selected':''}" onclick="selectCompany(${i})">${activeCompany&&activeCompany.iin===c.iin?'✓':'Выбрать'}</button>
-        <button class="cc-btn cc-del" onclick="deleteCompanyCard(${i})">✕</button>
+        <button class="cc-btn cc-sel ${activeCompany?.iin===c.iin?'on':''}" onclick="selComp(${i})">${activeCompany?.iin===c.iin?'✓':'Выбрать'}</button>
+        <button class="cc-btn cc-del" onclick="delComp(${i})">✕</button>
       </div>
       <div class="company-card-badge">${(c.name||'?')[0].toUpperCase()}</div>
       <div class="company-card-name">${esc(c.name)}</div>
@@ -882,284 +1115,176 @@ function renderCompanyGrid() {
     </div>`).join('');
 }
 
-function openAddCompany() { $('addCompanyForm').style.display='block'; $('nc_name').focus(); }
-function closeAddCompany() { $('addCompanyForm').style.display='none'; ['nc_name','nc_iin','nc_head','nc_phone'].forEach(id=>{$(id).value=''}); }
+function openAddComp(){ $('addCompForm').style.display='block'; $('nc_name').focus(); }
+function closeAddComp(){ $('addCompForm').style.display='none'; }
 
-async function saveCompany() {
-  const name = $('nc_name').value.trim(), iin = $('nc_iin').value.trim();
-  if (!name) { alert('Введите наименование'); return; }
-  if (!iin)  { alert('Введите БИН/ИИН'); return; }
-  const comp = { name, iin, head:$('nc_head').value.trim(), phone:$('nc_phone').value.trim(), form:$('nc_form').value, mode:$('nc_mode').value };
+async function saveComp() {
+  const name=$('nc_name').value.trim(), iin=$('nc_iin').value.trim();
+  if(!name){alert('Введите наименование');return}
+  if(!iin){alert('Введите БИН/ИИН');return}
+  const comp={name,iin,head:$('nc_head').value.trim(),phone:$('nc_phone').value.trim(),form:$('nc_form').value,mode:$('nc_mode').value};
   companies.push(comp);
-  if (!activeCompany) { activeCompany=comp; }
-  await syncCompanies();
-  renderCompanyGrid();
-  updateHeaderCompany();
-  closeAddCompany();
+  if(!activeCompany) activeCompany=comp;
+  await syncComps(); renderCompGrid(); updateHComp(); closeAddComp();
 }
 
-async function selectCompany(i) {
-  activeCompany = companies[i];
-  await syncCompanies();
-  renderCompanyGrid();
-  updateHeaderCompany();
+async function selComp(i){ activeCompany=companies[i]; await syncComps(); renderCompGrid(); updateHComp(); }
+async function delComp(i){
+  if(!confirm(`Удалить «${companies[i].name}»?`)) return;
+  const d=companies.splice(i,1)[0];
+  if(activeCompany?.iin===d.iin) activeCompany=companies[0]||null;
+  await syncComps(); renderCompGrid(); updateHComp();
 }
 
-async function deleteCompanyCard(i) {
-  if (!confirm(`Удалить «${companies[i].name}»?`)) return;
-  const del = companies.splice(i,1)[0];
-  if (activeCompany?.iin===del.iin) { activeCompany=companies[0]||null; }
-  await syncCompanies();
-  renderCompanyGrid();
-  updateHeaderCompany();
+function updateHComp() {
+  if(activeCompany?.name){ $('hCompName').textContent=activeCompany.name; $('hCompIin').textContent=activeCompany.iin||''; }
+  else{ $('hCompName').textContent='Выберите компанию'; $('hCompIin').textContent='▾'; }
 }
 
-function updateHeaderCompany() {
-  if (activeCompany?.name) {
-    $('headerCompName').textContent = activeCompany.name;
-    $('headerCompIin').textContent = activeCompany.iin||'';
-  } else {
-    $('headerCompName').textContent = 'Выберите компанию';
-    $('headerCompIin').textContent = '▾';
-  }
-}
+function openCompanyModal(){ renderCompModal(); $('compModal').classList.add('open'); }
+function closeCompModal(){ $('compModal').classList.remove('open'); }
 
-// Company Modal
-function openCompanyModal() { renderModalCompList(); $('companyModal').classList.add('open'); }
-function closeCompanyModal() { $('companyModal').classList.remove('open'); }
-
-function renderModalCompList() {
-  const list = $('modalCompList'), empty = $('noCompModal');
-  if (!companies.length) { list.innerHTML=''; empty.style.display='block'; return; }
-  empty.style.display='none';
-  list.innerHTML = companies.map((c,i)=>`
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:${activeCompany?.iin===c.iin?'var(--brand-light)':'var(--surface2)'}">
-      <div style="width:36px;height:36px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">${(c.name||'?')[0].toUpperCase()}</div>
+function renderCompModal() {
+  const l=$('compModalList'), e=$('compModalEmpty');
+  if(!companies.length){ l.innerHTML=''; e.style.display='block'; return; }
+  e.style.display='none';
+  l.innerHTML=companies.map((c,i)=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:${activeCompany?.iin===c.iin?'var(--brand-light)':'var(--surface2)'}">
+      <div style="width:34px;height:34px;border-radius:7px;background:var(--brand);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0">${(c.name||'?')[0].toUpperCase()}</div>
       <div style="flex:1;min-width:0">
         <div style="font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.name)}</div>
         <div style="font-size:11px;color:var(--text3)">${esc(c.iin||'')} · ${esc(c.form||'')} · ${esc(c.mode||'')}</div>
       </div>
-      <button class="btn btn-sm ${activeCompany?.iin===c.iin?'btn-primary':'btn-ghost'}" onclick="selectCompany(${i});closeCompanyModal()">${activeCompany?.iin===c.iin?'✓ Активна':'Выбрать'}</button>
+      <button class="btn btn-sm ${activeCompany?.iin===c.iin?'btn-primary':'btn-ghost'}" onclick="selComp(${i});closeCompModal()">${activeCompany?.iin===c.iin?'✓ Активна':'Выбрать'}</button>
     </div>`).join('');
 }
+$('compModal').addEventListener('click',function(e){if(e.target===this)closeCompModal()});
 
-$('companyModal').addEventListener('click', e => { if(e.target===$('companyModal')) closeCompanyModal(); });
+// ── CHANGE PASSWORD ────────────────────────────────────────────────────────────
+function openChangePass(){ $('cpModal').classList.add('open'); }
+function closeCpModal(){ $('cpModal').classList.remove('open'); }
+$('cpModal').addEventListener('click',function(e){if(e.target===this)closeCpModal()});
 
-// ═══════════════════════════════════════════════════════════════ CALCULATOR
-const TAX_RATES = { nds:16, kpn:20, ipn:10, opv:10, opvr:3.5, so:5, sn:6, osms:3, vosms:2 };
-let currentRate = 16;
-function setTax(type,btn) {
-  currentRate = TAX_RATES[type]||16;
-  document.querySelectorAll('.tax-tab').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  calcTax();
-}
-function calcTax() {
-  const base = parseFloat($('calcInput').value)||0;
-  const tax  = base*currentRate/100, total=base+tax;
-  $('cr-base').textContent = fmt(base)+' ₸';
-  $('cr-tax').textContent  = fmt(tax)+' ₸';
-  $('cr-total').textContent= fmt(total)+' ₸';
-}
-
-function calcSalary() {
-  const MRP=4325, MZP=85000;
-  const gross = parseFloat($('salInput')?.value)||0;
-  const hasDed = $('salDed')?.value==='1';
-  const salType = $('salType')?.value||'emp';
-  const isForeign = $('salCitizen')?.value==='foreign';
-  const res = $('salResult'), tot = $('salTotal');
-  if (!res||!tot||gross<=0) { if(res)res.innerHTML=''; return; }
-
-  let rows = [], empRows = [];
-  const f = n => Math.round(n||0).toLocaleString('ru-RU');
-
-  if (salType==='emp') {
-    // Наёмный работник ТОО ОУР
-    const opv   = isForeign ? 0 : Math.min(gross, MZP*50)*0.10;
-    const vosms = isForeign ? 0 : Math.min(gross, MZP*20)*0.02;
-    const ded   = (!isForeign && hasDed) ? MRP*30 : 0;
-    const ipnBase = Math.max(0, gross - opv - vosms - ded);
-    const ipn   = ipnBase * (isForeign ? 0.20 : 0.10);
-    const net   = gross - opv - vosms - ipn;
-    const opvr  = isForeign ? 0 : gross*0.035;
-    const soBase = isForeign ? 0 : Math.min(Math.max(gross-opv, MZP), MZP*7);
-    const so    = soBase*0.05;
-    const snBase = Math.max(gross-opv-vosms, 0);
-    const sn    = snBase*0.06;
-    const oosms = isForeign ? 0 : Math.min(gross, MZP*40)*0.03;
-    const totalCost = gross + opvr + so + sn + oosms;
-
-    rows = [
-      ['ОПВ (10%)', f(opv)],
-      ['ВОСМС (2%)', f(vosms)],
-      [`ИПН (${isForeign?'20%':'10%'}${hasDed&&!isForeign?', вычет 30МРП':''})`, f(ipn)],
-      ['НА РУКИ', f(net), 'green']
-    ];
-    empRows = [
-      ['ОПВР (3,5%)', f(opvr)],
-      ['СО (5%)', f(so)],
-      ['СН (6%)', f(sn)],
-      ['ООСМС (3%)', f(oosms)],
-      ['Итого расходы работодателя', f(totalCost), 'red']
-    ];
-  } else if (salType==='ip_our') {
-    // ИП на ОУР — платит за себя
-    const opv   = Math.min(gross, MZP*50)*0.10;
-    const vosms = Math.min(gross, MZP*20)*0.02;
-    const ded   = hasDed ? MRP*30 : 0;
-    const ipnBase = Math.max(0, gross - opv - vosms - ded);
-    const ipn   = ipnBase*0.10;
-    const so    = Math.min(Math.max(gross-opv, MZP), MZP*7)*0.05;
-    const oosms = Math.min(gross, MZP*40)*0.03;
-    const net   = gross - opv - vosms - ipn - so - oosms;
-    rows = [
-      ['ОПВ за себя (10%)', f(opv)],
-      ['ВОСМС (2%)', f(vosms)],
-      ['ИПН (10%)', f(ipn)],
-      ['СО (5%)', f(so)],
-      ['ООСМС (3%)', f(oosms)],
-      ['ОСТАТОК (чистый доход)', f(net), 'green']
-    ];
-  } else {
-    // ИП Упрощёнка
-    const tax6 = gross * 0.04; // 4% общий, пополам
-    const ipn  = tax6 / 2;
-    const so_part = tax6 / 2;
-    const opv   = Math.min(gross, MZP*50)*0.10;
-    const vosms = Math.min(gross, MZP*20)*0.02;
-    const net   = gross - tax6 - opv - vosms;
-    rows = [
-      ['Единый налог (4% ИПН+СН)', f(tax6)],
-      ['ОПВ (10%)', f(opv)],
-      ['ВОСМС (2%)', f(vosms)],
-      ['ОСТАТОК', f(net), 'green']
-    ];
-  }
-
-  const mkRows = arr => arr.map(([l,v,cls])=>
-    `<div>${l}</div><div style="text-align:right;font-weight:700;color:${cls==='green'?'var(--green)':cls==='red'?'var(--red)':'var(--text)'}">${v} ₸</div>`
-  ).join('');
-
-  res.innerHTML = `<div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
-    <div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Удержания с работника</div>
-    ${mkRows(rows)}
-  </div>`;
-
-  if (empRows.length) {
-    tot.innerHTML = `<div style="background:var(--surface2);border-radius:10px;padding:14px 16px">
-      <div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
-        <div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Расходы работодателя (сверх зарплаты)</div>
-        ${mkRows(empRows)}
-      </div>
-    </div>`;
-  } else tot.innerHTML='';
-}
-
-// ═══════════════════════════════════════════════════════════════ ADMIN
-async function loadAdminData() {
+async function doChangePass() {
+  const oldP=$('cpOld').value, newP=$('cpNew').value, newP2=$('cpNew2').value;
+  if(!oldP||!newP){showAuthMsg('cpMsg','Заполните все поля','err');return}
+  if(newP!==newP2){showAuthMsg('cpMsg','Пароли не совпадают','err');return}
+  if(newP.length<6){showAuthMsg('cpMsg','Минимум 6 символов','err');return}
   try {
-    const [pend, all] = await Promise.all([
-      api('GET','/api/admin/users/pending'),
-      api('GET','/api/admin/users')
-    ]);
-    renderPending(pend.users||[]);
-    renderAllUsers(all.users||[]);
-  } catch(e) { $('pendingList').innerHTML='<div style="color:var(--red)">Ошибка загрузки</div>'; }
+    const r=await api('POST','/api/auth/change-password',{oldPassword:oldP,newPassword:newP});
+    if(r.ok){showAuthMsg('cpMsg','✅ Пароль изменён!','ok');setTimeout(closeCpModal,1500);}
+    else showAuthMsg('cpMsg',r.error==='wrong_password'?'Неверный текущий пароль':'Ошибка','err');
+  }catch(e){showAuthMsg('cpMsg','Сервер недоступен','err');}
 }
 
+// ── CALCULATOR ────────────────────────────────────────────────────────────────
+const RATES={nds:16,kpn:20,ipn:10,opv:10,opvr:3.5,so:5,sn:6,osms:3,vosms:2};
+let curRate=16;
+function setTax(t,btn){curRate=RATES[t]||16;document.querySelectorAll('.tax-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');calcTax();}
+function calcTax(){
+  const base=parseFloat($('calcInput')?.value)||0, tax=base*curRate/100, total=base+tax;
+  if($('cr-base')) $('cr-base').textContent=fmt(base)+' ₸';
+  if($('cr-tax'))  $('cr-tax').textContent=fmt(tax)+' ₸';
+  if($('cr-total'))$('cr-total').textContent=fmt(total)+' ₸';
+}
+function calcSalary(){
+  const MRP=4325,MZP=85000;
+  const gross=parseFloat($('salInput')?.value)||0;
+  const hasDed=$('salDed')?.value==='1';
+  const salType=$('salType')?.value||'emp';
+  const isForeign=$('salCitizen')?.value==='foreign';
+  const res=$('salResult'),tot=$('salTotal');
+  if(!res||!tot||gross<=0){if(res)res.innerHTML='';if(tot)tot.innerHTML='';return;}
+  const f=n=>Math.round(n||0).toLocaleString('ru-RU');
+  let rows=[],empRows=[];
+  if(salType==='emp'){
+    const opv=isForeign?0:Math.min(gross,MZP*50)*0.10;
+    const vosms=isForeign?0:Math.min(gross,MZP*20)*0.02;
+    const ded=(!isForeign&&hasDed)?MRP*30:0;
+    const ipn=Math.max(0,gross-opv-vosms-ded)*(isForeign?0.20:0.10);
+    const net=gross-opv-vosms-ipn;
+    const opvr=isForeign?0:gross*0.035;
+    const so=isForeign?0:Math.min(Math.max(gross-opv,MZP),MZP*7)*0.05;
+    const sn=Math.max(gross-opv-vosms,0)*0.06;
+    const oosms=isForeign?0:Math.min(gross,MZP*40)*0.03;
+    rows=[['ОПВ (10%)',f(opv)],['ВОСМС (2%)',f(vosms)],[`ИПН (${isForeign?'20%':'10%'})`,f(ipn)],['НА РУКИ',f(net),'green']];
+    empRows=[['ОПВР (3,5%)',f(opvr)],['СО (5%)',f(so)],['СН (6%)',f(sn)],['ООСМС (3%)',f(oosms)],['Итого расходы',f(gross+opvr+so+sn+oosms),'red']];
+  } else if(salType==='ip_our'){
+    const opv=Math.min(gross,MZP*50)*0.10;
+    const vosms=Math.min(gross,MZP*20)*0.02;
+    const ipn=Math.max(0,gross-opv-vosms-(hasDed?MRP*30:0))*0.10;
+    const so=Math.min(Math.max(gross-opv,MZP),MZP*7)*0.05;
+    const oosms=Math.min(gross,MZP*40)*0.03;
+    rows=[['ОПВ (10%)',f(opv)],['ВОСМС (2%)',f(vosms)],['ИПН (10%)',f(ipn)],['СО (5%)',f(so)],['ООСМС (3%)',f(oosms)],['ОСТАТОК',f(gross-opv-vosms-ipn-so-oosms),'green']];
+  } else {
+    const tax=gross*0.04, opv=Math.min(gross,MZP*50)*0.10, vosms=Math.min(gross,MZP*20)*0.02;
+    rows=[['Единый налог (4%)',f(tax)],['ОПВ (10%)',f(opv)],['ВОСМС (2%)',f(vosms)],['ОСТАТОК',f(gross-tax-opv-vosms),'green']];
+  }
+  const mk=arr=>arr.map(([l,v,cls])=>`<div>${l}</div><div style="text-align:right;font-weight:700;color:${cls==='green'?'var(--green)':cls==='red'?'var(--red)':'var(--text)'}">${v} ₸</div>`).join('');
+  res.innerHTML=`<div style="display:grid;grid-template-columns:1fr auto;gap:5px;align-items:center"><div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Удержания с работника</div>${mk(rows)}</div>`;
+  tot.innerHTML=empRows.length?`<div style="background:var(--surface2);border-radius:9px;padding:12px 14px"><div style="display:grid;grid-template-columns:1fr auto;gap:5px;align-items:center"><div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Расходы работодателя</div>${mk(empRows)}</div></div>`:'';
+}
+
+// ── ADMIN ─────────────────────────────────────────────────────────────────────
+async function loadAdmin() {
+  try {
+    const [p,a]=await Promise.all([api('GET','/api/admin/users/pending'),api('GET','/api/admin/users')]);
+    renderPending(p.users||[]); renderAllUsers(a.users||[]);
+  }catch(e){$('pendingList').innerHTML='<div style="color:var(--red)">Ошибка загрузки</div>';}
+}
 function renderPending(users) {
-  const el = $('pendingList');
-  if (!users.length) { el.innerHTML='<div style="color:var(--text3);font-size:13px">Нет заявок</div>'; return; }
-  el.innerHTML = users.map(u=>`
-    <div class="admin-user-row">
-      <div class="admin-user-info">
-        <div class="admin-user-login">${esc(u.full_name)} <span style="color:var(--text3);font-weight:400">(${esc(u.login)})</span></div>
-        <div class="admin-user-meta">${esc(u.email||'—')} · ${esc(u.phone||'—')} · ${new Date(u.created_at).toLocaleDateString('ru-RU')}</div>
+  const el=$('pendingList');
+  if(!users.length){el.innerHTML='<div style="color:var(--text3);font-size:13px">Нет заявок</div>';return;}
+  el.innerHTML=users.map(u=>`
+    <div class="admin-row">
+      <div style="flex:1;min-width:150px">
+        <div style="font-weight:700;font-size:13px">${esc(u.full_name)} <span style="color:var(--text3);font-weight:400">(${esc(u.login)})</span></div>
+        <div style="font-size:11px;color:var(--text3)">${esc(u.email||'—')} · ${new Date(u.created_at).toLocaleDateString('ru-RU')}</div>
       </div>
-      <select id="tariff_${u.id}" style="padding:5px 8px;border-radius:7px;border:1px solid var(--border2);font-family:inherit;font-size:12px">
-        <option value="all">Все формы</option>
-        <option value="fno200">Только ФНО 200</option>
-        <option value="fno300">Только ФНО 300</option>
-        <option value="none">Без доступа</option>
+      <select id="t_${u.id}" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border2);font-size:12px;font-family:inherit">
+        <option value="all">Все формы</option><option value="fno200">Только ФНО 200</option>
+        <option value="fno300">Только ФНО 300</option><option value="none">Без доступа</option>
       </select>
-      <button class="btn btn-success btn-sm" onclick="approveUser(${u.id})">✓ Одобрить</button>
-      <button class="btn btn-danger btn-sm" onclick="rejectUser(${u.id})">✗ Отказать</button>
+      <button class="btn btn-success btn-sm" onclick="approveU(${u.id})">✓ Одобрить</button>
+      <button class="btn btn-danger btn-sm" onclick="rejectU(${u.id})">✗ Отказать</button>
     </div>`).join('');
 }
-
 function renderAllUsers(users) {
-  const el = $('allUsersList');
-  if (!users.length) { el.innerHTML='<div style="color:var(--text3);font-size:13px">Нет пользователей</div>'; return; }
-  el.innerHTML = `
-    <table class="rtable">
-      <thead><tr><th>Пользователь</th><th>Логин</th><th>E-mail</th><th>Статус</th><th>Тариф</th><th>Дата</th><th>Действия</th></tr></thead>
-      <tbody>
-        ${users.map(u=>`
-          <tr>
-            <td style="font-weight:600">${esc(u.full_name)}</td>
-            <td style="font-family:monospace">${esc(u.login)}</td>
-            <td>${esc(u.email||'—')}</td>
-            <td><span class="status-badge status-${u.status}">${{approved:'Активен',pending:'Ожидает',blocked:'Заблокирован'}[u.status]||u.status}</span></td>
-            <td>
-              <select onchange="changeTariff(${u.id},this.value)" style="padding:3px 6px;border-radius:5px;border:1px solid var(--border2);font-size:11px;font-family:inherit" ${u.role==='admin'?'disabled':''}>
-                <option value="all" ${u.tariff==='all'?'selected':''}>Все формы</option>
-                <option value="fno200" ${u.tariff==='fno200'?'selected':''}>ФНО 200</option>
-                <option value="fno300" ${u.tariff==='fno300'?'selected':''}>ФНО 300</option>
-                <option value="none" ${u.tariff==='none'?'selected':''}>Нет</option>
-              </select>
-            </td>
-            <td style="font-size:11px;color:var(--text3)">${new Date(u.created_at).toLocaleDateString('ru-RU')}</td>
-            <td>
-              ${u.role!=='admin'?`
-                ${u.status==='blocked'
-                  ?`<button class="btn btn-sm btn-success" onclick="adminAction(${u.id},'unblock')">Разблок.</button>`
-                  :u.status==='approved'
-                    ?`<button class="btn btn-sm btn-warn" onclick="adminAction(${u.id},'block')">Блок.</button>`
-                    :''}
-                <button class="btn btn-sm btn-danger" onclick="adminAction(${u.id},'delete')">Удалить</button>`:'<span style="color:var(--text3);font-size:11px">Администратор</span>'}
-            </td>
-          </tr>`).join('')}
-      </tbody>
-    </table>`;
+  const el=$('allUsersList');
+  if(!users.length){el.innerHTML='<div style="color:var(--text3);font-size:13px">Нет пользователей</div>';return;}
+  el.innerHTML=`<table class="rtable"><thead><tr><th>Пользователь</th><th>Логин</th><th>Email</th><th>Статус</th><th>Тариф</th><th>Действия</th></tr></thead><tbody>${
+    users.map(u=>`<tr>
+      <td style="font-weight:600">${esc(u.full_name)}</td>
+      <td style="font-family:monospace">${esc(u.login)}</td>
+      <td>${esc(u.email||'—')}</td>
+      <td><span class="status-badge status-${u.status}">${{approved:'Активен',pending:'Ожидает',blocked:'Блок.'}[u.status]||u.status}</span></td>
+      <td><select onchange="changeTariff(${u.id},this.value)" style="font-size:11px;padding:2px 5px;border-radius:4px;border:1px solid var(--border2);font-family:inherit" ${u.role==='admin'?'disabled':''}>
+        <option value="all" ${u.tariff==='all'?'selected':''}>Все</option>
+        <option value="fno200" ${u.tariff==='fno200'?'selected':''}>ФНО 200</option>
+        <option value="fno300" ${u.tariff==='fno300'?'selected':''}>ФНО 300</option>
+        <option value="none" ${u.tariff==='none'?'selected':''}>Нет</option>
+      </select></td>
+      <td style="display:flex;gap:4px">${u.role!=='admin'?`
+        ${u.status==='blocked'?`<button class="btn btn-sm btn-success" onclick="adminAct(${u.id},'unblock')">Разблок.</button>`
+          :u.status==='approved'?`<button class="btn btn-sm btn-warn" onclick="adminAct(${u.id},'block')">Блок.</button>`:''}
+        <button class="btn btn-sm btn-danger" onclick="adminAct(${u.id},'delete')">Удалить</button>`
+        :'<span style="font-size:11px;color:var(--text3)">Администратор</span>'}
+      </td></tr>`).join('')}
+    </tbody></table>`;
 }
+async function approveU(id){await api('POST',`/api/admin/users/${id}/approve`,{tariff:$('t_'+id)?.value||'all'});await api('POST',`/api/admin/users/${id}/notify`,{}).catch(()=>{});loadAdmin();}
+async function rejectU(id){if(!confirm('Удалить заявку?'))return;await api('DELETE',`/api/admin/users/${id}`);loadAdmin();}
+async function changeTariff(id,t){await api('POST',`/api/admin/users/${id}/tariff`,{tariff:t});}
+async function adminAct(id,action){if(action==='delete'&&!confirm('Удалить пользователя?'))return;await api('POST',`/api/admin/users/${id}/${action}`);loadAdmin();}
 
-async function approveUser(id) {
-  const t = $('tariff_'+id)?.value||'all';
-  await api('POST',`/api/admin/users/${id}/approve`,{tariff:t});
-  loadAdminData();
-}
-async function rejectUser(id) {
-  if (!confirm('Удалить заявку?')) return;
-  await api('DELETE',`/api/admin/users/${id}`);
-  loadAdminData();
-}
-async function changeTariff(id, tariff) {
-  await api('POST',`/api/admin/users/${id}/tariff`,{tariff});
-}
-async function adminAction(id, action) {
-  if (action==='delete' && !confirm('Удалить пользователя? Это действие нельзя отменить.')) return;
-  await api('POST',`/api/admin/users/${id}/${action}`);
-  loadAdminData();
-}
-
-// ═══════════════════════════════════════════════════════════════ BOOT
+// ── BOOT ─────────────────────────────────────────────────────────────────────
 (async function boot() {
-  // Показать auth screen пока проверяем
-  $('authScreen').classList.remove('hidden');
-  $('appShell').classList.remove('visible');
-
-  const health = await fetch(API+'/api/health').then(r=>r.json()).catch(()=>({ok:false,db:false}));
-
-  if (!health.ok || !health.db) {
-    // Нет сервера — показываем auth но без API (только localStorage)
-    // Для разработки: авто-вход если есть token
-  }
-
-  if (authToken) {
-    await initApp();
-  }
-  // Иначе auth screen уже показан
+  if (!authToken) return; // Показываем лендинг
+  try {
+    const r = await api('GET','/api/auth/me');
+    if (r.ok && r.user) { currentUser=r.user; initApp(); }
+    else { authToken=''; localStorage.removeItem('bho_token'); }
+  } catch(e) { authToken=''; localStorage.removeItem('bho_token'); }
 })();
 </script>
 </body>
