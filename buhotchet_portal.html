@@ -231,8 +231,8 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
       <div class="auth-sub">Портал бухгалтерской отчётности · Казахстан 2026</div>
     </div>
     <div class="auth-tabs">
-      <button class="auth-tab active" onclick="switchAuthTab('login')">Вход</button>
-      <button class="auth-tab" onclick="switchAuthTab('register')">Регистрация</button>
+      <button class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Вход</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Регистрация</button>
     </div>
     <div class="auth-body">
 
@@ -241,7 +241,31 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
         <div class="af"><label>Логин</label><input id="loginLogin" type="text" placeholder="Ваш логин" autocomplete="username"></div>
         <div class="af"><label>Пароль</label><input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
         <button class="btn-auth" onclick="doLogin()" id="loginBtn">Войти</button>
+        <div style="text-align:center;margin-top:8px">
+          <button onclick="showPanel('forgot')" style="background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline">Забыли пароль?</button>
+        </div>
         <div class="auth-msg" id="loginMsg"></div>
+      </div>
+
+      <!-- FORGOT -->
+      <div class="auth-panel" id="panelForgot">
+        <div style="font-size:13px;color:#64748b;margin-bottom:14px;line-height:1.5">Введите ваш логин — вышлем временный пароль на почту.</div>
+        <div class="af"><label>Логин</label><input id="forgotLogin" type="text" placeholder="ваш-логин"></div>
+        <button class="btn-auth" onclick="doForgotPassword()" id="forgotBtn">Отправить инструкцию</button>
+        <div style="text-align:center;margin-top:8px">
+          <button onclick="showPanel('login')" style="background:none;border:none;color:#94a3b8;font-size:12px;cursor:pointer;font-family:inherit;text-decoration:underline">← Назад ко входу</button>
+        </div>
+        <div class="auth-msg" id="forgotMsg"></div>
+      </div>
+
+      <!-- CHANGE PASSWORD -->
+      <div class="auth-panel" id="panelChangePass">
+        <div style="font-size:13px;color:#64748b;margin-bottom:14px">Введите текущий и новый пароль.</div>
+        <div class="af"><label>Текущий пароль</label><input id="cpOld" type="password" placeholder="••••••••"></div>
+        <div class="af"><label>Новый пароль (мин. 6 символов)</label><input id="cpNew" type="password" placeholder="••••••••"></div>
+        <div class="af"><label>Повтор нового пароля</label><input id="cpNew2" type="password" placeholder="••••••••"></div>
+        <button class="btn-auth" onclick="doChangePassword()" id="cpBtn">Сменить пароль</button>
+        <div class="auth-msg" id="cpMsg"></div>
       </div>
 
       <!-- REGISTER -->
@@ -299,10 +323,10 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
         <div class="company-chip-iin" id="headerCompIin">▾</div>
       </div>
     </div>
-    <div class="user-badge">
+    <div class="user-badge" style="cursor:pointer" onclick="openChangePass()" title="Нажмите чтобы сменить пароль">
       <div>
         <div class="user-name" id="headerUserName">—</div>
-        <div class="user-tariff" id="headerTariff">—</div>
+        <div class="user-tariff" id="headerTariff">— · 🔑 Сменить пароль</div>
       </div>
     </div>
     <button class="btn-logout" onclick="doLogout()">Выйти</button>
@@ -449,6 +473,35 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
   </div></div>
 </div>
 
+<!-- ── SALARY CALCULATOR ── -->
+<div class="card" style="max-width:740px">
+  <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты (ОУР 2026)</div>
+  <div class="form-grid">
+    <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
+    <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
+      <select id="salDed" onchange="calcSalary()">
+        <option value="1">Да — заявление подано</option>
+        <option value="0">Нет</option>
+      </select>
+    </div>
+    <div class="field"><label>Тип занятости</label>
+      <select id="salType" onchange="calcSalary()">
+        <option value="emp">Наёмный работник (ТОО ОУР)</option>
+        <option value="ip_our">ИП на ОУР</option>
+        <option value="ip_simple">ИП Упрощёнка</option>
+      </select>
+    </div>
+    <div class="field"><label>Гражданство</label>
+      <select id="salCitizen" onchange="calcSalary()">
+        <option value="kz">Гражданин РК</option>
+        <option value="foreign">Иностранец</option>
+      </select>
+    </div>
+  </div>
+  <div id="salResult" style="background:var(--surface2);border-radius:10px;padding:16px;font-size:13px;margin-top:4px"></div>
+  <div id="salTotal" style="margin-top:12px"></div>
+</div>
+
 <!-- ── DEADLINES ── -->
 <div class="page" id="page-deadlines">
   <div class="scroll-content"><div class="inner">
@@ -528,7 +581,7 @@ body{background:var(--bg);font-family:'Golos Text',system-ui,sans-serif;color:va
 
 <script>
 // ═══════════════════════════════════════════════════════════════ STATE
-const API = ''; // на Railway — тот же домен
+const API = 'https://buhotchet-production.up.railway.app';
 let authToken = localStorage.getItem('bho_token') || '';
 let currentUser = null;
 let companies = [];
@@ -550,16 +603,56 @@ async function api(method, path, body) {
 }
 
 // ═══════════════════════════════════════════════════════════════ AUTH SCREEN
-function switchAuthTab(tab) {
+function showPanel(name) {
   document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
-  if (tab==='login') {
-    document.querySelectorAll('.auth-tab')[0].classList.add('active');
-    $('panelLogin').classList.add('active');
-  } else {
-    document.querySelectorAll('.auth-tab')[1].classList.add('active');
-    $('panelRegister').classList.add('active');
-  }
+  const panelMap = { login:'panelLogin', register:'panelRegister', forgot:'panelForgot', changepass:'panelChangePass' };
+  const tabMap   = { login:0, register:1 };
+  const p = $(panelMap[name]);
+  if (p) p.classList.add('active');
+  if (tabMap[name] !== undefined) document.querySelectorAll('.auth-tab')[tabMap[name]].classList.add('active');
+}
+function switchAuthTab(tab) { showPanel(tab); }
+
+async function doForgotPassword() {
+  const login = $('forgotLogin').value.trim();
+  if (!login) { showAuthMsg('forgotMsg','Введите логин','err'); return; }
+  $('forgotBtn').disabled=true; $('forgotBtn').textContent='Отправляю...';
+  try {
+    const r = await api('POST','/api/auth/forgot',{login});
+    if (r.ok) showAuthMsg('forgotMsg','✅ Временный пароль отправлен на вашу почту!','ok');
+    else {
+      const m = {not_found:'Логин не найден',no_email:'Email не привязан к аккаунту'};
+      showAuthMsg('forgotMsg', m[r.error]||'Ошибка. Попробуйте позже.','err');
+    }
+  } catch(e) { showAuthMsg('forgotMsg','Сервер недоступен','err'); }
+  $('forgotBtn').disabled=false; $('forgotBtn').textContent='Отправить инструкцию';
+}
+
+function openChangePass() {
+  // Показать модал смены пароля
+  $('authScreen').classList.remove('hidden');
+  $('appShell').classList.remove('visible');
+  showPanel('changepass');
+}
+
+async function doChangePassword() {
+  const oldP = $('cpOld').value, newP = $('cpNew').value, newP2 = $('cpNew2').value;
+  if (!oldP||!newP) { showAuthMsg('cpMsg','Заполните все поля','err'); return; }
+  if (newP!==newP2) { showAuthMsg('cpMsg','Пароли не совпадают','err'); return; }
+  if (newP.length<6) { showAuthMsg('cpMsg','Минимум 6 символов','err'); return; }
+  $('cpBtn').disabled=true; $('cpBtn').textContent='Сохраняю...';
+  try {
+    const r = await api('POST','/api/auth/change-password',{oldPassword:oldP,newPassword:newP});
+    if (r.ok) {
+      showAuthMsg('cpMsg','✅ Пароль успешно изменён!','ok');
+      setTimeout(()=>{ $('authScreen').classList.add('hidden'); $('appShell').classList.add('visible'); },1500);
+    } else {
+      const m = {wrong_password:'Неверный текущий пароль'};
+      showAuthMsg('cpMsg', m[r.error]||'Ошибка','err');
+    }
+  } catch(e) { showAuthMsg('cpMsg','Сервер недоступен','err'); }
+  $('cpBtn').disabled=false; $('cpBtn').textContent='Сменить пароль';
 }
 
 function showAuthMsg(id, text, type) {
@@ -672,8 +765,9 @@ async function doLogout() {
   try { await api('POST','/api/auth/logout'); } catch(e) {}
   authToken = '';
   currentUser = null;
-  localStorage.removeItem('bho_token');
-  location.reload();
+  authToken=''; currentUser=null; localStorage.removeItem('bho_token');
+  $('appShell').classList.remove('visible'); $('authScreen').classList.remove('hidden');
+  showPanel('login');
 }
 
 // ═══════════════════════════════════════════════════════════════ NAVIGATION
@@ -866,6 +960,100 @@ function calcTax() {
   $('cr-base').textContent = fmt(base)+' ₸';
   $('cr-tax').textContent  = fmt(tax)+' ₸';
   $('cr-total').textContent= fmt(total)+' ₸';
+}
+
+function calcSalary() {
+  const MRP=4325, MZP=85000;
+  const gross = parseFloat($('salInput')?.value)||0;
+  const hasDed = $('salDed')?.value==='1';
+  const salType = $('salType')?.value||'emp';
+  const isForeign = $('salCitizen')?.value==='foreign';
+  const res = $('salResult'), tot = $('salTotal');
+  if (!res||!tot||gross<=0) { if(res)res.innerHTML=''; return; }
+
+  let rows = [], empRows = [];
+  const f = n => Math.round(n||0).toLocaleString('ru-RU');
+
+  if (salType==='emp') {
+    // Наёмный работник ТОО ОУР
+    const opv   = isForeign ? 0 : Math.min(gross, MZP*50)*0.10;
+    const vosms = isForeign ? 0 : Math.min(gross, MZP*20)*0.02;
+    const ded   = (!isForeign && hasDed) ? MRP*30 : 0;
+    const ipnBase = Math.max(0, gross - opv - vosms - ded);
+    const ipn   = ipnBase * (isForeign ? 0.20 : 0.10);
+    const net   = gross - opv - vosms - ipn;
+    const opvr  = isForeign ? 0 : gross*0.035;
+    const soBase = isForeign ? 0 : Math.min(Math.max(gross-opv, MZP), MZP*7);
+    const so    = soBase*0.05;
+    const snBase = Math.max(gross-opv-vosms, 0);
+    const sn    = snBase*0.06;
+    const oosms = isForeign ? 0 : Math.min(gross, MZP*40)*0.03;
+    const totalCost = gross + opvr + so + sn + oosms;
+
+    rows = [
+      ['ОПВ (10%)', f(opv)],
+      ['ВОСМС (2%)', f(vosms)],
+      [`ИПН (${isForeign?'20%':'10%'}${hasDed&&!isForeign?', вычет 30МРП':''})`, f(ipn)],
+      ['НА РУКИ', f(net), 'green']
+    ];
+    empRows = [
+      ['ОПВР (3,5%)', f(opvr)],
+      ['СО (5%)', f(so)],
+      ['СН (6%)', f(sn)],
+      ['ООСМС (3%)', f(oosms)],
+      ['Итого расходы работодателя', f(totalCost), 'red']
+    ];
+  } else if (salType==='ip_our') {
+    // ИП на ОУР — платит за себя
+    const opv   = Math.min(gross, MZP*50)*0.10;
+    const vosms = Math.min(gross, MZP*20)*0.02;
+    const ded   = hasDed ? MRP*30 : 0;
+    const ipnBase = Math.max(0, gross - opv - vosms - ded);
+    const ipn   = ipnBase*0.10;
+    const so    = Math.min(Math.max(gross-opv, MZP), MZP*7)*0.05;
+    const oosms = Math.min(gross, MZP*40)*0.03;
+    const net   = gross - opv - vosms - ipn - so - oosms;
+    rows = [
+      ['ОПВ за себя (10%)', f(opv)],
+      ['ВОСМС (2%)', f(vosms)],
+      ['ИПН (10%)', f(ipn)],
+      ['СО (5%)', f(so)],
+      ['ООСМС (3%)', f(oosms)],
+      ['ОСТАТОК (чистый доход)', f(net), 'green']
+    ];
+  } else {
+    // ИП Упрощёнка
+    const tax6 = gross * 0.04; // 4% общий, пополам
+    const ipn  = tax6 / 2;
+    const so_part = tax6 / 2;
+    const opv   = Math.min(gross, MZP*50)*0.10;
+    const vosms = Math.min(gross, MZP*20)*0.02;
+    const net   = gross - tax6 - opv - vosms;
+    rows = [
+      ['Единый налог (4% ИПН+СН)', f(tax6)],
+      ['ОПВ (10%)', f(opv)],
+      ['ВОСМС (2%)', f(vosms)],
+      ['ОСТАТОК', f(net), 'green']
+    ];
+  }
+
+  const mkRows = arr => arr.map(([l,v,cls])=>
+    `<div>${l}</div><div style="text-align:right;font-weight:700;color:${cls==='green'?'var(--green)':cls==='red'?'var(--red)':'var(--text)'}">${v} ₸</div>`
+  ).join('');
+
+  res.innerHTML = `<div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
+    <div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Удержания с работника</div>
+    ${mkRows(rows)}
+  </div>`;
+
+  if (empRows.length) {
+    tot.innerHTML = `<div style="background:var(--surface2);border-radius:10px;padding:14px 16px">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center">
+        <div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">Расходы работодателя (сверх зарплаты)</div>
+        ${mkRows(empRows)}
+      </div>
+    </div>`;
+  } else tot.innerHTML='';
 }
 
 // ═══════════════════════════════════════════════════════════════ ADMIN

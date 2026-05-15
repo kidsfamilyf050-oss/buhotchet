@@ -420,3 +420,14 @@ async function start() {
 }
 
 start();
+
+// ── CHANGE PASSWORD ───────────────────────────────────────────────────────────
+app.post('/api/auth/change-password', requireAuth, requireDb, async (req, res) => {
+  const { oldPassword, newPassword } = req.body || {};
+  if (!oldPassword || !newPassword) return res.status(400).json({ ok:false, error:'missing_fields' });
+  if (newPassword.length < 6) return res.status(400).json({ ok:false, error:'too_short' });
+  try {
+    const result = await db.changePassword(req.user.id, oldPassword, newPassword);
+    res.json(result);
+  } catch(e) { console.error(e); res.status(500).json({ ok:false, error:'server_error' }); }
+});

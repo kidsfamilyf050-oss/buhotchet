@@ -364,3 +364,17 @@ module.exports = {
   getUserCompanies, saveUserCompanies,
   getKv, putKv, bulkPutKv
 };
+
+async function changePassword(userId, oldPassword, newPassword) {
+  const oldHash = hashPassword(oldPassword);
+  const { rows } = await pool.query(
+    `SELECT id FROM users WHERE id=$1 AND password_hash=$2`,
+    [userId, oldHash]
+  );
+  if (!rows.length) return { ok:false, error:'wrong_password' };
+  const newHash = hashPassword(newPassword);
+  await pool.query(`UPDATE users SET password_hash=$1 WHERE id=$2`, [newHash, userId]);
+  return { ok:true };
+}
+
+module.exports = Object.assign(module.exports, { changePassword });
