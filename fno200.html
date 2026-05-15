@@ -4424,13 +4424,28 @@
     });
     document.getElementById('savedCompanySelect').addEventListener('change', (e) => {
       const nextId = String(e.target.value || '');
+      // СОХРАНИТЬ данные текущей компании перед переключением
+      try { persist(); } catch(err) {}
       if (!nextId) {
         state.activeCompanyId = '';
+        window.__buhotchetActiveCompany = null;
         renderCompanyManager();
-        persist();
+        render();
         return;
       }
-      loadSavedCompany(nextId);
+      // Найти компанию в портале
+      let portalComps = [];
+      try { portalComps = JSON.parse(localStorage.getItem('buhotchet_companies') || '[]'); } catch(err) {}
+      const pc = portalComps.find(cc => cc.iin === nextId);
+      if (pc) {
+        window.__buhotchetActiveCompany = pc;
+        localStorage.setItem('buhotchet_active_company', JSON.stringify(pc));
+        // Загрузить данные для этой компании (ключ включает ИИН)
+        restore();
+        renderCompanyManager();
+      } else {
+        loadSavedCompany(nextId);
+      }
     });
     // Company buttons removed - managed via portal
     document.getElementById('companyType').addEventListener('change', (e) => {
@@ -4937,6 +4952,10 @@
         if (!compData || !compData.name) return;
         const prevIin = window.__buhotchetActiveCompany && window.__buhotchetActiveCompany.iin;
         const changed = prevIin !== compData.iin;
+        // Сохранить данные текущей компании ПЕРЕД переключением
+        if (changed && prevIin && typeof persist === 'function') {
+          try { persist(); } catch(e) {}
+        }
         window.__buhotchetActiveCompany = compData;
         try {
           const binEl = document.getElementById('companyBin');
@@ -4948,12 +4967,12 @@
             state.company.bin = compData.iin || '';
             state.company.name = compData.name || '';
           }
-          // Если компания изменилась — перезагрузить данные сотрудников
+          // Если компания изменилась — загрузить данные новой компании
           if (changed && reload !== false && typeof restore === 'function') {
             restore();
             if (typeof render === 'function') render();
           }
-        } catch(e2){}
+        } catch(e2){ console.error('[fno200] applyPortalCompany:', e2); }
       }
       try {
         const pc = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');

@@ -391,6 +391,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
 .oferta-link{color:#94a3b8;font-size:11px;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit}
 .oferta-link:hover{color:#64748b}
 .oferta-modal{max-width:700px;max-height:80vh}
+#ofertaModal{z-index:9200}
 .oferta-body{font-size:13px;color:var(--text2);line-height:1.7;max-height:55vh;overflow-y:auto;padding:4px}
 .oferta-body h3{font-size:14px;font-weight:700;color:var(--text);margin:16px 0 6px}
 .oferta-body p{margin-bottom:10px}
@@ -622,7 +623,12 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="af"><label>Пароль * (мин. 6 символов)</label><div class="pass-wrap"><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"><button type="button" class="pass-eye" onclick="togglePass('regPass',this)">👁</button></div></div>
         <div class="check-row">
           <input type="checkbox" id="ofertaCheck">
-          <label for="ofertaCheck">Я ознакомился и согласен с <button class="oferta-link" onclick="openOferta()">Публичной офертой</button> и <button class="oferta-link" onclick="openOferta()">Политикой конфиденциальности</button></label>
+          <label>
+            Я ознакомился и согласен с
+            <span class="oferta-link" onclick="event.preventDefault();event.stopPropagation();openOferta()">Публичной офертой</span>
+            и
+            <span class="oferta-link" onclick="event.preventDefault();event.stopPropagation();openOferta()">Политикой конфиденциальности</span>
+          </label>
         </div>
         <button class="btn-auth" id="registerBtn" onclick="doRegister()">Отправить заявку</button>
         <div class="auth-msg" id="registerMsg"></div>
@@ -783,72 +789,152 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
 
     <!-- CALC -->
     <div class="page" id="page-calc">
-      <div class="scroll-wrap"><div class="inner">
-        <div class="card" style="max-width:680px">
-          <div class="card-title">Налоговый калькулятор · 2026</div>
-          <div class="tax-tabs">
-            <button class="tax-tab active" onclick="setTax('nds',this)">НДС 16%</button>
-            <button class="tax-tab" onclick="setTax('kpn',this)">КПН 20%</button>
-            <button class="tax-tab" onclick="setTax('ipn',this)">ИПН 10%</button>
-            <button class="tax-tab" onclick="setTax('opv',this)">ОПВ 10%</button>
-            <button class="tax-tab" onclick="setTax('opvr',this)">ОПВР 3.5%</button>
-            <button class="tax-tab" onclick="setTax('so',this)">СО 5%</button>
-            <button class="tax-tab" onclick="setTax('sn',this)">СН 6%</button>
-            <button class="tax-tab" onclick="setTax('osms',this)">ООСМС 3%</button>
-            <button class="tax-tab" onclick="setTax('vosms',this)">ВОСМС 2%</button>
+      <div class="scroll-wrap"><div class="inner" style="max-width:900px">
+        <!-- Вкладки калькулятора -->
+        <div class="tax-tabs" style="margin-bottom:0;flex-wrap:wrap;gap:6px">
+          <button class="tax-tab active" onclick="switchCalc('too_our',this)">ТОО · ОУР</button>
+          <button class="tax-tab" onclick="switchCalc('too_simple',this)">ТОО · Упрощёнка</button>
+          <button class="tax-tab" onclick="switchCalc('ip_our',this)">ИП · ОУР</button>
+          <button class="tax-tab" onclick="switchCalc('ip_simple',this)">ИП · Упрощёнка</button>
+          <button class="tax-tab" onclick="switchCalc('reverse',this)">Расчёт от обратного</button>
+          <button class="tax-tab" onclick="switchCalc('ep',this)">Единый платёж</button>
+          <button class="tax-tab" onclick="switchCalc('nds',this)">НДС</button>
+        </div>
+
+        <div class="card" id="calcCard">
+          <div id="calcTitle" class="card-title" style="font-size:1rem">💼 Зарплата работника · ТОО ОУР · 2026</div>
+
+          <!-- ОБЩИЕ ПОЛЯ ДЛЯ ЗАРПЛАТНЫХ РАСЧЁТОВ -->
+          <div id="calcSalaryBlock">
+            <div class="form-grid">
+              <div class="field">
+                <label id="salLabel">Зарплата (начисленная, ₸)</label>
+                <input type="number" id="salInput" value="300000" oninput="runCalc()" placeholder="300000">
+              </div>
+              <div class="field" id="salDedBlock">
+                <label>Вычет 30 МРП (129 750 ₸)?</label>
+                <select id="salDed" onchange="runCalc()">
+                  <option value="1">Да — заявление подано</option>
+                  <option value="0">Нет</option>
+                </select>
+              </div>
+              <div class="field" id="workerTypeBlock">
+                <label>Тип работника</label>
+                <select id="workerType" onchange="runCalc()">
+                  <option value="staff">В штате</option>
+                  <option value="gph">По договору ГПХ</option>
+                </select>
+              </div>
+              <div class="field" id="citizenBlock">
+                <label>Гражданство</label>
+                <select id="salCitizen" onchange="runCalc()">
+                  <option value="kz">Гражданин РК</option>
+                  <option value="eaes">Гражданин ЕАЭС</option>
+                  <option value="foreign">Иностранец (не ЕАЭС)</option>
+                </select>
+              </div>
+              <div class="field" id="pensionerBlock" style="display:none">
+                <label>Пенсионер?</label>
+                <select id="isPensioner" onchange="runCalc()">
+                  <option value="0">Нет</option>
+                  <option value="1">Да (не платит ОПВ)</option>
+                </select>
+              </div>
+              <div class="field" id="disabledBlock" style="display:none">
+                <label>Инвалидность?</label>
+                <select id="isDisabled" onchange="runCalc()">
+                  <option value="0">Нет</option>
+                  <option value="1">Инвалид 1-2 гр. (нет ОПВ, ИПН 0)</option>
+                  <option value="2">Инвалид 3 гр.</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- РЕЗУЛЬТАТ -->
+            <div id="salResult" style="background:var(--surface2);border-radius:9px;padding:14px 16px;font-size:13px;margin-top:4px"></div>
+            <div id="salTotal" style="margin-top:10px"></div>
           </div>
-          <input type="number" class="big-input" id="calcInput" value="1000000" oninput="calcTax()">
-          <div class="calc-result">
-            <div><div class="cr-label">База</div><div class="cr-value" id="cr-base">1 000 000 ₸</div></div>
-            <div><div class="cr-label">Налог</div><div class="cr-value" id="cr-tax">160 000 ₸</div></div>
-            <div><div class="cr-label">Итого</div><div class="cr-value" id="cr-total">1 160 000 ₸</div></div>
+
+          <!-- ДЛЯ НДС -->
+          <div id="calcNdsBlock" style="display:none">
+            <div class="form-grid">
+              <div class="field">
+                <label>Сумма без НДС (₸)</label>
+                <input type="number" id="ndsInput" value="1000000" oninput="calcNds()" placeholder="1000000">
+              </div>
+              <div class="field">
+                <label>Ставка НДС</label>
+                <select id="ndsRate" onchange="calcNds()">
+                  <option value="16">16% (стандартная 2026)</option>
+                  <option value="0">0% (экспорт)</option>
+                </select>
+              </div>
+            </div>
+            <div id="ndsResult" style="background:var(--surface2);border-radius:9px;padding:14px 16px;font-size:13px"></div>
+          </div>
+
+          <!-- ДЛЯ РАСЧЁТА ОТ ОБРАТНОГО -->
+          <div id="calcReverseBlock" style="display:none">
+            <div style="font-size:13px;color:var(--text3);margin-bottom:12px">Введите сумму «на руки» — рассчитаем начисленную зарплату и все налоги.</div>
+            <div class="form-grid">
+              <div class="field">
+                <label>Сумма «на руки» (₸)</label>
+                <input type="number" id="reverseInput" value="200000" oninput="calcReverse()" placeholder="200000">
+              </div>
+              <div class="field">
+                <label>Вычет 30 МРП?</label>
+                <select id="reverseDed" onchange="calcReverse()">
+                  <option value="1">Да</option><option value="0">Нет</option>
+                </select>
+              </div>
+            </div>
+            <div id="reverseResult" style="background:var(--surface2);border-radius:9px;padding:14px 16px;font-size:13px"></div>
+          </div>
+
+          <!-- ДЛЯ ЕДИНОГО ПЛАТЕЖА -->
+          <div id="calcEpBlock" style="display:none">
+            <div style="font-size:13px;color:var(--text2);margin-bottom:12px;padding:10px 12px;background:var(--brand-light);border-radius:8px">
+              Единый платёж — 24,8% от ФОТ для ИП/ТОО с работниками до 25 чел. и доходом до 388 620 МРП.
+            </div>
+            <div class="form-grid">
+              <div class="field">
+                <label>ФОТ (фонд оплаты труда, ₸)</label>
+                <input type="number" id="epInput" value="500000" oninput="calcEp()" placeholder="500000">
+              </div>
+              <div class="field">
+                <label>Кол-во сотрудников</label>
+                <input type="number" id="epCount" value="1" min="1" oninput="calcEp()">
+              </div>
+            </div>
+            <div id="epResult" style="background:var(--surface2);border-radius:9px;padding:14px 16px;font-size:13px"></div>
           </div>
         </div>
-        <div class="card" style="max-width:680px">
-          <div class="card-title" style="font-size:1rem">💰 Калькулятор зарплаты · 2026</div>
-          <div class="form-grid">
-            <div class="field"><label>Начисленная зарплата (₸)</label><input type="number" id="salInput" value="300000" oninput="calcSalary()"></div>
-            <div class="field"><label>Вычет 30 МРП (129 750 ₸)?</label>
-              <select id="salDed" onchange="calcSalary()">
-                <option value="1">Да — заявление подано</option><option value="0">Нет</option>
-              </select>
-            </div>
-            <div class="field"><label>Тип занятости</label>
-              <select id="salType" onchange="calcSalary()">
-                <option value="emp">Наёмный работник (ТОО ОУР)</option>
-                <option value="ip_our">ИП на ОУР</option>
-                <option value="ip_simple">ИП Упрощёнка</option>
-              </select>
-            </div>
-            <div class="field"><label>Гражданство</label>
-              <select id="salCitizen" onchange="calcSalary()">
-                <option value="kz">Гражданин РК</option><option value="foreign">Иностранец</option>
-              </select>
-            </div>
-          </div>
-          <div id="salResult" style="background:var(--surface2);border-radius:9px;padding:14px;font-size:13px"></div>
-          <div id="salTotal" style="margin-top:10px"></div>
-        </div>
-        <div class="card" style="max-width:680px">
-          <div class="card-title" style="font-size:1rem">Ставки · Казахстан 2026</div>
+
+        <!-- Справочник ставок -->
+        <div class="card">
+          <div class="card-title" style="font-size:1rem">Ставки и показатели · Казахстан 2026</div>
           <table class="rtable">
-            <thead><tr><th>Показатель</th><th>Ставка</th><th>База</th></tr></thead>
+            <thead><tr><th>Показатель</th><th>Ставка / Значение</th><th>База расчёта</th><th>Форма</th></tr></thead>
             <tbody>
-              <tr><td><b>МРП 2026</b></td><td>4 325 ₸</td><td>Базовый показатель</td></tr>
-              <tr><td><b>МЗП 2026</b></td><td>85 000 ₸</td><td>Минимальная з/п</td></tr>
-              <tr><td>НДС</td><td>16%</td><td>Облагаемый оборот</td></tr>
-              <tr><td>КПН</td><td>20%</td><td>Налогооблагаемый доход</td></tr>
-              <tr><td>ИПН</td><td>10% / 15%*</td><td>Доход − ОПВ − ВОСМС − 30 МРП</td></tr>
-              <tr><td>ОПВ</td><td>10%</td><td>Доход (макс. 50 МЗП)</td></tr>
-              <tr><td>ОПВР</td><td>3,5%</td><td>ФОТ работодателя</td></tr>
-              <tr><td>СО</td><td>5%</td><td>Доход − ОПВ (1–7 МЗП)</td></tr>
-              <tr><td>СН (ТОО ОУР)</td><td>6%</td><td>ФОТ − ОПВ − ВОСМС</td></tr>
-              <tr><td>ВОСМС</td><td>2%</td><td>Доход (макс. 20 МЗП)</td></tr>
-              <tr><td>ООСМС</td><td>3%</td><td>Доход (макс. 40 МЗП)</td></tr>
-              <tr><td>Упрощёнка</td><td>4%</td><td>Доход за полугодие</td></tr>
+              <tr><td><b>МРП 2026</b></td><td>4 325 ₸</td><td>Базовый показатель</td><td>—</td></tr>
+              <tr><td><b>МЗП 2026</b></td><td>85 000 ₸</td><td>Минимальная зарплата</td><td>—</td></tr>
+              <tr><td>НДС</td><td>16%</td><td>Облагаемый оборот</td><td>ФНО 300.00</td></tr>
+              <tr><td>КПН</td><td>20%</td><td>Налогооблагаемый доход</td><td>ФНО 100.00</td></tr>
+              <tr><td>ИПН с з/платы</td><td>10% / 15%*</td><td>Доход − ОПВ − ВОСМС − 30 МРП</td><td>ФНО 200.00</td></tr>
+              <tr><td>ОПВ (работник)</td><td>10%</td><td>Доход (макс. 50 МЗП = 4 250 000 ₸)</td><td>ФНО 200.00</td></tr>
+              <tr><td>ОПВР (работодатель)</td><td>3,5%</td><td>ФОТ</td><td>ФНО 200.00</td></tr>
+              <tr><td>ОППВ (доброволь.)</td><td>5%</td><td>Доход работника</td><td>ФНО 200.00</td></tr>
+              <tr><td>СО</td><td>5%</td><td>Доход − ОПВ (мин. 1 МЗП, макс. 7 МЗП)</td><td>ФНО 200.00</td></tr>
+              <tr><td>СН (ТОО/АО ОУР)</td><td>6%</td><td>ФОТ − ОПВ − ВОСМС (мин. 1 МРП)</td><td>ФНО 200.00</td></tr>
+              <tr><td>ВОСМС (работник)</td><td>2%</td><td>Доход (макс. 20 МЗП = 1 700 000 ₸)</td><td>ФНО 200.00</td></tr>
+              <tr><td>ООСМС (работодатель)</td><td>3%</td><td>Доход (макс. 40 МЗП = 3 400 000 ₸)</td><td>ФНО 200.00</td></tr>
+              <tr><td>Единый платёж (ЕП)</td><td>24,8%</td><td>ФОТ (малый бизнес)</td><td>ФНО 200.00</td></tr>
+              <tr><td>Упрощёнка (ИП/ТОО)</td><td>4%</td><td>Доход за полугодие</td><td>ФНО 910.00</td></tr>
             </tbody>
           </table>
-          <div style="margin-top:8px;font-size:11px;color:var(--text3);background:var(--warn-light);padding:8px 11px;border-radius:7px">* ИПН 15% с дохода >8 500 МРП/год (36,7 млн ₸). Вычет: 30 МРП = 129 750 ₸/мес.</div>
+          <div style="margin-top:8px;font-size:11px;color:var(--text3);background:var(--warn-light);padding:8px 11px;border-radius:7px">
+            * ИПН 15% применяется к части дохода, превышающей 8 500 МРП/год (36 762 500 ₸). Базовый вычет — 30 МРП = 129 750 ₸/мес. При наличии заявления работника.
+          </div>
         </div>
       </div></div>
     </div>
@@ -857,22 +943,43 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <div class="page" id="page-deadlines">
       <div class="scroll-wrap"><div class="inner">
         <div class="card">
-          <div class="card-title">Сроки сдачи 2026</div>
+          <div class="card-title">Сроки сдачи отчётности · 2026</div>
           <table class="rtable">
-            <thead><tr><th>Срок</th><th>Форма</th><th>Налог</th><th>Период</th><th>Штраф (МРП=4325₸)</th></tr></thead>
+            <thead><tr><th>Срок</th><th>Форма</th><th>Налог / Взнос</th><th>Период</th><th>Штраф</th></tr></thead>
             <tbody>
-              <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>I кв.</td><td>15–30 МРП</td></tr>
-              <tr><td style="color:var(--red);font-weight:700">15 май 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>I кв.</td><td>5 МРП + пени</td></tr>
-              <tr><td style="color:var(--warn);font-weight:700">25 июл 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>II кв.</td><td>15–30 МРП</td></tr>
-              <tr><td style="color:var(--warn);font-weight:700">15 авг 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>II кв.</td><td>5 МРП + пени</td></tr>
-              <tr><td>15 авг 2026</td><td>ФНО 910.00</td><td>Упрощёнка</td><td>I п/г</td><td>5 МРП</td></tr>
-              <tr><td>25 окт 2026</td><td>ФНО 300.00</td><td>НДС 16%</td><td>III кв.</td><td>15–30 МРП</td></tr>
-              <tr><td>15 ноя 2026</td><td>ФНО 200.00</td><td>ИПН/ОПВ/СО</td><td>III кв.</td><td>5 МРП + пени</td></tr>
-              <tr><td>25 янв 2027</td><td>ФНО 300.00</td><td>НДС 16%</td><td>IV кв.</td><td>15–30 МРП</td></tr>
-              <tr><td>31 мар 2027</td><td>ФНО 100.00</td><td>КПН 20%</td><td>2026 год</td><td>30–150 МРП</td></tr>
+              <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>I кв. 2026</td><td>15–30 МРП</td></tr>
+              <tr><td style="color:var(--red);font-weight:700">25 апр 2026</td><td>ФНО 101, 102</td><td>КПН авансы</td><td>март 2026</td><td>пени</td></tr>
+              <tr><td style="color:var(--red);font-weight:700">15 май 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>I кв. 2026</td><td>5 МРП + пени</td></tr>
+              <tr><td style="color:var(--warn)">25 июл 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>II кв. 2026</td><td>15–30 МРП</td></tr>
+              <tr><td style="color:var(--warn)">15 авг 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>II кв. 2026</td><td>5 МРП + пени</td></tr>
+              <tr><td style="color:var(--warn)">15 авг 2026</td><td>ФНО 910.00</td><td>Упрощённая декларация (4%)</td><td>I п/г 2026</td><td>5 МРП</td></tr>
+              <tr><td>25 окт 2026</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>III кв. 2026</td><td>15–30 МРП</td></tr>
+              <tr><td>15 ноя 2026</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>III кв. 2026</td><td>5 МРП + пени</td></tr>
+              <tr><td>25 янв 2027</td><td>ФНО 300.00</td><td>НДС (16%)</td><td>IV кв. 2026</td><td>15–30 МРП</td></tr>
+              <tr><td>15 фев 2027</td><td>ФНО 910.00</td><td>Упрощённая декларация (4%)</td><td>II п/г 2026</td><td>5 МРП</td></tr>
+              <tr><td>15 май 2027</td><td>ФНО 200.00</td><td>ИПН / ОПВ / СО / ОСМС</td><td>IV кв. 2026</td><td>5 МРП + пени</td></tr>
+              <tr><td>31 мар 2027</td><td>ФНО 100.00</td><td>КПН годовой (20%)</td><td>2026 год</td><td>30–150 МРП</td></tr>
+              <tr><td>31 мар 2027</td><td>ФНО 220.00</td><td>ИПН ИП на ОУР</td><td>2026 год</td><td>15–30 МРП</td></tr>
             </tbody>
           </table>
-          <div style="margin-top:10px;font-size:12px;color:var(--brand);background:var(--brand-light);padding:9px 13px;border-radius:8px">МРП 2026 = 4 325 ₸ · НК РК (Закон 214-VIII от 18.07.2025)</div>
+          <div style="margin-top:10px;font-size:11px;color:var(--text3);background:var(--brand-light);padding:9px 13px;border-radius:8px;color:var(--brand)">
+            МРП 2026 = 4 325 ₸ · Новый НК РК (Закон 214-VIII от 18.07.2025, действует с 01.01.2026)<br>
+            Если срок выпадает на выходной/праздник — переносится на следующий рабочий день.
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="font-size:1rem">Ежемесячные платежи (до 25-го каждого месяца)</div>
+          <table class="rtable">
+            <thead><tr><th>Платёж</th><th>Ставка</th><th>Кто платит</th><th>КБК</th></tr></thead>
+            <tbody>
+              <tr><td>ОПВ (пенсионные взносы)</td><td>10% от дохода работника</td><td>Работодатель (удержание)</td><td>902101</td></tr>
+              <tr><td>ОПВР (пенсионные работодателя)</td><td>3,5% от ФОТ</td><td>Работодатель</td><td>902201</td></tr>
+              <tr><td>Социальные отчисления (СО)</td><td>5% от (доход − ОПВ)</td><td>Работодатель</td><td>904101</td></tr>
+              <tr><td>ООСМС (медстрах работодателя)</td><td>3% от дохода</td><td>Работодатель</td><td>904201</td></tr>
+              <tr><td>ВОСМС (медстрах работника)</td><td>2% от дохода</td><td>Работодатель (удержание)</td><td>904301</td></tr>
+              <tr><td>КПН авансы (ТОО ОУР)</td><td>1/12 от прогноза</td><td>ТОО ОУР</td><td>101101</td></tr>
+            </tbody>
+          </table>
         </div>
       </div></div>
     </div>
@@ -1001,6 +1108,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
 </div>
 
 <!-- RESET PASSWORD MODAL (по токену из письма) -->
+<style>#resetModal{z-index:9300 !important}</style>
 <div class="modal-overlay" id="resetModal">
   <div class="modal" style="max-width:420px">
     <div class="modal-title">Сброс пароля</div>
@@ -1155,7 +1263,7 @@ function initApp() {
   if (!has200) $('navFno200').classList.add('locked');
   loadCompanies();
   showPage('dashboard', document.querySelector('.nav-btn'));
-  calcTax(); calcSalary();
+  runCalc();
 }
 
 async function doLogout() {
@@ -1195,24 +1303,58 @@ function onPeriodChange() {
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────────
 function refreshDash() {
+  const year = parseInt($('yearSel')?.value||2026);
+  const monthF = $('monthSel')?.value||'all';
+  const quarterF = $('quarterSel')?.value||'all';
+
+  // Определяем какие кварталы включать
+  let quarters = [0,1,2,3];
+  if (quarterF !== 'all') quarters = [parseInt(quarterF)-1];
+  else if (monthF !== 'all') quarters = [Math.floor((parseInt(monthF)-1)/3)];
+
+  // Получаем ИИН активной компании для поиска правильного ключа
+  const compIin = activeCompany ? ('_c' + String(activeCompany.iin).replace(/[^a-z0-9]/gi,'')) : null;
+
+  let found = false;
   for(const k of Object.keys(localStorage)) {
-    if(k.startsWith('fno300_data_')) {
-      try {
-        const d=JSON.parse(localStorage.getItem(k)||'{}');
-        const year=parseInt($('yearSel')?.value||2026);
-        if(d.calcResult&&d.reportYear===year) {
-          const cr=d.calcResult; let ch=0,cre=0;
-          [0,1,2,3].forEach(q=>{if(cr[q]){ch+=(cr[q].rSumB||0);cre+=(cr[q].pSumB||0);}});
-          $('d-ch').innerHTML=fmt(ch)+' <span>₸</span>';
-          $('d-ch-s').textContent='ФНО 300 · '+year;
-          $('d-cr').innerHTML=fmt(cre)+' <span>₸</span>';
-          const pay=Math.max(0,ch-cre);
-          $('d-pay').innerHTML=fmt(pay)+' <span style="font-size:10px">₸</span>';
-          $('d-pay-s').textContent=pay>0?'к уплате':'НДС = 0';
-          break;
+    if (!k.startsWith('fno300_data_')) continue;
+    // Если есть активная компания — ищем ключ с её ИИН
+    if (compIin && !k.endsWith(compIin)) continue;
+    try {
+      const d = JSON.parse(localStorage.getItem(k)||'{}');
+      if (!d.calcResult) continue;
+      // Совпадение по году (если year задан)
+      if (d.reportYear && d.reportYear !== year) continue;
+
+      const cr = d.calcResult;
+      let ch=0, cre=0;
+      quarters.forEach(q => {
+        if (cr[q]) {
+          ch += (cr[q].rSumB||0)+(cr[q].rMedB||0)+(cr[q].rPrintB||0)+(cr[q].rKorrB||0);
+          cre += (cr[q].pSumB||0)+(cr[q].pMedB||0)+(cr[q].fno328B||0)+(cr[q].pKorrNds||0)+(cr[q].gtdNds||0)+(cr[q].gtdEaesNds||0);
         }
-      } catch(e){}
-    }
+      });
+      const pay = Math.max(0,ch-cre), ref = Math.max(0,cre-ch);
+      $('d-ch').innerHTML = fmt(ch)+' <span>₸</span>';
+      $('d-ch-s').textContent = 'ФНО 300 · '+(d.reportYear||year);
+      $('d-cr').innerHTML = fmt(cre)+' <span>₸</span>';
+      if (pay > 0) {
+        $('d-pay').innerHTML = fmt(pay)+' <span style="font-size:10px">₸ к уплате</span>';
+        $('d-pay-s').textContent = 'перечислить в бюджет';
+      } else if (ref > 0) {
+        $('d-pay').innerHTML = fmt(ref)+' <span style="font-size:10px">₸ возврат</span>';
+        $('d-pay-s').textContent = 'к возврату из бюджета';
+      } else {
+        $('d-pay').innerHTML = '0 <span>₸</span>';
+        $('d-pay-s').textContent = 'НДС = 0';
+      }
+      found = true;
+      break;
+    } catch(e){}
+  }
+  if (!found) {
+    ['d-ch','d-cr','d-pay'].forEach(id=>{const el=$(id);if(el)el.innerHTML='— <span>₸</span>';});
+    ['d-ch-s','d-pay-s'].forEach(id=>{const el=$(id);if(el)el.textContent='нет данных';});
   }
 }
 
@@ -1312,16 +1454,207 @@ async function doChangePass() {
   }catch(e){showAuthMsg('cpMsg','Сервер недоступен','err');}
 }
 
-// ── CALCULATOR ────────────────────────────────────────────────────────────────
-const RATES={nds:16,kpn:20,ipn:10,opv:10,opvr:3.5,so:5,sn:6,osms:3,vosms:2};
-let curRate=16;
-function setTax(t,btn){curRate=RATES[t]||16;document.querySelectorAll('.tax-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');calcTax();}
-function calcTax(){
-  const base=parseFloat($('calcInput')?.value)||0, tax=base*curRate/100, total=base+tax;
-  if($('cr-base')) $('cr-base').textContent=fmt(base)+' ₸';
-  if($('cr-tax'))  $('cr-tax').textContent=fmt(tax)+' ₸';
-  if($('cr-total'))$('cr-total').textContent=fmt(total)+' ₸';
+// ── FULL CALCULATOR ──────────────────────────────────────────────────────────
+const MRP=4325, MZP=85000;
+let calcMode = 'too_our';
+
+function switchCalc(mode, btn) {
+  calcMode = mode;
+  document.querySelectorAll('.tax-tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  // Показать/скрыть блоки
+  $('calcSalaryBlock').style.display = ['too_our','too_simple','ip_our','ip_simple','reverse'].includes(mode) ? '' : 'none';
+  $('calcNdsBlock').style.display    = mode==='nds' ? '' : 'none';
+  $('calcReverseBlock').style.display= mode==='reverse' ? '' : 'none';
+  $('calcEpBlock').style.display     = mode==='ep' ? '' : 'none';
+  $('calcSalaryBlock').style.display = ['too_our','too_simple','ip_our','ip_simple'].includes(mode) ? '' : 'none';
+
+  // Обновить заголовки
+  const titles = {
+    too_our:'💼 Зарплата работника · ТОО ОУР · 2026',
+    too_simple:'💼 Зарплата работника · ТОО Упрощёнка · 2026',
+    ip_our:'👤 Зарплата работника · ИП ОУР · 2026',
+    ip_simple:'👤 Зарплата · ИП Упрощёнка · 2026',
+    reverse:'🔄 Расчёт от обратного (на руки → начислено)',
+    ep:'⚡ Единый платёж (24,8%)',
+    nds:'📊 Калькулятор НДС (16%)'
+  };
+  $('calcTitle').textContent = titles[mode]||'Калькулятор';
+
+  // Показать/скрыть поля
+  const isIP = mode.startsWith('ip');
+  const isSimple = mode.includes('simple');
+  if($('salDedBlock')) $('salDedBlock').style.display = isSimple ? 'none' : '';
+  if($('workerTypeBlock')) $('workerTypeBlock').style.display = isSimple ? 'none' : '';
+  if($('pensionerBlock')) $('pensionerBlock').style.display = !isSimple ? '' : 'none';
+  if($('disabledBlock')) $('disabledBlock').style.display = !isSimple ? '' : 'none';
+
+  const lblMap = {
+    too_our:'Зарплата (начисленная, ₸)',
+    too_simple:'Доход за полугодие (₸)',
+    ip_our:'Зарплата работника (начисленная, ₸)',
+    ip_simple:'Доход ИП за полугодие (₸)'
+  };
+  if($('salLabel')) $('salLabel').textContent = lblMap[mode]||'Сумма (₸)';
+  runCalc();
 }
+
+function runCalc() {
+  if(calcMode==='nds') { calcNds(); return; }
+  if(calcMode==='reverse') { calcReverse(); return; }
+  if(calcMode==='ep') { calcEp(); return; }
+  calcSalary();
+}
+
+function calcSalary() {
+  const res=$('salResult'), tot=$('salTotal');
+  if(!res||!tot) return;
+  const gross = parseFloat($('salInput')?.value)||0;
+  if(gross<=0){res.innerHTML='';tot.innerHTML='';return;}
+  const hasDed = $('salDed')?.value==='1';
+  const workerType = $('workerType')?.value||'staff';
+  const citizen = $('salCitizen')?.value||'kz';
+  const isPensioner = $('isPensioner')?.value==='1';
+  const disabledLevel = parseInt($('isDisabled')?.value||'0');
+  const isGPH = workerType==='gph';
+  const isEAES = citizen==='eaes';
+  const isForeign = citizen==='foreign';
+  const isSimple = calcMode.includes('simple');
+  const f=n=>Math.round(n||0).toLocaleString('ru-RU');
+
+  let rows=[], empRows=[];
+
+  if(isSimple) {
+    // Упрощёнка: 4% с дохода, делится пополам ИПН+СН
+    const tax = gross * 0.04;
+    const ipn  = tax/2, sn = tax/2;
+    const opv  = Math.min(gross, MZP*50)*0.10;
+    const vosms= Math.min(gross, MZP*20)*0.02;
+    const net  = gross - ipn - opv - vosms;
+    rows=[
+      ['Единый налог (4%: ИПН+СН)',f(tax)],
+      ['ОПВ (10%)',f(opv)],
+      ['ВОСМС (2%)',f(vosms)],
+      ['ОСТАТОК (доход ИП)',f(net),'green']
+    ];
+    res.innerHTML = mkRows(rows,'Расчёт по упрощёнке');
+    tot.innerHTML='';
+    return;
+  }
+
+  // Общеустановленный режим
+  const opv   = (isPensioner||isGPH||isForeign) ? 0 : Math.min(gross, MZP*50)*0.10;
+  const vosms = isForeign ? 0 : Math.min(gross, MZP*20)*0.02;
+  const ded30 = (!isForeign && hasDed && !isGPH) ? MRP*30 : 0;
+  let ipnBase = Math.max(0, gross - opv - vosms - ded30);
+  let ipnRate = isForeign&&!isEAES ? 0.20 : 0.10;
+  let ipn = 0;
+  if(disabledLevel===1) { ipn=0; } // инвалид 1-2 гр
+  else { ipn = ipnBase * ipnRate; }
+  const net = gross - opv - vosms - ipn;
+
+  // Расходы работодателя
+  const opvr   = (isForeign||isGPH) ? 0 : gross*0.035;
+  const soBase = isGPH ? 0 : Math.min(Math.max(gross-opv, MZP), MZP*7);
+  const so     = soBase*0.05;
+  const snBase = calcMode==='too_our' ? Math.max(gross-opv-vosms, MRP) : 0; // СН только у ТОО ОУР
+  const sn     = snBase*0.06;
+  const oosms  = isForeign ? 0 : Math.min(gross, MZP*40)*0.03;
+  const totalCost = gross + opvr + so + sn + oosms;
+
+  rows = [
+    ['ОПВ (10%'+(isPensioner?' — пенсионер, не платит':'')+')', f(opv)],
+    ['ВОСМС (2%)', f(vosms)],
+    ['ИПН ('+Math.round(ipnRate*100)+'%'+(hasDed&&!isGPH?', вычет 30МРП':'')+
+     (disabledLevel===1?' — инвалид 1-2гр.':'')+
+     ')', f(ipn)],
+    ['НА РУКИ', f(net), 'green']
+  ];
+  empRows = [
+    ['ОПВР (3,5%)', f(opvr)],
+    ['СО (5%)', f(so)],
+    ...(calcMode==='too_our' ? [['СН (6%)', f(sn)]] : []),
+    ['ООСМС (3%)', f(oosms)],
+    ['Итого расходы на сотрудника', f(totalCost), 'red']
+  ];
+
+  res.innerHTML = mkRows(rows, 'Удержания с работника');
+  tot.innerHTML = empRows.length
+    ? `<div style="background:var(--surface2);border-radius:9px;padding:12px 14px">${mkRows(empRows,'Расходы работодателя (сверх зарплаты)')}</div>`
+    : '';
+}
+
+function mkRows(arr, title) {
+  return `<div style="display:grid;grid-template-columns:1fr auto;gap:5px;align-items:center">
+    <div style="font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);grid-column:1/-1;margin-bottom:2px">${title}</div>
+    ${arr.map(([l,v,cls])=>`<div>${l}</div><div style="text-align:right;font-weight:700;color:${cls==='green'?'var(--green)':cls==='red'?'var(--red)':'var(--text)'}">${v} ₸</div>`).join('')}
+  </div>`;
+}
+
+function calcNds() {
+  const base = parseFloat($('ndsInput')?.value)||0;
+  const rate = parseInt($('ndsRate')?.value||'16')/100;
+  const nds = base * rate, total = base + nds;
+  const el = $('ndsResult');
+  if(!el) return;
+  el.innerHTML = mkRows([
+    ['Сумма без НДС', fmt(base)],
+    ['НДС ('+Math.round(rate*100)+'%)', fmt(nds)],
+    ['Итого с НДС', fmt(total), 'green'],
+    ['НДС к выделению из суммы с НДС', fmt(Math.round(base*rate*100)/100)],
+  ], 'Расчёт НДС');
+}
+
+function calcReverse() {
+  const net = parseFloat($('reverseInput')?.value)||0;
+  if(net<=0){if($('reverseResult'))$('reverseResult').innerHTML='';return;}
+  const hasDed = $('reverseDed')?.value==='1';
+  const ded30 = hasDed ? MRP*30 : 0;
+  // Обратный расчёт: net = gross - 0.10*gross - 0.02*gross - 0.10*(gross-0.12*gross-ded30)
+  // = gross*(1 - 0.10 - 0.02 - 0.10*(1-0.12)) + 0.10*ded30
+  // = gross*(1 - 0.10 - 0.02 - 0.088) + ded30*0.10
+  // = gross*0.792 + ded30*0.10
+  const gross = (net - ded30*0.10) / 0.792;
+  const opv = gross*0.10, vosms = gross*0.02;
+  const ipn = Math.max(0, gross - opv - vosms - ded30)*0.10;
+  const opvr=gross*0.035, so=Math.min(Math.max(gross-opv,MZP),MZP*7)*0.05;
+  const sn=Math.max(gross-opv-vosms,MRP)*0.06, oosms=gross*0.03;
+  const el=$('reverseResult');
+  if(!el) return;
+  el.innerHTML = mkRows([
+    ['Начисленная зарплата', fmt(gross)],
+    ['ОПВ (10%)', fmt(opv)],
+    ['ВОСМС (2%)', fmt(vosms)],
+    ['ИПН (10%'+(hasDed?', вычет 30МРП':'')+')' , fmt(ipn)],
+    ['НА РУКИ', fmt(Math.round(net)), 'green'],
+    ['ОПВР (3,5%)', fmt(opvr)],
+    ['СО (5%)', fmt(so)],
+    ['СН (6%)', fmt(sn)],
+    ['ООСМС (3%)', fmt(oosms)],
+    ['Итого расходы', fmt(gross+opvr+so+sn+oosms), 'red']
+  ], 'Расчёт от обратного (ТОО ОУР)');
+}
+
+function calcEp() {
+  const fot = parseFloat($('epInput')?.value)||0;
+  const cnt = parseInt($('epCount')?.value)||1;
+  if(fot<=0){if($('epResult'))$('epResult').innerHTML='';return;}
+  const ep = fot * 0.248;
+  const perPerson = fot/cnt * 0.248;
+  const el=$('epResult');
+  if(!el) return;
+  el.innerHTML = mkRows([
+    ['ФОТ', fmt(fot)],
+    ['Единый платёж 24,8%', fmt(ep), 'red'],
+    ['На 1 сотрудника', fmt(perPerson)],
+    ['Итого расходы', fmt(fot+ep), 'red']
+  ], 'Расчёт единого платежа');
+  el.innerHTML += '<div style="font-size:11px;color:var(--text3);margin-top:8px">Состав ЕП: ИПН 10% + ОПВ 10% + ОПВР 3,5% + СО 5% + ВОСМС 2% + ООСМС 3%</div>';
+}
+
+// Legacy alias
+function calcTax() { runCalc(); }
 function calcSalary(){
   const MRP=4325,MZP=85000;
   const gross=parseFloat($('salInput')?.value)||0;
@@ -1480,16 +1813,25 @@ async function checkResetToken() {
   const token = params.get('token');
   if (!token) return;
   resetToken = token;
+  // Убрать token из URL чтобы не мешал
+  try { window.history.replaceState({}, '', window.location.pathname); } catch(e) {}
   try {
-    const r = await fetch(API + '/api/auth/reset-check?token=' + token);
+    const r = await fetch(API + '/api/auth/reset-check?token=' + encodeURIComponent(token));
+    if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
     if (data.ok) {
-      $('resetUserInfo').innerHTML = `Сброс пароля для аккаунта: <strong>${data.login}</strong>`;
+      $('resetUserInfo').innerHTML = 'Аккаунт: <strong>' + (data.login||'') + '</strong> · Задайте новый пароль:';
       $('resetModal').classList.add('open');
+      // Скрыть лендинг и auth modal если открыты
+      $('authModal').classList.remove('open');
     } else {
-      alert('Ссылка для сброса пароля недействительна или истекла. Запросите новую.');
+      // Показать лендинг с сообщением об ошибке
+      alert('Ссылка для сброса пароля недействительна или истекла. Запросите новую во вкладке «Войти» → «Забыли пароль?».');
     }
-  } catch(e) { console.error('[reset-check]', e); }
+  } catch(e) {
+    console.error('[reset-check]', e.message);
+    // Сервер недоступен — показываем лендинг
+  }
 }
 
 async function doResetPassword() {

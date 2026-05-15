@@ -505,8 +505,11 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
 <div class="header">
   <div class="header-inner">
     <div class="logo-wrap">
-      <div class="logo-badge">БухОтчет · ФНО 300</div>
-      <div class="logo-text">Декларация по НДС (ФНО 300.00) · НК РК 2026 · Excel, PDF, JSON · адаптивный интерфейс</div>
+      <div class="logo-badge" style="display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;letter-spacing:-0.5px">
+        <div style="width:32px;height:32px;background:#C9A227;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0a1628;flex-shrink:0">БО</div>
+        <span style="color:#C9A227">Бух</span><span style="color:#fff">Отчет</span>
+      </div>
+      <div class="logo-text" style="display:none"></div>
     </div>
     <div class="header-actions">
       <span id="authSessionLabel" class="hidden" style="font-size:12px;color:var(--text2);max-width:min(160px,28vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;align-self:center;padding:0 4px" title=""></span>
@@ -881,15 +884,26 @@ function persistWorkspace() {
 function loadWorkspaceIntoState() {
   const apply = function () {
   const d = readWorkspaceDisk();
-  companies = Array.isArray(d.companies) ? d.companies : [];
+  // Список компаний берём из базового ключа или из портала, не из данных компании
+  const bk = baseStorageKey();
+  let portalCompanies = [];
+  try { portalCompanies = JSON.parse(localStorage.getItem('buhotchet_companies') || '[]'); } catch(e){}
+  if (portalCompanies.length) {
+    companies = portalCompanies;
+  } else if (Array.isArray(d.companies) && d.companies.length) {
+    companies = d.companies;
+  }
+  // Данные этой компании
   persistedProjects = Array.isArray(d.projects) ? d.projects : [];
   selectedQ = d.selectedQ !== undefined ? d.selectedQ : 'all';
   reportYear = d.reportYear || 2026;
   reportQ = d.reportQ !== undefined ? d.reportQ : 'all';
   calcResult = d.calcResult || null;
-  activeCompany = null;
-  if (d.activeCompanyIin && companies.length) {
-    activeCompany = companies.find(function (c) { return c.iin === d.activeCompanyIin; }) || null;
+  // Устанавливаем активную компанию только если она ещё не выбрана
+  if (!activeCompany) {
+    if (d.activeCompanyIin && companies.length) {
+      activeCompany = companies.find(function (c) { return c.iin === d.activeCompanyIin; }) || null;
+    }
   }
   if (d.template && d.template.json) {
     files.template = { json: d.template.json, name: d.template.name || 'template.json', _id: 'tpl' };
@@ -1403,12 +1417,13 @@ window.addEventListener('storage', function(e){
     try {
       var pc = JSON.parse(e.newValue || 'null');
       if (pc && pc.name && (!activeCompany || pc.iin !== activeCompany.iin)) {
+        // Сохранить данные текущей компании перед переключением
+        if (activeCompany) persistWorkspace();
         activeCompany = pc;
         var cn = document.getElementById('headerCompName');
         var ci = document.getElementById('headerCompIin');
         if (cn) cn.textContent = pc.name;
         if (ci) ci.textContent = pc.iin || '';
-        // Перезагрузить данные для новой компании
         loadWorkspaceIntoState();
       }
     } catch(err){}
@@ -1452,13 +1467,15 @@ function renderCompanyList() {
 }
 
 function selectCompany(i) {
+  // 1. СНАЧАЛА сохранить данные текущей компании
+  if (activeCompany) persistWorkspace();
+  // 2. Переключить компанию
   activeCompany = companies[i];
   document.getElementById('headerCompName').textContent = activeCompany.name;
   document.getElementById('headerCompIin').textContent = 'БИН/ИИН: ' + activeCompany.iin;
-  // Сохранить в общий localStorage портала
   localStorage.setItem('buhotchet_active_company', JSON.stringify(activeCompany));
   closeModal();
-  // Перезагрузить данные ЭТОЙ компании (ключ хранилища включает ИИН)
+  // 3. Загрузить данные НОВОЙ компании
   loadWorkspaceIntoState();
 }
 
