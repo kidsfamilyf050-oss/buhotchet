@@ -22,9 +22,10 @@ try {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc:  ["'self'", "'unsafe-inline'", "'unsafe-eval'",
+        scriptSrc:  ["'self'", "'unsafe-inline'", "'unsafe-eval'", "'unsafe-hashes'",
                      "https://cdnjs.cloudflare.com", "https://fonts.googleapis.com",
                      "https://*.cloudflareinsights.com"],
+        scriptSrcAttr: ["'unsafe-inline'", "'unsafe-hashes'"],
         styleSrc:   ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         fontSrc:    ["'self'", "https://fonts.gstatic.com", "data:"],
         imgSrc:     ["'self'", "data:", "https:", "blob:"],
