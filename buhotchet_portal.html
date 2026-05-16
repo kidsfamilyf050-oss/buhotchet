@@ -530,20 +530,33 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="tariff-card">
           <div class="tariff-name">Базовый</div>
           <div class="tariff-price">25 000 <span>₸/год</span></div>
-          <div class="tariff-desc">Одна зарплатная форма на выбор</div>
+          <div class="tariff-desc">Одна форма на выбор</div>
           <ul class="tariff-features">
-            <li>ФНО 200 <b>или</b> ФНО 300 (на выбор)</li>
-            <li>ФНО 910 + ФНО 100 включены</li>
+            <li>ФНО 200 <b>или</b> ФНО 300 <b>или</b> ФНО 910 <b>или</b> ФНО 100</li>
             <li>Неограниченно компаний</li>
-            <li>Все калькуляторы и сроки</li>
+            <li>Все калькуляторы и справочники</li>
+            <li>Сроки и КБК/КНП</li>
+            <li>+ 10 000 ₸/год за доп. пользователя</li>
+          </ul>
+          <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
+        </div>
+        <div class="tariff-card">
+          <div class="tariff-name">Стандарт</div>
+          <div class="tariff-price">40 000 <span>₸/год</span></div>
+          <div class="tariff-desc">Две формы на выбор + ФНО 910/100</div>
+          <ul class="tariff-features">
+            <li>ФНО 200 + ФНО 300 (или 910, или 100)</li>
+            <li>ФНО 910 и ФНО 100 включены</li>
+            <li>Неограниченно компаний</li>
+            <li>Все калькуляторы и справочники</li>
             <li>+ 10 000 ₸/год за доп. пользователя</li>
           </ul>
           <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
         <div class="tariff-card featured">
-          <div class="tariff-badge">⭐ Выгоднее всего</div>
-          <div class="tariff-name">Pro</div>
-          <div class="tariff-price">40 000 <span>₸/год</span></div>
+          <div class="tariff-badge">⭐ Максимум</div>
+          <div class="tariff-name">Premium</div>
+          <div class="tariff-price">80 000 <span>₸/год</span></div>
           <div class="tariff-desc">Все формы без ограничений</div>
           <ul class="tariff-features">
             <li>ФНО 200 (ИПН, ОПВ, ОСМС)</li>
@@ -554,19 +567,6 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
             <li>+ 10 000 ₸/год за доп. пользователя</li>
           </ul>
           <button class="btn-hero-primary" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
-        </div>
-        <div class="tariff-card">
-          <div class="tariff-name">Доп. пользователь</div>
-          <div class="tariff-price">10 000 <span>₸/год</span></div>
-          <div class="tariff-desc">Добавьте коллег к своей компании</div>
-          <ul class="tariff-features">
-            <li>Отдельный логин и пароль</li>
-            <li>Те же права что у основного</li>
-            <li>Управление из вашего кабинета</li>
-            <li>К любому тарифу (Базовый или Pro)</li>
-            <li>Без ограничений по количеству</li>
-          </ul>
-          <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
       </div>
       <div style="text-align:center;margin-top:28px;padding:18px 24px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);border-radius:14px;max-width:700px;margin-left:auto;margin-right:auto">
@@ -628,9 +628,22 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="af"><label>Пароль * (мин. 6 символов)</label><div class="pass-wrap"><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"><button type="button" class="pass-eye" onclick="togglePass('regPass',this)">👁</button></div></div>
         <div class="af"><label>Желаемый тариф</label>
           <select id="regTariff" style="background:#f9fafb;border:1px solid #d1d5db;border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;color:#111;outline:none">
-            <option value="all">Pro — 40 000 ₸/год (все формы: 200+300+910+100)</option>
-            <option value="fno200">Базовый ФНО 200 — 25 000 ₸/год (зарплата + 910 + 100)</option>
-            <option value="fno300">Базовый ФНО 300 — 25 000 ₸/год (НДС + 910 + 100)</option>
+            <optgroup label="Базовый — 25 000 ₸/год (одна форма)">
+              <option value="basic_fno200">ФНО 200 (зарплата, ОПВ, ОСМС)</option>
+              <option value="basic_fno300">ФНО 300 (НДС 16%)</option>
+              <option value="basic_fno910">ФНО 910 (Упрощёнка 4%)</option>
+              <option value="basic_fno100">ФНО 100 (КПН 20%)</option>
+            </optgroup>
+            <optgroup label="Стандарт — 40 000 ₸/год (две формы + 910/100)">
+              <option value="standard_200_300">ФНО 200 + ФНО 300</option>
+              <option value="standard_200_910">ФНО 200 + ФНО 910</option>
+              <option value="standard_200_100">ФНО 200 + ФНО 100</option>
+              <option value="standard_300_910">ФНО 300 + ФНО 910</option>
+              <option value="standard_300_100">ФНО 300 + ФНО 100</option>
+            </optgroup>
+            <optgroup label="Premium — 80 000 ₸/год (все формы)">
+              <option value="all">ФНО 200 + 300 + 910 + 100</option>
+            </optgroup>
           </select>
         </div>
         <div class="check-row">
@@ -1326,13 +1339,16 @@ function initApp() {
       loadSubUsers();
     }
   }
-  const t=currentUser.tariff;
-  const has300=t==='all'||t==='fno300', has200=t==='all'||t==='fno200';
-  const hasExtra=t!=='none'; // ФНО 910 и 100 с любым тарифом
-  if (!has300) $('navFno300').classList.add('locked');
-  if (!has200) $('navFno200').classList.add('locked');
-  if ($('navFno910')) $('navFno910').classList.toggle('locked', !hasExtra);
-  if ($('navFno100')) $('navFno100').classList.toggle('locked', !hasExtra);
+  const t = currentUser.tariff || 'none';
+  // Расширенная логика тарифов
+  const has200 = t==='all'||t==='fno200'||t==='std200300'||t==='std200910'||t==='std200100';
+  const has300 = t==='all'||t==='fno300'||t==='std200300'||t==='std300910'||t==='std300100';
+  const has910 = t==='all'||t==='fno910'||t==='std200910'||t==='std300910'||t!=='none'&&['fno200','fno300','fno100','std200300','std200100','std300100'].includes(t);
+  const has100 = t==='all'||t==='fno100'||t==='std200100'||t==='std300100'||t!=='none'&&['fno200','fno300','fno910','std200300','std200910','std300910'].includes(t);
+  if ($('navFno300')) $('navFno300').classList.toggle('locked', !has300);
+  if ($('navFno200')) $('navFno200').classList.toggle('locked', !has200);
+  if ($('navFno910')) $('navFno910').classList.toggle('locked', !has910);
+  if ($('navFno100')) $('navFno100').classList.toggle('locked', !has100);
   loadCompanies();
   showPage('dashboard', document.querySelector('.nav-btn'));
   runCalc();
@@ -1410,34 +1426,40 @@ function onPeriodChange() {
 
 // ── DASHBOARD ─────────────────────────────────────────────────────────────────
 function refreshDash() {
-  const year = parseInt($('yearSel')?.value||2026);
-  const monthF = $('monthSel')?.value||'all';
+  const year     = parseInt($('yearSel')?.value||2026);
+  const monthF   = $('monthSel')?.value||'all';
   const quarterF = $('quarterSel')?.value||'all';
 
-  // Определяем какие кварталы включать
+  // Кварталы для фильтра
   let quarters = [0,1,2,3];
   if (quarterF !== 'all') quarters = [parseInt(quarterF)-1];
   else if (monthF !== 'all') quarters = [Math.floor((parseInt(monthF)-1)/3)];
 
-  // Получаем ИИН активной компании для поиска правильного ключа
+  // Месяцы для фильтра (для ФНО 200)
+  let months = [...Array(12).keys()]; // 0-11
+  if (quarterF !== 'all') {
+    const q = parseInt(quarterF)-1;
+    months = [q*3, q*3+1, q*3+2];
+  } else if (monthF !== 'all') {
+    months = [parseInt(monthF)-1];
+  }
+
   const compIin = activeCompany ? ('_c' + String(activeCompany.iin).replace(/[^a-z0-9]/gi,'')) : null;
 
-  let found = false;
+  // ── ФНО 300: НДС данные ──────────────────────────────────────────────────
+  let fnd300 = false;
   for(const k of Object.keys(localStorage)) {
     if (!k.startsWith('fno300_data_')) continue;
-    // Если есть активная компания — ищем ключ с её ИИН
     if (compIin && !k.endsWith(compIin)) continue;
     try {
       const d = JSON.parse(localStorage.getItem(k)||'{}');
       if (!d.calcResult) continue;
-      // Совпадение по году (если year задан)
       if (d.reportYear && d.reportYear !== year) continue;
-
       const cr = d.calcResult;
       let ch=0, cre=0;
       quarters.forEach(q => {
         if (cr[q]) {
-          ch += (cr[q].rSumB||0)+(cr[q].rMedB||0)+(cr[q].rPrintB||0)+(cr[q].rKorrB||0);
+          ch  += (cr[q].rSumB||0)+(cr[q].rMedB||0)+(cr[q].rPrintB||0)+(cr[q].rKorrB||0);
           cre += (cr[q].pSumB||0)+(cr[q].pMedB||0)+(cr[q].fno328B||0)+(cr[q].pKorrNds||0)+(cr[q].gtdNds||0)+(cr[q].gtdEaesNds||0);
         }
       });
@@ -1455,13 +1477,46 @@ function refreshDash() {
         $('d-pay').innerHTML = '0 <span>₸</span>';
         $('d-pay-s').textContent = 'НДС = 0';
       }
-      found = true;
+      fnd300 = true; break;
+    } catch(e){}
+  }
+  if (!fnd300) {
+    $('d-ch').innerHTML = '— <span>₸</span>';  $('d-ch-s').textContent = 'нет данных';
+    $('d-cr').innerHTML = '— <span>₸</span>';
+    $('d-pay').innerHTML = '—'; $('d-pay-s').textContent = 'нет данных';
+  }
+
+  // ── ФНО 200: сотрудники + ФОТ ─────────────────────────────────────────────
+  let empCount = 0, grossSum = 0, foundFno200 = false;
+  for (const k of Object.keys(localStorage)) {
+    if (!k.startsWith('payroll-kz-2026-sheet-v4__')) continue;
+    if (compIin && !k.includes(compIin)) continue;
+    try {
+      const d = JSON.parse(localStorage.getItem(k)||'{}');
+      if (!d.monthEntries || !Array.isArray(d.monthEntries)) continue;
+      // Фильтруем по месяцам
+      const filtered = d.monthEntries.filter(e => months.includes(e.monthIndex));
+      // Уникальные сотрудники (по ИИН или id)
+      const uniqueEmps = new Set(filtered.map(e => e.iin||e.id||e.name).filter(Boolean));
+      empCount = uniqueEmps.size || filtered.length;
+      // Суммируем начисленное
+      grossSum = filtered.reduce((s, e) => s + (parseFloat(e.salary)||parseFloat(e.gross)||0), 0);
+      foundFno200 = true;
       break;
     } catch(e){}
   }
-  if (!found) {
-    ['d-ch','d-cr','d-pay'].forEach(id=>{const el=$(id);if(el)el.innerHTML='— <span>₸</span>';});
-    ['d-ch-s','d-pay-s'].forEach(id=>{const el=$(id);if(el)el.textContent='нет данных';});
+
+  const empEl = $('d-emp');
+  if (empEl) {
+    if (foundFno200 && empCount > 0) {
+      empEl.innerHTML = empCount + ' <span style="font-size:11px">чел.</span>';
+      const empSub = empEl.parentElement?.querySelector('.kpi-sub');
+      if (empSub) empSub.textContent = 'ФОТ: ' + fmt(grossSum) + ' ₸';
+    } else {
+      empEl.innerHTML = '—';
+      const empSub = empEl.parentElement?.querySelector('.kpi-sub');
+      if (empSub) empSub.textContent = 'нет данных';
+    }
   }
 }
 
@@ -1967,14 +2022,30 @@ function renderPending(users) {
   const el=$('pendingList');
   if(!users.length){el.innerHTML='<div style="color:var(--text3);font-size:13px">Нет заявок</div>';return;}
   el.innerHTML=users.map(u=>`
-    <div class="admin-row">
-      <div style="flex:1;min-width:150px">
+    <div class="admin-row" style="flex-wrap:wrap;gap:8px">
+      <div style="flex:1;min-width:200px">
         <div style="font-weight:700;font-size:13px">${esc(u.full_name)} <span style="color:var(--text3);font-weight:400">(${esc(u.login)})</span></div>
         <div style="font-size:11px;color:var(--text3)">${esc(u.email||'—')} · ${new Date(u.created_at).toLocaleDateString('ru-RU')}</div>
+        ${u.desired_tariff?`<div style="font-size:11px;color:var(--brand);margin-top:2px">Желает: <b>${esc(u.desired_tariff)}</b></div>`:''}
       </div>
-      <select id="t_${u.id}" style="padding:4px 8px;border-radius:6px;border:1px solid var(--border2);font-size:12px;font-family:inherit">
-        <option value="all">Все формы</option><option value="fno200">Только ФНО 200</option>
-        <option value="fno300">Только ФНО 300</option><option value="none">Без доступа</option>
+      <select id="t_${u.id}" style="padding:5px 8px;border-radius:6px;border:1px solid var(--border2);font-size:12px;font-family:inherit">
+        <optgroup label="— Базовый 25 000 ₸ —">
+          <option value="fno200">ФНО 200 (зарплата)</option>
+          <option value="fno300">ФНО 300 (НДС)</option>
+          <option value="fno910">ФНО 910 (Упрощёнка)</option>
+          <option value="fno100">ФНО 100 (КПН)</option>
+        </optgroup>
+        <optgroup label="— Стандарт 40 000 ₸ —">
+          <option value="std200300">ФНО 200 + ФНО 300</option>
+          <option value="std200910">ФНО 200 + ФНО 910</option>
+          <option value="std200100">ФНО 200 + ФНО 100</option>
+          <option value="std300910">ФНО 300 + ФНО 910</option>
+          <option value="std300100">ФНО 300 + ФНО 100</option>
+        </optgroup>
+        <optgroup label="— Premium 80 000 ₸ —">
+          <option value="all">Все формы (200+300+910+100)</option>
+        </optgroup>
+        <option value="none">Без доступа</option>
       </select>
       <button class="btn btn-success btn-sm" onclick="approveU(${u.id})">✓ Одобрить</button>
       <button class="btn btn-danger btn-sm" onclick="rejectU(${u.id})">✗ Отказать</button>
@@ -1990,9 +2061,14 @@ function renderAllUsers(users) {
       <td>${esc(u.email||'—')}</td>
       <td><span class="status-badge status-${u.status}">${{approved:'Активен',pending:'Ожидает',blocked:'Блок.'}[u.status]||u.status}</span></td>
       <td><select onchange="changeTariff(${u.id},this.value)" style="font-size:11px;padding:2px 5px;border-radius:4px;border:1px solid var(--border2);font-family:inherit" ${u.role==='admin'?'disabled':''}>
-        <option value="all" ${u.tariff==='all'?'selected':''}>Все</option>
+        <option value="all" ${u.tariff==='all'?'selected':''}>Premium (все)</option>
         <option value="fno200" ${u.tariff==='fno200'?'selected':''}>ФНО 200</option>
         <option value="fno300" ${u.tariff==='fno300'?'selected':''}>ФНО 300</option>
+        <option value="fno910" ${u.tariff==='fno910'?'selected':''}>ФНО 910</option>
+        <option value="fno100" ${u.tariff==='fno100'?'selected':''}>ФНО 100</option>
+        <option value="std200300" ${u.tariff==='std200300'?'selected':''}>200+300</option>
+        <option value="std200910" ${u.tariff==='std200910'?'selected':''}>200+910</option>
+        <option value="std200100" ${u.tariff==='std200100'?'selected':''}>200+100</option>
         <option value="none" ${u.tariff==='none'?'selected':''}>Нет</option>
       </select></td>
       <td style="display:flex;gap:4px">${u.role!=='admin'?`

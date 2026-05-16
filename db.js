@@ -56,17 +56,18 @@ async function initDb() {
   }
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
-      id            SERIAL PRIMARY KEY,
-      login         TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
-      full_name     TEXT NOT NULL DEFAULT '',
-      email         TEXT NOT NULL DEFAULT '',
-      phone         TEXT NOT NULL DEFAULT '',
-      role          TEXT NOT NULL DEFAULT 'user',
-      status        TEXT NOT NULL DEFAULT 'pending',
-      tariff        TEXT NOT NULL DEFAULT 'none',
-      created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-      approved_at   TIMESTAMPTZ
+      id              SERIAL PRIMARY KEY,
+      login           TEXT UNIQUE NOT NULL,
+      password_hash   TEXT NOT NULL,
+      full_name       TEXT NOT NULL DEFAULT '',
+      email           TEXT NOT NULL DEFAULT '',
+      phone           TEXT NOT NULL DEFAULT '',
+      role            TEXT NOT NULL DEFAULT 'user',
+      status          TEXT NOT NULL DEFAULT 'pending',
+      tariff          TEXT NOT NULL DEFAULT 'none',
+      desired_tariff  TEXT NOT NULL DEFAULT '',
+      created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      approved_at     TIMESTAMPTZ
     );
     CREATE TABLE IF NOT EXISTS sessions (
       token       TEXT PRIMARY KEY,
@@ -102,6 +103,8 @@ async function initDb() {
       used       BOOLEAN NOT NULL DEFAULT FALSE
     );
     CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
+    -- Add desired_tariff column if not exists (safe migration)
+    ALTER TABLE users ADD COLUMN IF NOT EXISTS desired_tariff TEXT NOT NULL DEFAULT '';
     CREATE INDEX IF NOT EXISTS idx_kv_user ON kv_store(user_id);
     CREATE INDEX IF NOT EXISTS idx_reset_tokens ON reset_tokens(expires_at);
   `);
@@ -177,10 +180,11 @@ async function registerUser(data) {
   const { rows:ex } = await pool.query(`SELECT id FROM users WHERE login = $1`, [ln]);
   if (ex.length) return { ok:false, error:'login_taken' };
   const hash = await hashPassword(password);
+  const desired = String(data.desired_tariff||'').trim().substring(0,50);
   await pool.query(
-    `INSERT INTO users(login, password_hash, full_name, email, phone)
-     VALUES($1, $2, $3, $4, $5)`,
-    [ln, hash, full_name.trim(), email.trim(), phone||'']
+    `INSERT INTO users(login, password_hash, full_name, email, phone, desired_tariff)
+     VALUES($1, $2, $3, $4, $5, $6)`,
+    [ln, hash, full_name.trim(), email.trim(), phone||'', desired]
   );
   return { ok:true };
 }

@@ -164,7 +164,20 @@ app.post('/api/auth/register', requireDb, async (req, res) => {
       // 2. Письмо администратору
       const adminEmail = process.env.ADMIN_EMAIL||'';
       const desiredTariff = req.body?.desired_tariff || 'all';
-      const tariffNames = { all:'Pro — 40 000 ₸/год', fno200:'Базовый ФНО 200 — 25 000 ₸/год', fno300:'Базовый ФНО 300 — 25 000 ₸/год' };
+      const tariffNames = {
+        'basic_fno200': 'Базовый ФНО 200 — 25 000 ₸/год',
+        'basic_fno300': 'Базовый ФНО 300 — 25 000 ₸/год',
+        'basic_fno910': 'Базовый ФНО 910 — 25 000 ₸/год',
+        'basic_fno100': 'Базовый ФНО 100 — 25 000 ₸/год',
+        'standard_200_300': 'Стандарт ФНО 200+300 — 40 000 ₸/год',
+        'standard_200_910': 'Стандарт ФНО 200+910 — 40 000 ₸/год',
+        'standard_200_100': 'Стандарт ФНО 200+100 — 40 000 ₸/год',
+        'standard_300_910': 'Стандарт ФНО 300+910 — 40 000 ₸/год',
+        'standard_300_100': 'Стандарт ФНО 300+100 — 40 000 ₸/год',
+        'all': 'Premium (все формы) — 80 000 ₸/год',
+        'fno200': 'Базовый ФНО 200 — 25 000 ₸/год',
+        'fno300': 'Базовый ФНО 300 — 25 000 ₸/год',
+      };
       if (adminEmail) {
         await sendEmail(adminEmail,
           '🆕 Новая заявка — БухОтчет',
@@ -177,8 +190,9 @@ app.post('/api/auth/register', requireDb, async (req, res) => {
             Желаемый тариф: <strong>${tariffNames[desiredTariff]||desiredTariff}</strong>
           </div>
           <p>Тарифы:<br>
-          • Базовый — 25 000 ₸/год (ФНО 200 или 300 + ФНО 910 + ФНО 100)<br>
-          • Pro — 40 000 ₸/год (все формы)<br>
+          • Базовый — 25 000 ₸/год (одна форма: 200, 300, 910 или 100)<br>
+          • Стандарт — 40 000 ₸/год (две формы на выбор + 910/100)<br>
+          • Premium — 80 000 ₸/год (все формы: 200+300+910+100)<br>
           • Доп. пользователь — +10 000 ₸/год</p>
           <a class="btn" href="${SITE}">Открыть AdminPanel →</a>`
         );
