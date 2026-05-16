@@ -530,27 +530,28 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="tariff-card">
           <div class="tariff-name">Базовый</div>
           <div class="tariff-price">25 000 <span>₸/год</span></div>
-          <div class="tariff-desc">Одна форма на выбор: ФНО 200 или ФНО 300</div>
+          <div class="tariff-desc">Одна зарплатная форма на выбор</div>
           <ul class="tariff-features">
             <li>ФНО 200 <b>или</b> ФНО 300 (на выбор)</li>
+            <li>ФНО 910 + ФНО 100 включены</li>
             <li>Неограниченно компаний</li>
-            <li>Все калькуляторы</li>
-            <li>Сроки, КБК/КНП</li>
-            <li>+ 10 000 ₸/год за каждого доп. пользователя</li>
+            <li>Все калькуляторы и сроки</li>
+            <li>+ 10 000 ₸/год за доп. пользователя</li>
           </ul>
           <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
         <div class="tariff-card featured">
-          <div class="tariff-badge">⭐ Выгоднее</div>
+          <div class="tariff-badge">⭐ Выгоднее всего</div>
           <div class="tariff-name">Pro</div>
           <div class="tariff-price">40 000 <span>₸/год</span></div>
-          <div class="tariff-desc">Полный доступ: ФНО 200 + ФНО 300</div>
+          <div class="tariff-desc">Все формы без ограничений</div>
           <ul class="tariff-features">
             <li>ФНО 200 (ИПН, ОПВ, ОСМС)</li>
             <li>ФНО 300 (НДС 16%)</li>
+            <li>ФНО 910 (Упрощёнка 4%)</li>
+            <li>ФНО 100 (КПН 20%)</li>
             <li>Неограниченно компаний</li>
-            <li>Все калькуляторы и справочники</li>
-            <li>+ 10 000 ₸/год за каждого доп. пользователя</li>
+            <li>+ 10 000 ₸/год за доп. пользователя</li>
           </ul>
           <button class="btn-hero-primary" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
@@ -559,11 +560,11 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
           <div class="tariff-price">10 000 <span>₸/год</span></div>
           <div class="tariff-desc">Добавьте коллег к своей компании</div>
           <ul class="tariff-features">
-            <li>Доступ к вашим компаниям</li>
-            <li>Те же права что у основного аккаунта</li>
             <li>Отдельный логин и пароль</li>
+            <li>Те же права что у основного</li>
             <li>Управление из вашего кабинета</li>
-            <li>Подключается к любому тарифу</li>
+            <li>К любому тарифу (Базовый или Pro)</li>
+            <li>Без ограничений по количеству</li>
           </ul>
           <button class="btn-hero-ghost" style="width:100%;font-size:14px;padding:11px" onclick="openAuth('register')">Зарегистрироваться</button>
         </div>
@@ -625,6 +626,13 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="af"><label>Email *</label><input id="regEmail" type="email" placeholder="buh@company.kz"></div>
         <div class="af"><label>Телефон</label><input id="regPhone" type="tel" placeholder="+7 701 000 00 00"></div>
         <div class="af"><label>Пароль * (мин. 6 символов)</label><div class="pass-wrap"><input id="regPass" type="password" placeholder="••••••••" autocomplete="new-password"><button type="button" class="pass-eye" onclick="togglePass('regPass',this)">👁</button></div></div>
+        <div class="af"><label>Желаемый тариф</label>
+          <select id="regTariff" style="background:#f9fafb;border:1px solid #d1d5db;border-radius:9px;padding:10px 12px;font-size:14px;font-family:inherit;color:#111;outline:none">
+            <option value="all">Pro — 40 000 ₸/год (все формы: 200+300+910+100)</option>
+            <option value="fno200">Базовый ФНО 200 — 25 000 ₸/год (зарплата + 910 + 100)</option>
+            <option value="fno300">Базовый ФНО 300 — 25 000 ₸/год (НДС + 910 + 100)</option>
+          </select>
+        </div>
         <div class="check-row">
           <input type="checkbox" id="ofertaCheck">
           <label>
@@ -1273,7 +1281,8 @@ async function doRegister() {
   if (pass.length<6){showAuthMsg('registerMsg','Пароль минимум 6 символов','err');return}
   $('registerBtn').disabled=true; $('registerBtn').textContent='Отправляю...';
   try {
-    const r = await api('POST','/api/auth/register',{full_name,login:login.toLowerCase(),email,phone,password:pass});
+    const tariff = $('regTariff')?.value||'all';
+    const r = await api('POST','/api/auth/register',{full_name,login:login.toLowerCase(),email,phone,password:pass,desired_tariff:tariff});
     if (r.ok) {
       showAuthMsg('registerMsg','✅ Заявка отправлена! Ожидайте одобрения администратора.','ok');
       api('POST','/api/auth/notify-admin',{userName:full_name,userLogin:login,userEmail:email}).catch(()=>{});
@@ -1319,11 +1328,11 @@ function initApp() {
   }
   const t=currentUser.tariff;
   const has300=t==='all'||t==='fno300', has200=t==='all'||t==='fno200';
-  const hasExtra=t!=='none';
+  const hasExtra=t!=='none'; // ФНО 910 и 100 с любым тарифом
   if (!has300) $('navFno300').classList.add('locked');
   if (!has200) $('navFno200').classList.add('locked');
-  if (!hasExtra&&$('navFno910')) $('navFno910').classList.add('locked');
-  if (!hasExtra&&$('navFno100')) $('navFno100').classList.add('locked');
+  if ($('navFno910')) $('navFno910').classList.toggle('locked', !hasExtra);
+  if ($('navFno100')) $('navFno100').classList.toggle('locked', !hasExtra);
   loadCompanies();
   showPage('dashboard', document.querySelector('.nav-btn'));
   runCalc();

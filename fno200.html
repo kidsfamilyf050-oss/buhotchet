@@ -5072,25 +5072,35 @@
         }
         window.__buhotchetActiveCompany = compData;
         try {
-          const binEl = document.getElementById('companyBin');
+          // Заполнить все поля компании из данных портала
           const nameEl = document.getElementById('companyName');
-          if (binEl) binEl.value = compData.iin || '';
-          if (nameEl) nameEl.value = compData.name || '';
+          const binEl  = document.getElementById('companyBin');
+          const formEl = document.getElementById('companyLegalForm');
+          const modeEl = document.getElementById('companyTaxMode');
+          if (nameEl) { nameEl.value = compData.name || ''; nameEl.dispatchEvent(new Event('input')); }
+          if (binEl)  { binEl.value  = compData.iin  || ''; binEl.dispatchEvent(new Event('input')); }
+          if (formEl && compData.form) {
+            const opts = Array.from(formEl.options||[]).map(o=>o.value);
+            if (opts.includes(compData.form)) formEl.value = compData.form;
+          }
+          if (modeEl && compData.mode) {
+            const opts = Array.from(modeEl.options||[]).map(o=>o.value);
+            if (opts.includes(compData.mode)) modeEl.value = compData.mode;
+          }
           if (typeof state !== 'undefined') {
             if (!state.company) state.company = {};
-            state.company.bin = compData.iin || '';
             state.company.name = compData.name || '';
+            state.company.bin  = compData.iin  || '';
           }
-          // Если компания изменилась — загрузить данные новой компании
-          if (changed && reload !== false && typeof restore === 'function') {
+          // Загрузить данные новой компании (ключ хранилища включает ИИН)
+          if ((changed || reload) && typeof restore === 'function') {
             restore();
-            if (typeof render === 'function') render();
           }
         } catch(e2){ console.error('[fno200] applyPortalCompany:', e2); }
       }
       try {
         const pc = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
-        if (pc) applyPortalCompany(pc, false); // не перезагружать при первом запуске
+        if (pc) applyPortalCompany(pc, true); // загружаем данные при старте
       } catch(e){}
       window.addEventListener('storage', function(ev){
         if (ev.key === 'buhotchet_active_company') {

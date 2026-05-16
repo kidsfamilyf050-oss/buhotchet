@@ -163,17 +163,24 @@ app.post('/api/auth/register', requireDb, async (req, res) => {
       );
       // 2. Письмо администратору
       const adminEmail = process.env.ADMIN_EMAIL||'';
+      const desiredTariff = req.body?.desired_tariff || 'all';
+      const tariffNames = { all:'Pro — 40 000 ₸/год', fno200:'Базовый ФНО 200 — 25 000 ₸/год', fno300:'Базовый ФНО 300 — 25 000 ₸/год' };
       if (adminEmail) {
         await sendEmail(adminEmail,
-          '🆕 Новая заявка на регистрацию — БухОтчет',
-          `<p>Поступила новая заявка:</p>
+          '🆕 Новая заявка — БухОтчет',
+          `<p>Новая заявка на регистрацию:</p>
           <div class="highlight">
             ФИО: <strong>${full_name}</strong><br>
             Логин: <strong>${login}</strong><br>
-            Email: <strong>${email}</strong>
+            Email: <strong>${email}</strong><br>
+            Тел: <strong>${phone||'—'}</strong><br>
+            Желаемый тариф: <strong>${tariffNames[desiredTariff]||desiredTariff}</strong>
           </div>
-          <p>Тарифы:<br>• Базовый — 25 000 ₸/год (одна форма)<br>• Pro — 40 000 ₸/год (обе формы)<br>• Доп. пользователь — +10 000 ₸/год</p>
-          <a class="btn" href="${SITE}">Войти в AdminPanel</a>`
+          <p>Тарифы:<br>
+          • Базовый — 25 000 ₸/год (ФНО 200 или 300 + ФНО 910 + ФНО 100)<br>
+          • Pro — 40 000 ₸/год (все формы)<br>
+          • Доп. пользователь — +10 000 ₸/год</p>
+          <a class="btn" href="${SITE}">Открыть AdminPanel →</a>`
         );
       }
     }

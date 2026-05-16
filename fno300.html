@@ -1447,53 +1447,75 @@ function initAppEntry() {
   migrateLegacyIfNeeded();
   ensureAdminAccountRow();
   initGateLink();
-  // БухОтчет портал: авто-вход без пароля
-  // Установить сессию с реальным логином пользователя из портала
-  if (!getSession()) {
-    var portalToken = localStorage.getItem('bho_token');
-    if (portalToken && portalToken !== 'demo') {
-      // Пробуем получить реального пользователя
-      fetch('https://buhotchet-production.up.railway.app/api/auth/me', {
-        headers: { 'Authorization': 'Bearer ' + portalToken }
-      })
-      .then(function(r){ return r.ok ? r.json() : null; })
-      .then(function(data) {
-        if (data && data.ok && data.user) {
-          setSession({ email: data.user.login, name: data.user.name||data.user.login, role: data.user.role||'user' });
-        } else {
-          setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
-        }
-        loadWorkspaceIntoState();
-        refreshEntryScreen();
-        updateHeaderAuth();
-      })
-      .catch(function() {
-        setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
-      });
-    } else if (portalToken === 'demo') {
-      setSession({ email: 'demo@fno300.local', name: 'Демо', role: 'demo' });
-    } else {
-      setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
-    }
+
+  // Применить компанию из портала
+  function applyPortalCompanyFno300() {
+    try {
+      var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
+      if (portalComp && portalComp.name) {
+        var exists = companies.find(function(c){ return c.iin === portalComp.iin; });
+        if (!exists) { companies.push(portalComp); }
+        activeCompany = portalComp;
+        var cn = document.getElementById('headerCompName');
+        var ci = document.getElementById('headerCompIin');
+        if (cn) cn.textContent = portalComp.name;
+        if (ci) ci.textContent = portalComp.iin || 'БИН не задан';
+      }
+    } catch(e){}
   }
-  var s = getSession();
-  if (s) loadWorkspaceIntoState();
-  else resetWorkspaceMemory();
-  // Подхватить компанию из портала
-  try {
-  var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
-    if (portalComp && portalComp.name) {
-      var exists = companies.find(function(c){ return c.iin === portalComp.iin; });
-      if (!exists) { companies.push(portalComp); }
-      activeCompany = portalComp;
-      var cn = document.getElementById('headerCompName');
-      var ci = document.getElementById('headerCompIin');
-      if (cn) cn.textContent = portalComp.name;
-      if (ci) ci.textContent = portalComp.iin || 'БИН не задан';
-    }
-  } catch(e){}
-  refreshEntryScreen();
-  updateHeaderAuth();
+
+  // Финальная инициализация после установки сессии
+  function finishInit() {
+    applyPortalCompanyFno300();
+    loadWorkspaceIntoState();
+    refreshEntryScreen();
+    updateHeaderAuth();
+  }
+
+  // Если сессия уже есть — сразу инициализируем
+  if (getSession()) {
+    finishInit();
+    return;
+  }
+
+  // Читаем токен портала
+  var portalToken = localStorage.getItem('bho_token');
+
+  if (portalToken === 'demo') {
+    setSession({ email: 'demo@fno300.local', name: 'Демо', role: 'demo' });
+    finishInit();
+    return;
+  }
+
+  if (portalToken) {
+    // Устанавливаем временную сессию сразу — чтобы не было пустого экрана
+    setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+    finishInit();
+    // В фоне уточняем реального пользователя
+    fetch('https://buhotchet-production.up.railway.app/api/auth/me', {
+      headers: { 'Authorization': 'Bearer ' + portalToken }
+    })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && data.ok && data.user) {
+        // Обновляем сессию с реальным логином (для правильного ключа хранилища)
+        var prevEmail = getSession() ? getSession().email : '';
+        setSession({ email: data.user.login, name: data.user.name||data.user.login, role: data.user.role||'user' });
+        // Если логин изменился — перезагружаем данные под правильным ключом
+        if (prevEmail !== data.user.login) {
+          loadWorkspaceIntoState();
+          refreshEntryScreen();
+          updateHeaderAuth();
+        }
+      }
+    })
+    .catch(function(){});
+    return;
+  }
+
+  // Нет токена — показываем без авторизации (не должно случиться в iframe портала)
+  setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+  finishInit();
 }
 
 initAppEntry();
