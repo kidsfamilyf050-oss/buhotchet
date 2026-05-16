@@ -428,6 +428,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <div class="hero-btns">
       <button class="btn-hero-primary" onclick="openAuth('login')">🚀 Войти в систему</button>
       <button class="btn-hero-ghost" onclick="openAuth('register')">📝 Зарегистрироваться</button>
+      <button class="btn-hero-ghost" onclick="startDemo()" style="background:rgba(201,162,39,.2);border-color:rgba(201,162,39,.5);color:#C9A227">🎯 Попробовать демо</button>
     </div>
     <div class="hero-stats">
       <div class="stat-item"><div class="stat-num">НДС 16%</div><div class="stat-label">актуальная ставка</div></div>
@@ -568,9 +569,11 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         </div>
       </div>
       <div style="text-align:center;margin-top:28px;padding:18px 24px;background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.25);border-radius:14px;max-width:700px;margin-left:auto;margin-right:auto">
-        <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.6">
+        <div style="font-size:14px;color:rgba(255,255,255,.8);line-height:1.7">
           💳 После регистрации администратор свяжется с вами для оплаты и активации доступа.<br>
-          Оплата через Kaspi или перевод. <strong style="color:var(--gold)">Первые 7 дней — бесплатный тестовый доступ.</strong>
+          Оплата через Kaspi или перевод.<br>
+          <strong style="color:var(--gold)">🎯 Демо-режим без регистрации:</strong>
+          <span style="color:rgba(255,255,255,.7)"> до 3 сотрудников в ФНО 200, 1 файл в ФНО 300, без скачивания.</span>
         </div>
       </div>
     </div>
@@ -583,6 +586,7 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <div class="hero-btns">
       <button class="btn-hero-primary" onclick="openAuth('register')">📝 Создать аккаунт</button>
       <button class="btn-hero-ghost" onclick="openAuth('login')">Уже есть аккаунт →</button>
+      <button class="btn-hero-ghost" onclick="startDemo()" style="background:rgba(201,162,39,.2);border-color:rgba(201,162,39,.5);color:#C9A227">🎯 Попробовать без регистрации</button>
     </div>
   </div>
 
@@ -661,7 +665,11 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
         <div class="app-logo-sub">Республика Казахстан</div>
       </div>
     </div>
-    <div class="period-bar" id="periodBar" style="display:none">
+    <div id="demoBannerPortal" style="display:none;align-items:center;gap:10px;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.4);border-radius:8px;padding:5px 14px;font-size:12px;color:#C9A227;font-weight:600">
+    🎯 Демо · <span style="color:rgba(255,255,255,.7)">3 сотрудника, 1 файл ФНО 300</span>
+    <button onclick="openAuth('register')" style="background:#C9A227;border:none;color:#0a1628;font-size:11px;font-weight:800;padding:3px 10px;border-radius:5px;cursor:pointer;font-family:inherit">Оформить →</button>
+  </div>
+  <div class="period-bar" id="periodBar" style="display:none">
       <select class="period-sel" id="yearSel" onchange="onPeriodChange()">
         <option value="2024">2024</option><option value="2025">2025</option>
         <option value="2026" selected>2026</option><option value="2027">2027</option>
@@ -2054,6 +2062,48 @@ async function doResetPassword() {
       showAuthMsg('resetMsg', m[data.error]||'Ошибка. Попробуйте снова.', 'err');
     }
   } catch(e) { showAuthMsg('resetMsg','Сервер недоступен','err'); }
+}
+
+// ── DEMO MODE ────────────────────────────────────────────────────────────────
+function startDemo() {
+  currentUser = {
+    id: 0,
+    login: 'demo',
+    name: 'Демо-пользователь',
+    role: 'demo',
+    tariff: 'all' // показываем обе формы, но с ограничениями внутри
+  };
+  authToken = 'demo';
+  // Установить демо-сессии в localStorage для iframe
+  localStorage.setItem('fno300_session', JSON.stringify({
+    email: 'demo@fno300.local', name: 'Демо', role: 'demo'
+  }));
+  localStorage.setItem('buho_token', 'demo');
+  $('authModal').classList.remove('open');
+  initDemoApp();
+}
+
+function initDemoApp() {
+  $('landingPage').classList.add('hidden');
+  $('appShell').classList.add('visible');
+  // Показать демо-баннер
+  const db = $('demoBannerPortal');
+  if (db) db.style.display = 'flex';
+  // Скрыть period bar
+  const pb = $('periodBar');
+  if (pb) pb.style.display = 'none';
+  // Обновить шапку
+  $('hUserName').textContent = '🎯 Демо-режим';
+  $('hTariff').textContent = '3 сотрудника · 1 файл';
+  // Показать навигацию
+  $('navFno300').classList.remove('locked');
+  $('navFno200').classList.remove('locked');
+  // Демо компания
+  activeCompany = { name: 'Демо-компания', iin: '000000000000', form: 'ТОО', mode: 'ОУР' };
+  localStorage.setItem('buhotchet_active_company', JSON.stringify(activeCompany));
+  localStorage.setItem('buhotchet_companies', JSON.stringify([activeCompany]));
+  updateHComp();
+  showPage('dashboard', document.querySelector('.nav-btn'));
 }
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────

@@ -512,6 +512,10 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
       <div class="logo-text" style="display:none"></div>
     </div>
     <div class="header-actions">
+      <div id="demoBanner300" style="display:none;align-items:center;gap:10px;background:rgba(201,162,39,.15);border:1px solid rgba(201,162,39,.35);border-radius:8px;padding:6px 14px;font-size:12px;color:#C9A227;font-weight:600">
+        🎯 Демо-режим · <span id="demoCounter300">3 сотрудника, 1 файл</span>
+        <a href="https://buhotchet.site" style="color:#1a4d8f;font-weight:700;text-decoration:none;background:#fff;padding:3px 10px;border-radius:5px;font-size:11px">Оформить →</a>
+      </div>
       <span id="authSessionLabel" class="hidden" style="font-size:12px;color:var(--text2);max-width:min(160px,28vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;align-self:center;padding:0 4px" title=""></span>
     </div>
     <div class="company-selector" onclick="openModal()" title="Выбрать компанию">
@@ -1001,6 +1005,8 @@ function refreshEntryScreen() {
   if (gate) gate.classList.add('hidden');
   if (shell) shell.classList.remove('hidden');
   document.body.classList.toggle('demo-mode', !!(s && s.role === 'demo'));
+  var db300 = document.getElementById('demoBanner300');
+  if (db300) db300.style.display = (s && s.role === 'demo') ? 'flex' : 'none';
   var modBtn = document.getElementById('headerBtnModeration');
   if (modBtn) modBtn.classList.toggle('hidden', !(s && s.role === 'admin'));
   var hp = document.getElementById('headerBtnProjects');
@@ -1056,7 +1062,53 @@ function enterDemo() {
   loadWorkspaceIntoState();
   refreshEntryScreen();
   updateHeaderAuth();
-  alert('Демо: загрузите только «Реализацию», выберите месяц и выгрузите JSON. Остальные типы файлов и кварталы отключены.');
+  showDemoWelcome();
+}
+
+function showDemoWelcome() {
+  // Показываем баннер только первый раз
+  var shown = sessionStorage.getItem('demoWelcomeShown');
+  if (shown) return;
+  sessionStorage.setItem('demoWelcomeShown', '1');
+  openDemoLimitModal('welcome');
+}
+
+function openDemoLimitModal(type) {
+  var msgs = {
+    welcome: 'Вы вошли в демо-режим. Попробуйте загрузить файл реализации (ЭСФ) за любой месяц.',
+    files: 'В демо-режиме можно загрузить только 1 файл (только реализация ЭСФ).',
+    export: 'В демо-режиме скачивание недоступно. Оформите доступ чтобы выгружать Excel, PDF и JSON.',
+    projects: 'В демо-режиме проекты недоступны.',
+  };
+  var msg = msgs[type] || 'Эта функция недоступна в демо-режиме.';
+  var overlay = document.getElementById('demoLimitOverlay300');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'demoLimitOverlay300';
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)';
+    overlay.innerHTML = '<div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.3)">' +
+      '<div style="font-size:48px;margin-bottom:16px">🔒</div>' +
+      '<div style="font-size:20px;font-weight:800;color:#1a1a1a;margin-bottom:10px">Демо-ограничение</div>' +
+      '<div id="demoLimitMsg300" style="font-size:15px;color:#555;margin-bottom:6px"></div>' +
+      '<div style="font-size:13px;color:#888;margin-bottom:24px">Оформите доступ чтобы работать без ограничений.</div>' +
+      '<div style="background:#f4f6fb;border-radius:12px;padding:16px;margin-bottom:20px;text-align:left">' +
+        '<div style="font-size:13px;font-weight:700;color:#1a4d8f;margin-bottom:8px">Тарифы БухОтчет:</div>' +
+        '<div style="font-size:13px;color:#333;line-height:1.8">' +
+          '📋 <b>Базовый</b> — 25 000 ₸/год (ФНО 200 или ФНО 300)<br>' +
+          '⭐ <b>Pro</b> — 40 000 ₸/год (ФНО 200 + ФНО 300)<br>' +
+          '👥 <b>Доп. пользователь</b> — +10 000 ₸/год' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;justify-content:center">' +
+        '<button onclick="document.getElementById('demoLimitOverlay300').style.display='none'" style="padding:10px 20px;border-radius:10px;border:1px solid #ddd;background:#f8f9fa;font-family:inherit;font-size:14px;cursor:pointer">Продолжить демо</button>' +
+        '<a href="https://buhotchet.site" target="_blank" style="padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;text-decoration:none;font-size:14px;font-weight:700;display:inline-flex;align-items:center">Оформить доступ →</a>' +
+      '</div>' +
+    '</div>';
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.style.display='none'; });
+    document.body.appendChild(overlay);
+  }
+  document.getElementById('demoLimitMsg300').textContent = msg;
+  overlay.style.display = 'flex';
 }
 
 function submitLogin() {
@@ -1312,7 +1364,7 @@ function rejectRegistration(id) {
 }
 
 function openProjectsModal() {
-  if (getSession() && getSession().role === 'demo') { alert('В демо режиме проекты недоступны.'); return; }
+  if (getSession() && getSession().role === 'demo') { openDemoLimitModal('projects'); return; }
   document.getElementById('projectsModal').classList.add('open');
   renderProjectsList();
 }
@@ -1332,7 +1384,7 @@ function renderProjectsList() {
     : '<div style="color:var(--text3);font-size:13px">Нет сохранённых проектов</div>';
 }
 function saveProjectDialog() {
-  if (getSession() && getSession().role === 'demo') { alert('В демо режиме сохранение проектов недоступно.'); return; }
+  if (getSession() && getSession().role === 'demo') { openDemoLimitModal('projects'); return; }
   if (!calcResult) {
     alert('Сначала выполните расчёт («Рассчитать»), чтобы сохранить отчёт и данные компаний.');
     return;

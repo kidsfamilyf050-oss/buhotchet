@@ -1189,7 +1189,7 @@
   <!-- ========== DEMO BANNER ========== -->
   <div id="demoBanner">
     🔒 Демо-версия: 1 сотрудник, только 1 квартал (JSON). Полная версия — 25 000 ₸/год, неограниченное кол-во компаний.
-    <button class="demo-upgrade-btn" onclick="openUpgradeModal()">Купить полную версию →</button>
+    <button class="demo-upgrade-btn" onclick="openDemoLimitModal("export")">Купить полную версию →</button>
   </div>
 
   <!-- ========== UPGRADE MODAL ========== -->
@@ -3581,7 +3581,7 @@
 
     function exportSingleQuarterJson(quarterIndex) {
       if (window.isDemoMode && window.isDemoMode() && quarterIndex !== 0) {
-        openUpgradeModal();
+        openDemoLimitModal("export");
         return;
       }
       const validation = validateState();
@@ -4222,9 +4222,10 @@
 
     function addEmployee(monthIndex = 0) {
       if (window.isDemoMode && window.isDemoMode()) {
-        const uniqueIins = new Set(state.monthEntries.map(e => e.iin || e.id));
-        if (state.monthEntries.length >= 1) {
-          openUpgradeModal();
+        const uniqueNames = new Set(state.monthEntries.map(e => e.iin || e.id).filter(Boolean));
+        const totalUnique = uniqueNames.size || state.monthEntries.filter((e,i,a)=>a.findIndex(x=>x.iin===e.iin)===i).length;
+        if (totalUnique >= 3) {
+          openDemoLimitModal('employees');
           return;
         }
       }
@@ -4234,7 +4235,7 @@
 
     function duplicateMonthEmployees(fromMonthIndex) {
       if (window.isDemoMode && window.isDemoMode()) {
-        openUpgradeModal();
+        openDemoLimitModal('duplicate');
         return;
       }
       const nextMonth = fromMonthIndex + 1;
@@ -4378,7 +4379,7 @@
 
     function exportFnoJson() {
       if (window.isDemoMode && window.isDemoMode()) {
-        openUpgradeModal();
+        openDemoLimitModal("export");
         return;
       }
       const validation = validateState();
@@ -4913,6 +4914,45 @@
       window.isDemoMode = function() {
         const s = getSession();
         return s && s.role === 'demo';
+      };
+
+      window.openDemoLimitModal = function(type) {
+        const msgs = {
+          employees: 'В демо-режиме можно добавить до 3 сотрудников.',
+          duplicate: 'В демо-режиме дублирование недоступно.',
+          export: 'В демо-режиме скачивание файлов недоступно.',
+          quarters: 'В демо-режиме доступен только I квартал.',
+        };
+        const msg = msgs[type] || 'Эта функция недоступна в демо-режиме.';
+        // Показать красивый overlaymodal
+        let overlay = document.getElementById('demoLimitOverlay');
+        if (!overlay) {
+          overlay = document.createElement('div');
+          overlay.id = 'demoLimitOverlay';
+          overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(6px)';
+          overlay.innerHTML = `<div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.3)">
+            <div style="font-size:48px;margin-bottom:16px">🔒</div>
+            <div style="font-size:20px;font-weight:800;color:#1a1a1a;margin-bottom:10px">Демо-ограничение</div>
+            <div id="demoLimitMsg" style="font-size:15px;color:#555;margin-bottom:6px"></div>
+            <div style="font-size:13px;color:#888;margin-bottom:24px">Оформите доступ чтобы работать без ограничений.</div>
+            <div style="background:#f4f6fb;border-radius:12px;padding:16px;margin-bottom:20px;text-align:left">
+              <div style="font-size:13px;font-weight:700;color:#1a4d8f;margin-bottom:8px">Тарифы БухОтчет:</div>
+              <div style="font-size:13px;color:#333;line-height:1.8">
+                📋 <b>Базовый</b> — 25 000 ₸/год (ФНО 200 или ФНО 300)<br>
+                ⭐ <b>Pro</b> — 40 000 ₸/год (ФНО 200 + ФНО 300)<br>
+                👥 <b>Доп. пользователь</b> — +10 000 ₸/год
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:center">
+              <button onclick="document.getElementById('demoLimitOverlay').style.display='none'" style="padding:10px 20px;border-radius:10px;border:1px solid #ddd;background:#f8f9fa;font-family:inherit;font-size:14px;cursor:pointer">Продолжить демо</button>
+              <a href="https://buhotchet.site" target="_blank" style="padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;text-decoration:none;font-size:14px;font-weight:700;display:inline-flex;align-items:center">Оформить доступ →</a>
+            </div>
+          </div>`;
+          overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.style.display='none'; });
+          document.body.appendChild(overlay);
+        }
+        document.getElementById('demoLimitMsg').textContent = msg;
+        overlay.style.display = 'flex';
       };
 
       window.openUpgradeModal = function() {
