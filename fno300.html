@@ -1100,15 +1100,19 @@ function openDemoLimitModal(type) {
         '</div>' +
       '</div>' +
       '<div style="display:flex;gap:10px;justify-content:center">' +
-        '<button onclick="document.getElementById('demoLimitOverlay300').style.display='none'" style="padding:10px 20px;border-radius:10px;border:1px solid #ddd;background:#f8f9fa;font-family:inherit;font-size:14px;cursor:pointer">Продолжить демо</button>' +
+        '<button id="demo300CloseBtn" style="padding:10px 20px;border-radius:10px;border:1px solid #ddd;background:#f8f9fa;font-family:inherit;font-size:14px;cursor:pointer">Продолжить демо</button>' +
         '<a href="https://buhotchet.site" target="_blank" style="padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;text-decoration:none;font-size:14px;font-weight:700;display:inline-flex;align-items:center">Оформить доступ →</a>' +
       '</div>' +
     '</div>';
     overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.style.display='none'; });
     document.body.appendChild(overlay);
+    var cb300 = document.getElementById('demo300CloseBtn');
+    if (cb300) cb300.onclick = function(){ overlay.style.display='none'; };
   }
   document.getElementById('demoLimitMsg300').textContent = msg;
   overlay.style.display = 'flex';
+  var cb300b = document.getElementById('demo300CloseBtn');
+  if (cb300b) cb300b.onclick = function(){ overlay.style.display='none'; };
 }
 
 function submitLogin() {

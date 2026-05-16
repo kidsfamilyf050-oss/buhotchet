@@ -483,7 +483,7 @@ function calc(){
 function getStateKey(){
   try{const c=JSON.parse(localStorage.getItem('buhotchet_active_company')||'null');return'fno100_data'+(c?.iin?'_c'+c.iin:'');}catch(e){return'fno100_data';}
 }
-const FIELDS=['f_name','f_bin','f_year','f_decl_type','f_resident','f_oked','r001','r002','r003','r004','r005','r006','r007','r008','v001','v002','v003','v004','v005','v006','v007','v008','v009','v010','v011','v012','v013','v014','v_losses','v_advances','v_withheld'];
+var FIELDS=['f_name','f_bin','f_year','f_decl_type','f_resident','f_oked','r001','r002','r003','r004','r005','r006','r007','r008','v001','v002','v003','v004','v005','v006','v007','v008','v009','v010','v011','v012','v013','v014','v_losses','v_advances','v_withheld'];
 
 function saveState(){
   const s={};
