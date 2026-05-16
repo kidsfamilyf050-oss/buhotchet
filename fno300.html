@@ -353,7 +353,7 @@ label.field-label{display:block;color:var(--text2);font-size:13px;font-weight:70
 .main a{color:var(--blue);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;font-weight:600}
 .main a:hover{color:var(--gold-deep)}
 
-.auth-gate{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-start;justify-content:center;padding:clamp(16px,4vw,40px);overflow-y:auto;background:linear-gradient(165deg,#ebe6df 0%,#ddd4c8 50%,#ebe8e2 100%)}
+.auth-gate{position:fixed;inset:0;z-index:2000;display:none!important;align-items:flex-start;justify-content:center;padding:clamp(16px,4vw,40px);overflow-y:auto;background:linear-gradient(165deg,#ebe6df 0%,#ddd4c8 50%,#ebe8e2 100%)}
 .auth-gate.hidden{display:none!important}
 .auth-gate-layout{display:flex;flex-wrap:wrap;gap:clamp(20px,4vw,32px);max-width:960px;width:100%;justify-content:center;align-items:flex-start}
 .auth-gate-card{flex:1;min-width:min(100%,320px);max-width:440px}
@@ -649,6 +649,11 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
           <div class="period-tab" data-q="2" onclick="selectQ(this)">III</div>
           <div class="period-tab" data-q="3" onclick="selectQ(this)">IV</div>
         </div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+          <button type="button" class="btn btn-primary btn-sm" onclick="saveQuarterData()" title="Сохранить данные выбранного квартала">💾 Сохранить квартал</button>
+          <button type="button" class="btn btn-danger btn-sm" onclick="deleteQuarterData()" title="Удалить данные выбранного квартала">🗑 Удалить квартал</button>
+        </div>
+        <div id="quarterActionMsg" style="font-size:12px;margin-top:6px;padding:6px 10px;border-radius:7px;display:none"></div>
       </div>
       <div id="demoMonthWrap">
         <label class="field-label">Месяц для демо-расчёта</label>
@@ -993,8 +998,8 @@ function refreshEntryScreen() {
   var s = getSession();
   var gate = document.getElementById('authGate');
   var shell = document.getElementById('mainShell');
-  if (gate) gate.classList.toggle('hidden', !!s);
-  if (shell) shell.classList.toggle('hidden', !s);
+  if (gate) gate.classList.add('hidden');
+  if (shell) shell.classList.remove('hidden');
   document.body.classList.toggle('demo-mode', !!(s && s.role === 'demo'));
   var modBtn = document.getElementById('headerBtnModeration');
   if (modBtn) modBtn.classList.toggle('hidden', !(s && s.role === 'admin'));
@@ -1395,7 +1400,10 @@ function initAppEntry() {
   else resetWorkspaceMemory();
   // Подхватить компанию из портала
   try {
-    var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
+    if (!getSession()) {
+    setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+  }
+  var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
     if (portalComp && portalComp.name) {
       var exists = companies.find(function(c){ return c.iin === portalComp.iin; });
       if (!exists) { companies.push(portalComp); }
@@ -2267,6 +2275,55 @@ function processFno328PdfText(text, year, quarter, data) {
 }
 
 // ─── PERIOD SELECTOR ─────────────────────────────────────────────────────────
+function saveQuarterData() {
+  var q = selectedQ;
+  var qLabel = q === 'all' ? 'все кварталы' : ['I','II','III','IV'][parseInt(q)] + ' квартал';
+  if (!activeCompany) { showQuarterMsg('⚠️ Выберите компанию в шапке', 'warn'); return; }
+  persistWorkspace();
+  showQuarterMsg('✅ Данные за ' + qLabel + ' сохранены · ' + activeCompany.name, 'ok');
+}
+
+function deleteQuarterData() {
+  var q = selectedQ;
+  if (q === 'all') { showQuarterMsg('⚠️ Выберите конкретный квартал (I–IV)', 'warn'); return; }
+  var qLabel = ['I','II','III','IV'][parseInt(q)] + ' квартал';
+  if (!confirm('Удалить все данные за ' + qLabel + '?
+Действие нельзя отменить.')) return;
+  var k = dataStorageKey();
+  if (!k) { showQuarterMsg('⚠️ Нет активной компании', 'warn'); return; }
+  var d = readWorkspaceDisk();
+  var qi = parseInt(q);
+  var qMonths = [qi*3, qi*3+1, qi*3+2];
+  if (d.files) {
+    ['realizations','purchases','purchases328','medReals','medPurch','printForms','korrReals','korrPurch','gtdFiles','gtdEaesFiles'].forEach(function(key) {
+      if (Array.isArray(d.files[key])) {
+        d.files[key] = d.files[key].filter(function(row) {
+          var dateStr = row.date || row.docDate || '';
+          if (!dateStr) return true;
+          var m = new Date(dateStr).getMonth();
+          return qMonths.indexOf(m) === -1;
+        });
+      }
+    });
+  }
+  if (d.calcResult) d.calcResult[qi] = null;
+  try {
+    localStorage.setItem(k, JSON.stringify(d));
+    loadWorkspaceIntoState();
+    showQuarterMsg('✅ Данные за ' + qLabel + ' удалены', 'ok');
+  } catch(e) { showQuarterMsg('❌ Ошибка: ' + e.message, 'err'); }
+}
+
+function showQuarterMsg(text, type) {
+  var el = document.getElementById('quarterActionMsg');
+  if (!el) return;
+  el.textContent = text; el.style.display = 'block';
+  var s = {ok:{bg:'#dff3e8',c:'#1d6b45'},warn:{bg:'#f8edd8',c:'#9a5f0a'},err:{bg:'#fce8e6',c:'#b42318'}};
+  var st = s[type]||s.ok;
+  el.style.background = st.bg; el.style.color = st.c;
+  setTimeout(function(){ el.style.display='none'; }, 4000);
+}
+
 function selectQ(el) {
   document.querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');

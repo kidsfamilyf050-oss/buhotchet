@@ -688,6 +688,7 @@
   
     /* ========== AUTH SYSTEM ========== */
     #authOverlay {
+      display: none !important;
       position: fixed; inset: 0; z-index: 9999;
       background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #162644 100%);
       display: flex; align-items: center; justify-content: center;
@@ -1258,21 +1259,9 @@
         <div class="section-head">
         </div>
 
-        <div class="company-manager">
-          <div class="section-head" style="margin-bottom:10px">
-            <div>
-              <h3>Компании</h3>
-              <div class="small">Выберите компанию из общей базы портала.</div>
-            </div>
-          </div>
-          <div class="form-grid single">
-            <div class="field">
-              <label for="savedCompanySelect">Выбрать компанию</label>
-              <select id="savedCompanySelect"></select>
-            </div>
-          </div>
-          <div id="companyManagerInfo" class="small company-manager-info"></div>
-        </div>
+        <!-- Компания управляется из шапки портала БухОтчет -->
+        <select id="savedCompanySelect" style="display:none"></select>
+        <div id="companyManagerInfo" style="display:none"></div>
 
         <div class="form-grid single">
           <div class="field">
@@ -4908,7 +4897,14 @@
         });
       }
 
-      window.enterDemo = function() {
+      // Скрыть старый overlay — авторизация через портал
+    (function() {
+      var ov = document.getElementById('authOverlay');
+      if (ov) ov.style.setProperty('display','none','important');
+      if (!window.__asmayaUserEmail) window.__asmayaUserEmail = 'buhotchet@portal.kz';
+    })();
+
+    window.enterDemo = function() {
         setSession({ email: '__demo__', role: 'demo' });
         showApp({ role: 'demo', email: '__demo__', displayName: 'Демо' });
         document.getElementById('demoBanner').classList.add('visible');
