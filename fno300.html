@@ -2401,15 +2401,14 @@ function deleteQuarterData() {
   var q = selectedQ;
   if (q === 'all') { showQuarterMsg('⚠️ Выберите конкретный квартал (I–IV)', 'warn'); return; }
   var qLabel = ['I','II','III','IV'][parseInt(q)] + ' квартал';
-  if (!confirm('Удалить все данные за ' + qLabel + '?
-Действие нельзя отменить.')) return;
+  if (!confirm('Удалить все данные за ' + qLabel + '? Действие нельзя отменить.')) return;
   var k = dataStorageKey();
   if (!k) { showQuarterMsg('⚠️ Нет активной компании', 'warn'); return; }
   var d = readWorkspaceDisk();
   var qi = parseInt(q);
   var qMonths = [qi*3, qi*3+1, qi*3+2];
   if (d.files) {
-    ['realizations','purchases','purchases328','medReals','medPurch','printForms','korrReals','korrPurch','gtdFiles','gtdEaesFiles'].forEach(function(key) {
+    ['real','post','fno328','gtd'].forEach(function(key) {
       if (Array.isArray(d.files[key])) {
         d.files[key] = d.files[key].filter(function(row) {
           var dateStr = row.date || row.docDate || '';
