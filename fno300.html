@@ -1448,8 +1448,33 @@ function initAppEntry() {
   ensureAdminAccountRow();
   initGateLink();
   // БухОтчет портал: авто-вход без пароля
+  // Установить сессию с реальным логином пользователя из портала
   if (!getSession()) {
-    setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+    var portalToken = localStorage.getItem('bho_token');
+    if (portalToken && portalToken !== 'demo') {
+      // Пробуем получить реального пользователя
+      fetch('https://buhotchet-production.up.railway.app/api/auth/me', {
+        headers: { 'Authorization': 'Bearer ' + portalToken }
+      })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(data) {
+        if (data && data.ok && data.user) {
+          setSession({ email: data.user.login, name: data.user.name||data.user.login, role: data.user.role||'user' });
+        } else {
+          setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+        }
+        loadWorkspaceIntoState();
+        refreshEntryScreen();
+        updateHeaderAuth();
+      })
+      .catch(function() {
+        setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+      });
+    } else if (portalToken === 'demo') {
+      setSession({ email: 'demo@fno300.local', name: 'Демо', role: 'demo' });
+    } else {
+      setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
+    }
   }
   var s = getSession();
   if (s) loadWorkspaceIntoState();
@@ -1760,9 +1785,8 @@ async function loadFile(type, input) {
       input.value = '';
       return;
     }
-    // Проверить количество уже загруженных файлов реализации
-    var existingFiles = files.realizations || [];
-    if (existingFiles.length >= 1) {
+    // В демо: только 1 файл реализации
+    if ((files.real || []).length >= 1) {
       openDemoLimitModal('files');
       input.value = '';
       return;

@@ -1256,7 +1256,12 @@
 
     <div class="grid">
       <aside class="panel">
-        <div class="section-head">
+        <div class="section-head" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:14px;font-weight:700;color:var(--text)">ФНО 200.00 · Данные компании</div>
+          <button onclick="window.saveToServer&&window.saveToServer()" id="fno200SaveBtn"
+            style="background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;border:none;border-radius:9px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(26,77,143,.3)">
+            💾 Сохранить данные
+          </button>
         </div>
 
         <!-- Компания управляется из шапки портала БухОтчет -->
@@ -3817,38 +3822,58 @@
       };
       try {
         localStorage.setItem(key, JSON.stringify(payload));
-        if (window.BuhotchetAPI && BuhotchetAPI.isOnline()) {
-          BuhotchetAPI.putKv(key, payload).catch(() => {});
+        // Синхронизировать с сервером Railway
+        const token = localStorage.getItem('bho_token');
+        const apiUrl = 'https://buhotchet-production.up.railway.app';
+        if (token && token !== 'demo') {
+          fetch(apiUrl + '/api/kv/' + encodeURIComponent(key), {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+            body: JSON.stringify({ value: payload })
+          }).catch(() => {});
         }
       } catch (e) { /* quota */ }
     }
 
     function restore() {
       const key = getUserDataStorageKey();
-      const applyRestore = () => {
-      let raw = localStorage.getItem(key);
-      if (!raw && normalizeAccountEmail(window.__asmayaUserEmail) && window.__asmayaUserEmail !== '__demo__') {
-        const legacy = localStorage.getItem(STORAGE_KEY_MAIN) || localStorage.getItem(LEGACY_STORAGE_KEY_MAIN);
-        if (legacy) {
-          raw = legacy;
-          try { localStorage.setItem(key, legacy); } catch (e) { /* ignore */ }
+
+      // ШАГ 1: Мгновенно загружаем из localStorage (без задержки)
+      const applyFromLocal = () => {
+        let raw = localStorage.getItem(key);
+        if (!raw && normalizeAccountEmail(window.__asmayaUserEmail) && window.__asmayaUserEmail !== '__demo__') {
+          const legacy = localStorage.getItem(STORAGE_KEY_MAIN) || localStorage.getItem(LEGACY_STORAGE_KEY_MAIN);
+          if (legacy) { raw = legacy; try { localStorage.setItem(key, legacy); } catch(e){} }
         }
-      }
-      if (!raw) {
-        hydrateState({});
-        return;
-      }
-      try {
-        const data = JSON.parse(raw);
-        hydrateState(data);
-      } catch (e) {
-        hydrateState({});
-      }
+        if (!raw) { hydrateState({}); } else {
+          try { hydrateState(JSON.parse(raw)); } catch(e) { hydrateState({}); }
+        }
+        render();
       };
-      if (!window.BuhotchetAPI) { applyRestore(); return; }
-      BuhotchetAPI.init().then((ok) => {
-        if (ok) return BuhotchetAPI.pullKvToLocal(key);
-      }).finally(applyRestore);
+
+      applyFromLocal();
+
+      // ШАГ 2: Фоновая синхронизация с сервером (не блокирует UI)
+      const token = localStorage.getItem('bho_token');
+      const apiUrl = 'https://buhotchet-production.up.railway.app';
+      if (token && token !== 'demo') {
+        fetch(apiUrl + '/api/kv/' + encodeURIComponent(key), {
+          headers: { 'Authorization': 'Bearer ' + token }
+        })
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+          if (data && data.ok && data.value) {
+            // Обновляем localStorage и перезагружаем если данные с сервера новее
+            const serverJson = JSON.stringify(data.value);
+            const localJson  = localStorage.getItem(key) || '{}';
+            if (serverJson !== localJson) {
+              localStorage.setItem(key, serverJson);
+              try { hydrateState(data.value); render(); } catch(e){}
+            }
+          }
+        })
+        .catch(() => {}); // Игнорируем ошибки сети — данные уже из localStorage
+      }
     }
 
     function renderNonresidentDetails(entry) {
@@ -4222,9 +4247,13 @@
 
     function addEmployee(monthIndex = 0) {
       if (window.isDemoMode && window.isDemoMode()) {
-        const uniqueNames = new Set(state.monthEntries.map(e => e.iin || e.id).filter(Boolean));
-        const totalUnique = uniqueNames.size || state.monthEntries.filter((e,i,a)=>a.findIndex(x=>x.iin===e.iin)===i).length;
-        if (totalUnique >= 3) {
+        // Демо: максимум 3 сотрудника в текущем месяце
+        // Если в любом месяце есть 3 — в другие тоже нельзя добавить
+        const maxInAnyMonth = Array.from({length:12}, (_,m) =>
+          state.monthEntries.filter(e => e.monthIndex === m).length
+        ).reduce((a,b) => Math.max(a,b), 0);
+        const inThisMonth = state.monthEntries.filter(e => e.monthIndex === monthIndex).length;
+        if (maxInAnyMonth >= 3 || inThisMonth >= 3) {
           openDemoLimitModal('employees');
           return;
         }
@@ -4916,6 +4945,25 @@
         return s && s.role === 'demo';
       };
 
+      window.saveToServer = function() {
+        try {
+          persist();
+          // Show brief confirmation
+          const btn = document.querySelector('button[onclick="saveToServer()"]');
+          if (btn) {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '✅ Сохранено!';
+            btn.style.background = 'linear-gradient(135deg,#1d6b45,#2a8a5a)';
+            setTimeout(() => {
+              btn.innerHTML = orig;
+              btn.style.background = 'linear-gradient(135deg,#1a4d8f,#2e6bc4)';
+            }, 2000);
+          }
+        } catch(e) {
+          alert('Ошибка сохранения: ' + e.message);
+        }
+      };
+
       window.openDemoLimitModal = function(type) {
         const msgs = {
           employees: 'В демо-режиме можно добавить до 3 сотрудников.',
@@ -4982,8 +5030,37 @@
         if (e.key === 'Enter') document.getElementById('authPass').focus();
       });
 
-      // БухОтчет портал: авто-вход без пароля
-      showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
+      // БухОтчет портал: авто-вход с реальным логином пользователя
+      (function() {
+        // Читаем данные пользователя из localStorage портала
+        try {
+          const token = localStorage.getItem('bho_token');
+          if (token && token !== 'demo') {
+            // Получить данные пользователя с сервера
+            fetch('https://buhotchet-production.up.railway.app/api/auth/me', {
+              headers: { 'Authorization': 'Bearer ' + token }
+            })
+            .then(r => r.ok ? r.json() : null)
+            .then(data => {
+              if (data && data.ok && data.user) {
+                const u = data.user;
+                showApp({ role: u.role||'user', email: u.login||u.email||'user', displayName: u.name||u.login });
+              } else {
+                showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
+              }
+            })
+            .catch(() => {
+              showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
+            });
+          } else if (token === 'demo') {
+            showApp({ role: 'demo', email: '__demo__', displayName: 'Демо' });
+          } else {
+            showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
+          }
+        } catch(e) {
+          showApp({ role: 'user', email: 'buhotchet@portal.kz', displayName: 'БухОтчет' });
+        }
+      })();
       // Подхватить компанию из портала
       function applyPortalCompany(compData, reload) {
         if (!compData || !compData.name) return;
