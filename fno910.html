@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ФНО 910.00 — Упрощённая декларация · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#1A4D8F;--brand2:#2E6BC4;--brand-light:#EAF2FF;
+  --gold:#C9A227;--gold-light:#FFF8E6;
+  --surface:#fffef9;--surface2:#f4f1eb;--bg:#ece8e0;
+  --border:rgba(26,22,18,.1);--border2:rgba(26,22,18,.18);
+  --text:#141210;--text2:#4a433a;--text3:#7a7166;
+  --green:#1d6b45;--green-light:#dff3e8;
+  --red:#b42318;--red-light:#fce8e6;
+  --warn:#9a5f0a;--warn-light:#f8edd8;
+  --shadow:0 1px 3px rgba(20,18,16,.06),0 8px 24px rgba(20,18,16,.08);
+  --radius:14px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:15px;line-height:1.55;background:var(--bg);display:flex;flex-direction:column}
+
+/* HEADER */
+.app-header{
+  background:var(--brand);padding:0 20px;display:flex;align-items:center;
+  justify-content:space-between;height:52px;flex-shrink:0;
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.logo-name span{color:var(--gold)}
+.logo-sep{width:1px;height:18px;background:rgba(255,255,255,.3)}
+.logo-form{font-size:12px;font-weight:600;color:rgba(255,255,255,.75)}
+.header-right{display:flex;align-items:center;gap:10px}
+.period-badge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:7px;padding:4px 12px;font-size:12px;font-weight:600;color:#fff}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:20px}
+.inner{max-width:900px;margin:0 auto}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;box-shadow:var(--shadow)}
+.card-title{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.card-subtitle{font-size:12px;color:var(--text3);font-weight:400;margin-top:2px}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.form-single{margin-bottom:12px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px}
+.field .hint{font-size:11px;color:var(--text3);margin-top:2px}
+.field input,.field select{
+  background:var(--surface2);border:1.5px solid var(--border2);border-radius:9px;
+  padding:10px 13px;font-size:14px;font-family:inherit;color:var(--text);
+  outline:none;transition:all .18s;width:100%;
+}
+.field input:focus,.field select:focus{border-color:var(--brand2);background:var(--surface);box-shadow:0 0 0 3px rgba(46,107,196,.1)}
+.field input.big{font-size:20px;font-weight:700;padding:12px 14px}
+.field input[readonly]{background:var(--brand-light);color:var(--brand);font-weight:700;border-color:rgba(26,77,143,.25)}
+
+/* ROW */
+.section-label{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.calc-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
+.calc-row:last-child{border-bottom:none}
+.calc-row label{color:var(--text2);flex:1}
+.calc-row .row-num{font-size:11px;color:var(--text3);margin-right:10px;width:24px;text-align:right;flex-shrink:0}
+.calc-row .val{font-weight:700;color:var(--text);min-width:140px;text-align:right}
+.calc-row .val.input-val{display:flex;justify-content:flex-end}
+.calc-row .val input{width:160px;text-align:right;padding:6px 10px;font-size:14px;font-family:inherit;background:var(--surface2);border:1.5px solid var(--border2);border-radius:7px;outline:none;font-weight:700}
+.calc-row .val input:focus{border-color:var(--brand2);box-shadow:0 0 0 3px rgba(46,107,196,.1)}
+.calc-row.total{background:var(--brand-light);margin:0 -24px;padding:10px 24px;border-radius:0}
+.calc-row.total label{font-weight:700;color:var(--brand)}
+.calc-row.total .val{color:var(--brand);font-size:18px}
+.calc-row.sub{background:var(--surface2);margin:0 -24px;padding:8px 24px}
+
+/* RESULT BOX */
+.result-box{background:linear-gradient(135deg,var(--brand),var(--brand2));border-radius:12px;padding:20px 24px;color:#fff;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.result-item .r-label{font-size:10px;opacity:.7;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.result-item .r-value{font-size:20px;font-weight:800}
+.result-item .r-sub{font-size:11px;opacity:.6;margin-top:2px}
+
+/* BUTTONS */
+.btn{padding:10px 20px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;border:none;font-family:inherit;display:inline-flex;align-items:center;gap:7px;transition:all .15s;white-space:nowrap}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 3px 12px rgba(26,77,143,.3)}
+.btn-primary:hover{background:var(--brand2)}
+.btn-ghost{background:var(--surface2);color:var(--text2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--surface)}
+.btn-success{background:var(--green);color:#fff}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+
+/* INFO BOXES */
+.info-box{background:var(--brand-light);border:1px solid rgba(26,77,143,.2);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--brand);margin-bottom:16px;line-height:1.6}
+.warn-box{background:var(--warn-light);border:1px solid rgba(154,95,10,.2);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--warn);margin-bottom:16px;line-height:1.6}
+.success-box{background:var(--green-light);border:1px solid rgba(29,107,69,.2);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--green);margin-bottom:16px}
+
+/* TABLE */
+.rtable{width:100%;border-collapse:collapse;font-size:13px}
+.rtable th{text-align:left;padding:8px 10px;background:var(--surface2);color:var(--text3);font-weight:700;border-bottom:1px solid var(--border);font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+.rtable td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+.rtable tr:last-child td{border-bottom:none}
+.rtable tr:hover td{background:var(--surface2)}
+
+/* WATERMARK */
+.demo-watermark{position:fixed;bottom:20px;right:20px;background:rgba(201,162,39,.9);color:#000;font-size:11px;font-weight:800;padding:6px 14px;border-radius:999px;z-index:1000;display:none}
+body.demo-mode .demo-watermark{display:block}
+
+@media(max-width:768px){
+  .form-grid,.form-grid-3{grid-template-columns:1fr}
+  .result-box{grid-template-columns:1fr 1fr}
+  .content{padding:14px}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="logo">
+    <div style="font-size:16px;font-weight:800;color:#fff"><span style="color:var(--gold)">Бух</span>Отчет</div>
+    <div class="logo-sep"></div>
+    <div class="logo-form">ФНО 910.00 · Упрощённая декларация</div>
+  </div>
+  <div class="header-right">
+    <div class="period-badge" id="periodBadge">2026 · I полугодие</div>
+    <button class="btn btn-success" onclick="exportJSON()" style="padding:6px 14px;font-size:12px">⬇ JSON</button>
+    <button class="btn btn-ghost" onclick="printForm()" style="padding:6px 14px;font-size:12px">🖨 Печать</button>
+  </div>
+</div>
+
+<div class="content">
+<div class="inner">
+
+  <div class="info-box">
+    <strong>ФНО 910.00 · 2026 год (НК РК, Закон 214-VIII от 18.07.2025)</strong><br>
+    С 2026 года из формы 910 исключён раздел по доходам сотрудников. Зарплатные налоги (ИПН, ОПВ, СО, ОСМС) теперь сдаются отдельно в <strong>ФНО 200.00</strong> ежеквартально.
+    Форма 910 — только доходы бизнеса и личные платежи ИП.
+  </div>
+
+  <!-- РЕКВИЗИТЫ -->
+  <div class="card">
+    <div class="card-title">Реквизиты налогоплательщика</div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Наименование / ФИО ИП</label>
+        <input type="text" id="f_name" placeholder="ИП Иванов Иван Иванович" oninput="syncCompany()">
+      </div>
+      <div class="field">
+        <label>БИН / ИИН</label>
+        <input type="text" id="f_bin" placeholder="123456789012" maxlength="12" oninput="calc()">
+      </div>
+      <div class="field">
+        <label>Форма налогообложения</label>
+        <select id="f_type" onchange="onTypeChange()">
+          <option value="ip">ИП (Упрощёнка)</option>
+          <option value="too">ТОО (Упрощёнка)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Отчётный период</label>
+        <select id="f_period" onchange="onPeriodChange()">
+          <option value="1h2026">I полугодие 2026 (янв–июн)</option>
+          <option value="2h2026">II полугодие 2026 (июл–дек)</option>
+          <option value="1h2025">I полугодие 2025</option>
+          <option value="2h2025">II полугодие 2025</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>КНП (код назначения платежа)</label>
+        <input type="text" id="f_knp" value="911" placeholder="911">
+        <span class="hint">911 — текущий платёж</span>
+      </div>
+      <div class="field">
+        <label>Признак резидентства</label>
+        <select id="f_resident">
+          <option value="1">Резидент РК</option>
+          <option value="2">Нерезидент</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- РАЗДЕЛ 1: ДОХОДЫ -->
+  <div class="card">
+    <div class="card-title">
+      Раздел 1. Исчисление налогов с дохода
+      <span style="font-size:12px;color:var(--text3);font-weight:400">Строки 910.00.001 – 910.00.006</span>
+    </div>
+
+    <div class="section-label">Доходы за полугодие</div>
+    <div class="calc-row">
+      <span class="row-num">001</span>
+      <label>Совокупный доход (реализация товаров, работ, услуг)</label>
+      <div class="val input-val"><input type="number" id="r001" value="0" oninput="calc()" placeholder="0"></div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">001A</span>
+      <label>в т.ч. безналичные доходы (через банк, терминал)</label>
+      <div class="val input-val"><input type="number" id="r001a" value="0" oninput="calc()" placeholder="0"></div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">001B</span>
+      <label>в т.ч. наличные доходы</label>
+      <div class="val input-val"><input type="number" id="r001b" value="0" oninput="calc()" placeholder="0"></div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px">Расчёт налогов</div>
+    <div class="calc-row sub">
+      <span class="row-num">002</span>
+      <label>Налоговая база (= стр. 001)</label>
+      <div class="val" id="r002">0 ₸</div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">003</span>
+      <label>Ставка налога</label>
+      <div class="val">4%</div>
+    </div>
+    <div class="calc-row sub">
+      <span class="row-num">004</span>
+      <label>Исчисленный налог (стр. 002 × 4%)</label>
+      <div class="val" id="r004">0 ₸</div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">005</span>
+      <label>из него ИПН / КПН (половина, зачисляется в госбюджет)</label>
+      <div class="val" id="r005">0 ₸</div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">006</span>
+      <label>из него Социальный налог (половина)</label>
+      <div class="val" id="r006">0 ₸</div>
+    </div>
+    <div class="calc-row total">
+      <span class="row-num" style="color:var(--brand)">004</span>
+      <label>ИТОГО налог к уплате (010+006)</label>
+      <div class="val" id="totalTax">0 ₸</div>
+    </div>
+  </div>
+
+  <!-- РАЗДЕЛ 2: ЛИЧНЫЕ ПЛАТЕЖИ ИП (скрыт для ТОО) -->
+  <div class="card" id="ipSection">
+    <div class="card-title">
+      Раздел 2. Социальные платежи ИП за себя
+      <span style="font-size:12px;color:var(--text3);font-weight:400">Строки 910.00.007 – 910.00.012 (только для ИП)</span>
+    </div>
+
+    <div class="warn-box">
+      <strong>Важно:</strong> Этот раздел заполняют только <strong>ИП</strong>. Платежи рассчитываются от дохода ИП за себя лично.
+      Для сотрудников (ОПВ, ИПН, СО, ОСМС) — подаётся отдельно <strong>ФНО 200.00</strong>.
+    </div>
+
+    <div class="field form-single">
+      <label>Доход ИП для расчёта личных взносов (₸ / месяц)</label>
+      <input type="number" id="r_ip_income" value="85000" oninput="calc()" placeholder="85000">
+      <span class="hint">Не менее МЗП (85 000 ₸). Обычно берут фактический доход или МЗП.</span>
+    </div>
+
+    <div class="section-label">Пенсионные взносы ИП</div>
+    <div class="calc-row">
+      <span class="row-num">007</span>
+      <label>ОПВ за ИП (10% от дохода, макс. 50 МЗП × 6 мес.)</label>
+      <div class="val" id="r007">0 ₸</div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">007A</span>
+      <label>ОППВ (добровольные, 5%) — если заявлено</label>
+      <div class="val input-val"><input type="number" id="r007a" value="0" oninput="calc()" placeholder="0"></div>
+    </div>
+
+    <div class="section-label" style="margin-top:12px">Социальные отчисления ИП</div>
+    <div class="calc-row">
+      <span class="row-num">008</span>
+      <label>СО за ИП (5% от дохода − ОПВ, диапазон 1–7 МЗП)</label>
+      <div class="val" id="r008">0 ₸</div>
+    </div>
+
+    <div class="section-label" style="margin-top:12px">ОСМС ИП</div>
+    <div class="calc-row">
+      <span class="row-num">009</span>
+      <label>ВОСМС за ИП (2% от дохода, макс. 20 МЗП × 6 мес.)</label>
+      <div class="val" id="r009">0 ₸</div>
+    </div>
+    <div class="calc-row">
+      <span class="row-num">010</span>
+      <label>ООСМС за ИП как работодатель (3%, если есть сотрудники)</label>
+      <div class="val input-val"><input type="number" id="r010" value="0" oninput="calc()" placeholder="0"></div>
+    </div>
+
+    <div class="calc-row total" style="margin-top:8px">
+      <span class="row-num" style="color:var(--brand)">∑</span>
+      <label>Итого личных платежей ИП за полугодие</label>
+      <div class="val" id="ipTotal">0 ₸</div>
+    </div>
+  </div>
+
+  <!-- ИТОГ -->
+  <div class="result-box" id="resultBox">
+    <div class="result-item">
+      <div class="r-label">ИПН / КПН к уплате</div>
+      <div class="r-value" id="res_ipn">0 ₸</div>
+      <div class="r-sub">КБК 101201 / 101101</div>
+    </div>
+    <div class="result-item">
+      <div class="r-label">Социальный налог</div>
+      <div class="r-value" id="res_sn">0 ₸</div>
+      <div class="r-sub">КБК 101201</div>
+    </div>
+    <div class="result-item">
+      <div class="r-label">ОПВ за себя</div>
+      <div class="r-value" id="res_opv">0 ₸</div>
+      <div class="r-sub">КБК 902101</div>
+    </div>
+    <div class="result-item">
+      <div class="r-label">СО за себя</div>
+      <div class="r-value" id="res_so">0 ₸</div>
+      <div class="r-sub">КБК 904101</div>
+    </div>
+    <div class="result-item">
+      <div class="r-label">ВОСМС за себя</div>
+      <div class="r-value" id="res_vosms">0 ₸</div>
+      <div class="r-sub">КБК 904301</div>
+    </div>
+    <div class="result-item" style="background:rgba(255,255,255,.1);border-radius:8px;padding:10px">
+      <div class="r-label">ИТОГО к уплате</div>
+      <div class="r-value" id="res_total" style="font-size:22px">0 ₸</div>
+      <div class="r-sub">все платежи за полугодие</div>
+    </div>
+  </div>
+
+  <!-- СРОКИ -->
+  <div class="card">
+    <div class="card-title" style="font-size:1rem">Сроки сдачи и уплаты 2026</div>
+    <table class="rtable">
+      <thead><tr><th>Период</th><th>Срок сдачи ФНО</th><th>Срок уплаты</th><th>Штраф за просрочку</th></tr></thead>
+      <tbody>
+        <tr><td>I полугодие 2026 (янв–июн)</td><td style="font-weight:700;color:var(--warn)">15 августа 2026</td><td>до 25 августа 2026</td><td>5 МРП = 21 625 ₸</td></tr>
+        <tr><td>II полугодие 2026 (июл–дек)</td><td style="font-weight:700">15 февраля 2027</td><td>до 25 февраля 2027</td><td>5 МРП = 21 625 ₸</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:12px;color:var(--text3);background:var(--brand-light);padding:9px 13px;border-radius:8px;color:var(--brand)">
+      МРП 2026 = 4 325 ₸ · НК РК (Закон 214-VIII от 18.07.2025, действует с 01.01.2026)
+    </div>
+  </div>
+
+  <!-- КНОПКИ -->
+  <div class="card">
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="calc()">🔄 Пересчитать</button>
+      <button class="btn btn-success" onclick="exportJSON()">⬇ Скачать JSON</button>
+      <button class="btn btn-ghost" onclick="clearAll()">🗑 Очистить</button>
+      <button class="btn btn-ghost" onclick="printForm()">🖨 Печать</button>
+    </div>
+  </div>
+
+</div><!-- /inner -->
+</div><!-- /content -->
+
+<div class="demo-watermark">ДЕМО · БухОтчет</div>
+
+<script>
+const MRP = 4325, MZP = 85000;
+const fmt = n => Math.round(n||0).toLocaleString('ru-RU') + ' ₸';
+
+// ── Синхронизация с порталом ─────────────────────────────────────────────────
+(function init() {
+  try {
+    const comp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
+    if (comp) {
+      document.getElementById('f_name').value = comp.name || '';
+      document.getElementById('f_bin').value  = comp.iin  || '';
+      if (comp.form === 'ТОО') document.getElementById('f_type').value = 'too';
+      onTypeChange();
+    }
+  } catch(e){}
+  // Загрузить сохранённые данные
+  loadState();
+  calc();
+  window.addEventListener('storage', function(e){
+    if (e.key === 'buhotchet_active_company') {
+      try {
+        const comp = JSON.parse(e.newValue || 'null');
+        if (comp) {
+          document.getElementById('f_name').value = comp.name || '';
+          document.getElementById('f_bin').value  = comp.iin  || '';
+          if (comp.form === 'ТОО' || comp.form === 'АО') document.getElementById('f_type').value = 'too';
+          else document.getElementById('f_type').value = 'ip';
+          onTypeChange(); calc();
+        }
+      } catch(e){}
+    }
+  });
+})();
+
+function syncCompany(){}
+
+function onTypeChange() {
+  const isTOO = document.getElementById('f_type').value === 'too';
+  document.getElementById('ipSection').style.display = isTOO ? 'none' : '';
+  calc();
+}
+
+function onPeriodChange() {
+  const p = document.getElementById('f_period').value;
+  const labels = {
+    '1h2026':'2026 · I полугодие',
+    '2h2026':'2026 · II полугодие',
+    '1h2025':'2025 · I полугодие',
+    '2h2025':'2025 · II полугодие',
+  };
+  document.getElementById('periodBadge').textContent = labels[p] || p;
+  calc();
+}
+
+// ── РАСЧЁТ ───────────────────────────────────────────────────────────────────
+function calc() {
+  const v = id => parseFloat(document.getElementById(id)?.value) || 0;
+  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = fmt(val); };
+
+  // Доходы
+  const income = v('r001');
+  const tax = income * 0.04;
+  const ipn  = tax / 2;   // ИПН/КПН
+  const sn   = tax / 2;   // Социальный налог
+
+  set('r002', income);
+  set('r004', tax);
+  set('r005', ipn);
+  set('r006', sn);
+  set('totalTax', tax);
+
+  // Личные платежи ИП
+  const isTOO = document.getElementById('f_type').value === 'too';
+  let opv_ip=0, so_ip=0, vosms_ip=0, oppv_ip=0, oosms_ip=0;
+
+  if (!isTOO) {
+    const ipIncome = v('r_ip_income');
+    const months = 6;
+    // ОПВ: 10% от дохода/мес, макс 50 МЗП
+    opv_ip = Math.min(ipIncome, MZP*50) * 0.10 * months;
+    oppv_ip = v('r007a');
+    // СО: 5% от (доход − ОПВ), диапазон 1–7 МЗП
+    const soBase = Math.min(Math.max(ipIncome - ipIncome*0.10, MZP), MZP*7);
+    so_ip = soBase * 0.05 * months;
+    // ВОСМС: 2% от дохода, макс 20 МЗП
+    vosms_ip = Math.min(ipIncome, MZP*20) * 0.02 * months;
+    oosms_ip = v('r010');
+
+    set('r007', opv_ip);
+    set('r008', so_ip);
+    set('r009', vosms_ip);
+
+    const ipTot = opv_ip + oppv_ip + so_ip + vosms_ip + oosms_ip;
+    set('ipTotal', ipTot);
+  }
+
+  // Итог
+  const grand = tax + (isTOO ? 0 : opv_ip + v('r007a') + so_ip + vosms_ip + v('r010'));
+
+  document.getElementById('res_ipn').textContent   = fmt(ipn);
+  document.getElementById('res_sn').textContent    = fmt(sn);
+  document.getElementById('res_opv').textContent   = fmt(isTOO?0:opv_ip);
+  document.getElementById('res_so').textContent    = fmt(isTOO?0:so_ip);
+  document.getElementById('res_vosms').textContent = fmt(isTOO?0:vosms_ip);
+  document.getElementById('res_total').textContent = fmt(grand);
+
+  saveState();
+}
+
+// ── СОХРАНЕНИЕ ───────────────────────────────────────────────────────────────
+function getStateKey() {
+  try {
+    const comp = JSON.parse(localStorage.getItem('buhotchet_active_company')||'null');
+    const iin = comp?.iin ? '_c'+comp.iin : '';
+    return 'fno910_data' + iin;
+  } catch(e){ return 'fno910_data'; }
+}
+
+function saveState() {
+  const fields = ['f_name','f_bin','f_type','f_period','f_knp','f_resident','r001','r001a','r001b','r_ip_income','r007a','r010'];
+  const state = {};
+  fields.forEach(id => { const el = document.getElementById(id); if(el) state[id] = el.value; });
+  try { localStorage.setItem(getStateKey(), JSON.stringify(state)); } catch(e){}
+}
+
+function loadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem(getStateKey()) || 'null');
+    if (!s) return;
+    Object.entries(s).forEach(([id, val]) => {
+      const el = document.getElementById(id);
+      if (el) el.value = val;
+    });
+    onTypeChange(); onPeriodChange();
+  } catch(e){}
+}
+
+function clearAll() {
+  if (!confirm('Очистить все данные формы?')) return;
+  ['r001','r001a','r001b','r_ip_income','r007a','r010'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = 0;
+  });
+  try { localStorage.removeItem(getStateKey()); } catch(e){}
+  calc();
+}
+
+// ── ЭКСПОРТ JSON ─────────────────────────────────────────────────────────────
+function exportJSON() {
+  const v = id => parseFloat(document.getElementById(id)?.value)||0;
+  const txt = id => document.getElementById(id)?.value||'';
+  const income = v('r001');
+  const tax = income*0.04;
+  const isTOO = txt('f_type')==='too';
+  const ipIncome = v('r_ip_income');
+  const months = 6;
+  const opv_ip = isTOO?0:Math.min(ipIncome,MZP*50)*0.10*months;
+  const soBase = isTOO?0:Math.min(Math.max(ipIncome-ipIncome*0.10,MZP),MZP*7);
+  const so_ip = isTOO?0:soBase*0.05*months;
+  const vosms_ip = isTOO?0:Math.min(ipIncome,MZP*20)*0.02*months;
+
+  const data = {
+    form: 'ФНО 910.00',
+    nk_version: 'НК РК 2026 (Закон 214-VIII от 18.07.2025)',
+    generated_at: new Date().toISOString(),
+    taxpayer: {
+      name: txt('f_name'),
+      bin_iin: txt('f_bin'),
+      type: txt('f_type').toUpperCase(),
+      period: txt('f_period'),
+      resident: txt('f_resident')==='1'?'резидент':'нерезидент',
+      knp: txt('f_knp'),
+    },
+    section1_income: {
+      '910.00.001_income_total': income,
+      '910.00.001A_cashless': v('r001a'),
+      '910.00.001B_cash': v('r001b'),
+      '910.00.002_tax_base': income,
+      '910.00.003_rate': '4%',
+      '910.00.004_tax_total': tax,
+      '910.00.005_ipn_kpn': tax/2,
+      '910.00.006_social_tax': tax/2,
+    },
+    section2_ip_payments: isTOO ? null : {
+      ip_income_per_month: ipIncome,
+      '910.00.007_opv': opv_ip,
+      '910.00.007A_oppv': v('r007a'),
+      '910.00.008_so': so_ip,
+      '910.00.009_vosms': vosms_ip,
+      '910.00.010_oosms': v('r010'),
+      total_ip_payments: opv_ip+v('r007a')+so_ip+vosms_ip+v('r010'),
+    },
+    summary: {
+      ipn_kpn_to_pay: tax/2,
+      social_tax_to_pay: tax/2,
+      opv_to_pay: opv_ip,
+      so_to_pay: so_ip,
+      vosms_to_pay: vosms_ip,
+      grand_total: tax+(isTOO?0:opv_ip+v('r007a')+so_ip+vosms_ip+v('r010')),
+    },
+    kbk: {
+      ipn_kpn: '101201 / 101101',
+      social_tax: '101201',
+      opv: '902101',
+      so: '904101',
+      vosms: '904301',
+    }
+  };
+
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `ФНО_910_${txt('f_period')}_${txt('f_bin')||'nobin'}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function printForm() { window.print(); }
+</script>
+</body>
+</html>

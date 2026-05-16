@@ -710,6 +710,8 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <button class="nav-btn" onclick="showPage('companies',this)">🏢 Компании</button>
     <button class="nav-btn" id="navFno300" onclick="openFno('fno300',this)">📋 ФНО 300</button>
     <button class="nav-btn" id="navFno200" onclick="openFno('fno200',this)">💼 ФНО 200</button>
+    <button class="nav-btn" id="navFno910" onclick="openFno('fno910',this)">📋 ФНО 910</button>
+    <button class="nav-btn" id="navFno100" onclick="openFno('fno100',this)">🏛 ФНО 100</button>
     <button class="nav-btn" onclick="showPage('calc',this)">🧮 Калькулятор</button>
     <button class="nav-btn" onclick="showPage('deadlines',this)">📅 Сроки</button>
     <button class="nav-btn" onclick="showPage('kbk',this)">🔢 КБК/КНП</button>
@@ -726,6 +728,16 @@ body{font-family:'Golos Text',system-ui,sans-serif;color:var(--text);font-size:1
     <!-- iframe FNO 200 -->
     <div class="page-iframe" id="page-fno200">
       <iframe class="iframe-full" id="iframe200" src="fno200.html"></iframe>
+    </div>
+
+    <!-- ФНО 910 -->
+    <div class="page-iframe" id="page-fno910">
+      <iframe class="iframe-full" id="iframe910" src="fno910.html" title="ФНО 910 — Упрощённая декларация"></iframe>
+    </div>
+
+    <!-- ФНО 100 -->
+    <div class="page-iframe" id="page-fno100">
+      <iframe class="iframe-full" id="iframe100" src="fno100.html" title="ФНО 100 — КПН"></iframe>
     </div>
 
     <!-- DASHBOARD -->
@@ -1307,8 +1319,11 @@ function initApp() {
   }
   const t=currentUser.tariff;
   const has300=t==='all'||t==='fno300', has200=t==='all'||t==='fno200';
+  const hasExtra=t!=='none';
   if (!has300) $('navFno300').classList.add('locked');
   if (!has200) $('navFno200').classList.add('locked');
+  if (!hasExtra&&$('navFno910')) $('navFno910').classList.add('locked');
+  if (!hasExtra&&$('navFno100')) $('navFno100').classList.add('locked');
   loadCompanies();
   showPage('dashboard', document.querySelector('.nav-btn'));
   runCalc();
@@ -1335,8 +1350,13 @@ function showPage(id, btn) {
 }
 
 function openFno(id, btn) {
-  const t=currentUser?.tariff||'none';
-  if(t!=='all'&&t!==id){alert('Нет доступа к этой форме. Обратитесь к администратору.');return}
+  const t = currentUser?.tariff||'none';
+  // Для fno910 и fno100 — достаточно любого тарифа кроме none
+  if (id === 'fno910' || id === 'fno100') {
+    if (t === 'none') { alert('Нет доступа. Обратитесь к администратору.'); return; }
+  } else {
+    if (t!=='all' && t!==id) { alert('Нет доступа к этой форме. Обратитесь к администратору.'); return; }
+  }
   showPage(id, btn);
 }
 
