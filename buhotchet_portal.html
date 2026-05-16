@@ -1337,7 +1337,36 @@ async function doLogout() {
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
+function showDemoBlockModal(msg) {
+  let ov = document.getElementById('demoBlockModal');
+  if (!ov) {
+    ov = document.createElement('div');
+    ov.id = 'demoBlockModal';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.65);backdrop-filter:blur(8px)';
+    ov.innerHTML = '<div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:440px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.3)">' +
+      '<div style="font-size:48px;margin-bottom:14px">🔒</div>' +
+      '<div style="font-size:20px;font-weight:800;color:#1a1a1a;margin-bottom:10px">Недоступно в демо</div>' +
+      '<div id="demoBlockMsg" style="font-size:14px;color:#555;margin-bottom:20px;line-height:1.6"></div>' +
+      '<div style="background:#f4f6fb;border-radius:12px;padding:14px;margin-bottom:18px;text-align:left;font-size:13px;color:#333;line-height:1.8">' +
+        '📋 <b>Базовый</b> — 25 000 ₸/год (одна форма)<br>⭐ <b>Pro</b> — 40 000 ₸/год (ФНО 200 + 300)<br>👥 <b>Доп. пользователь</b> — +10 000 ₸/год</div>' +
+      '<div style="display:flex;gap:10px;justify-content:center">' +
+        '<button onclick="document.getElementById('demoBlockModal').style.display='none'" style="padding:10px 20px;border-radius:10px;border:1px solid #ddd;background:#f8f9fa;font-size:14px;cursor:pointer;font-family:inherit">Закрыть</button>' +
+        '<button onclick="doLogout()" style="padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,#1a4d8f,#2e6bc4);color:#fff;border:none;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Зарегистрироваться →</button>' +
+      '</div></div>';
+    ov.addEventListener('click', function(e){ if(e.target===ov) ov.style.display='none'; });
+    document.body.appendChild(ov);
+  }
+  document.getElementById('demoBlockMsg').textContent = msg;
+  ov.style.display = 'flex';
+}
+
 function showPage(id, btn) {
+  if (currentUser?.role==='demo' && (id==='dashboard'||id==='fno910'||id==='fno100')) {
+    showDemoBlockModal(id==='dashboard'
+      ? 'Дашборд недоступен в демо-режиме. Зарегистрируйтесь чтобы видеть сводку по своим данным.'
+      : 'Эта форма недоступна в демо-режиме. Оформите доступ.');
+    return;
+  }
   document.querySelectorAll('.page,.page-iframe').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   const p=$('page-'+id); if(p) p.classList.add('active');
@@ -2106,24 +2135,26 @@ function startDemo() {
 function initDemoApp() {
   $('landingPage').classList.add('hidden');
   $('appShell').classList.add('visible');
-  // Показать демо-баннер
   const db = $('demoBannerPortal');
   if (db) db.style.display = 'flex';
-  // Скрыть period bar
   const pb = $('periodBar');
   if (pb) pb.style.display = 'none';
-  // Обновить шапку
   $('hUserName').textContent = '🎯 Демо-режим';
-  $('hTariff').textContent = '3 сотрудника · 1 файл';
-  // Показать навигацию
+  $('hTariff').textContent = '3 сотр. · 1 файл ФНО 300';
+  // Разблокировать ФНО 300 и ФНО 200
   $('navFno300').classList.remove('locked');
   $('navFno200').classList.remove('locked');
+  // ФНО 910 и 100 — заблокированы в демо
+  if ($('navFno910')) $('navFno910').classList.add('locked');
+  if ($('navFno100')) $('navFno100').classList.add('locked');
   // Демо компания
   activeCompany = { name: 'Демо-компания', iin: '000000000000', form: 'ТОО', mode: 'ОУР' };
   localStorage.setItem('buhotchet_active_company', JSON.stringify(activeCompany));
   localStorage.setItem('buhotchet_companies', JSON.stringify([activeCompany]));
   updateHComp();
-  showPage('dashboard', document.querySelector('.nav-btn'));
+  // Сразу открываем ФНО 300 (не дашборд)
+  const nav300 = document.getElementById('navFno300');
+  if (nav300) showPage('fno300', nav300);
 }
 
 // ── BOOT ─────────────────────────────────────────────────────────────────────

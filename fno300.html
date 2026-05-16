@@ -428,7 +428,7 @@ body.demo-mode #postBtn,body.demo-mode #gtdBtn,body.demo-mode #fno328Btn,body.de
   </div>
 </div>
 
-<div id="mainShell" class="hidden">
+<div id="mainShell">
 
 <!-- Восстановление пароля -->
 <div class="modal-overlay" id="forgotModal">
@@ -1452,9 +1452,6 @@ function initAppEntry() {
   else resetWorkspaceMemory();
   // Подхватить компанию из портала
   try {
-    if (!getSession()) {
-    setSession({ email: 'buhotchet@portal.kz', name: 'БухОтчет', role: 'user' });
-  }
   var portalComp = JSON.parse(localStorage.getItem('buhotchet_active_company') || 'null');
     if (portalComp && portalComp.name) {
       var exists = companies.find(function(c){ return c.iin === portalComp.iin; });
@@ -1752,6 +1749,21 @@ async function ingestFileToItem(file, type) {
 }
 
 async function loadFile(type, input) {
+  // В демо режиме: только реализация, только 1 файл
+  if (getSession() && getSession().role === 'demo') {
+    if (type !== 'real') {
+      openDemoLimitModal('files');
+      input.value = '';
+      return;
+    }
+    // Проверить количество уже загруженных файлов реализации
+    var existingFiles = files.realizations || [];
+    if (existingFiles.length >= 1) {
+      openDemoLimitModal('files');
+      input.value = '';
+      return;
+    }
+  }
   /* FileList привязан к input: если сразу сделать input.value='', список
      опустеет и цикл не прочитает ни одного файла. Снимаем снимок в массив. */
   const picked = Array.from(input.files || []);
